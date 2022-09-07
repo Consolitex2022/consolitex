@@ -16,8 +16,8 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
     return (<>
         <Box sx={{ width: "280px", height: "380", borderRadius: "12px", border: "1px solid #cbd6dc", overflow: "hidden", cursor: "pointer" }}>
             {/* Img */}
-            <Box>
-                <Image src={`https://consolitex.org/img.php?i=${encodeURI(url_inmueble)}`} alt={data.nombre + " Imagen Consolitex"} style={{ maxWidth: "100%", minWidth: "280px", minHeight: "250px", maxHeight: "250px" }} />
+            <Box sx={{ maxWidth: "100%", minWidth: "280px", minHeight: "250px", maxHeight: "250px" }}>
+                <Box component="img" src={`https://consolitex.org/img.php?i=${encodeURIComponent(url_inmueble)}`} width={"100%"} height={250}></Box>
             </Box>
             {/* Content */}
             <Box sx={{ pt: 2, pr: 2, pl: 2, pb: 0 }}>

@@ -18,7 +18,7 @@ const Empresa = () => {
     return (
         <>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }}>
-                <Image src='./logo.webp' alt='Logo Consolitex - Footer' width='80' height='80' />
+                <Image src='/logo.webp' alt='Logo Consolitex - Footer' width='80' height='80' />
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography component='h5' variant='overline' fontSize={16} fontWeight='bold' sx={{ fontFamily: 'Hind' }}>Consolitex®</Typography>
                     <Typography variant='subtitle2' fontWeight='100' sx={{ fontFamily: 'Hind', }}>Bienes Raíces</Typography>

@@ -9,9 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/cache": "^11.10.3",
+    "@emotion/react": "^11.10.4",
+    "@emotion/server": "^11.10.0",
+    "@emotion/styled": "^11.10.4",
+    "@mui/icons-material": "^5.10.3",
+    "@mui/lab": "^5.0.0-alpha.98",
+    "@mui/material": "^5.10.4",
+    "axios": "^0.27.2",
+    "date-fns": "^2.29.2",
     "next": "12.2.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-multi-carousel": "^2.8.2",
+    "sweetalert2": "^11.4.32"
   },
   "devDependencies": {
     "@types/node": "18.7.15",

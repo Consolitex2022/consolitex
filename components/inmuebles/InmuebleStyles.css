@@ -1,0 +1,13 @@
+.nextArrow {
+    top: 0;
+    right: -45px;
+}
+
+.prevArrow {
+    top: 0;
+    left: -45px;
+}
+
+.arrow {
+    position: absolute;
+}

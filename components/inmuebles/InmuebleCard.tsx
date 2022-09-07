@@ -1,6 +1,7 @@
 import { Box, Typography, useTheme } from '@mui/material';
+import Image from 'next/image';
 import { FC } from 'react'
-import { Inmueble } from '../../pages/SearchPage';
+import { Inmueble } from '../../pages/index';
 import { numberWithDots, ucfirst, utf8_encode } from '../../utils/functions';
 import { BanosIcon, HabitacionesIcon, MetrajeIcon, TerrenoIcon } from '../icons';
 interface Props {
@@ -16,7 +17,7 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
         <Box sx={{ width: "280px", height: "380", borderRadius: "12px", border: "1px solid #cbd6dc", overflow: "hidden", cursor: "pointer" }}>
             {/* Img */}
             <Box>
-                <img src={`https://consolitex.org/img.php?i=${encodeURI(url_inmueble)}`} alt={data.nombre + " Imagen Consolitex"} style={{ maxWidth: "100%", minWidth: "280px", minHeight: "250px", maxHeight: "250px" }} />
+                <Image src={`https://consolitex.org/img.php?i=${encodeURI(url_inmueble)}`} alt={data.nombre + " Imagen Consolitex"} style={{ maxWidth: "100%", minWidth: "280px", minHeight: "250px", maxHeight: "250px" }} />
             </Box>
             {/* Content */}
             <Box sx={{ pt: 2, pr: 2, pl: 2, pb: 0 }}>

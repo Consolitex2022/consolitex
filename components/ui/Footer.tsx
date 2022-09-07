@@ -8,6 +8,7 @@ import AdjustIcon from '@mui/icons-material/Adjust';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import LocalPhoneRoundedIcon from '@mui/icons-material/LocalPhoneRounded';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 /**
  * Componente con informacion de la empresa
@@ -17,7 +18,7 @@ const Empresa = () => {
     return (
         <>
             <Box sx={{ display: "flex", flexDirection: "row", alignItems: "start" }}>
-                <img src="./logo.webp" alt="Logo Consolitex - Footer" width="80" />
+                <Image src="./logo.webp" alt="Logo Consolitex - Footer" width="80" height="80" />
                 <Box sx={{ display: "flex", flexDirection: "column" }}>
                     <Typography component="h5" variant="overline" fontSize={16} fontWeight="bold" sx={{ fontFamily: "Hind" }}>Consolitex®</Typography>
                     <Typography variant="subtitle2" fontWeight="100" sx={{ fontFamily: "Hind", }}>Bienes Raíces</Typography>

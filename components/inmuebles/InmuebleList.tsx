@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 
-import { Inmueble } from '../../pages/SearchPage';
+import { Inmueble } from '../../pages/index';
 import { InmuebleCard } from './InmuebleCard';
 
 interface Props {

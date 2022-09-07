@@ -1,6 +1,7 @@
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { FC, useState, MouseEvent } from 'react';
+import Image from 'next/image';
 
 interface Props {
     title: string;
@@ -58,7 +59,7 @@ const MenuPc: FC<PropsMenuPc> = ({ title, handleOpenNavMenu, anchorElNav, handle
     return (
         <>
             <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }} >
-                <img alt="Logo Consolitex" src="./logo.webp" width="50" />
+                <Image alt="Logo Consolitex" src="./logo.webp" width="50" height="50" />
             </Box>
             <Typography
                 variant="h6"
@@ -119,7 +120,7 @@ const MenuMobile: FC<PropsMobile> = ({ title = "Consolitex", handleCloseNavMenu,
     return (
         <>
             <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }} >
-                <img alt="Logo Consolitex" src="./logo.webp" width="50" />
+                <Image alt="Logo Consolitex" src="./logo.webp" width="50" height="50" />
             </Box>
             <Typography
                 variant="h5"

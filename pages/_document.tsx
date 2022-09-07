@@ -7,22 +7,22 @@ import createEmotionCache from '../src/createEmotionCache';
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang='en'>
         <Head>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-          <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
-          <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300&display=swap" rel="stylesheet" />
+          <link rel='preconnect' href='https://fonts.googleapis.com' />
+          <link rel='preconnect' href='https://fonts.gstatic.com' />
+          <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap' />
+          <link href='https://fonts.googleapis.com/css2?family=Poppins&display=swap' rel='stylesheet' />
+          <link href='https://fonts.googleapis.com/css2?family=Hind:wght@300&display=swap' rel='stylesheet' />
           {/* PWA primary color */}
-          <meta name="theme-color" content={theme.palette.primary.main} />
-          <link rel="shortcut icon" href="/favicon.ico" />
+          <meta name='theme-color' content={theme.palette.primary.main} />
+          <link rel='shortcut icon' href='/favicon.ico' />
           <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel='stylesheet'
+            href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'
           />
 
-          <meta name="emotion-insertion-point" content="" />
+          <meta name='emotion-insertion-point' content='' />
           {(this.props as any).emotionStyleTags}
         </Head>
         <body>

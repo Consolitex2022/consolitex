@@ -39,5 +39,6 @@ const theme = createTheme({
         },
         htmlFontSize: 16,
     },
+
 });
 export default theme;

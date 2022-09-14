@@ -33,7 +33,7 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
         <>
 
             {
-                inmuebles.length > 0
+                inmuebles && inmuebles.length > 0
                     ?
                     (
                         <Carousel

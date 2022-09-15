@@ -5,7 +5,7 @@ interface Props {
 }
 export const PozoIcon: FC<Props> = ({ w = 16, h = 16 }) => {
     return (
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width={w} height={h} viewBox="0 0 512 512" enable-background="new 0 0 512 512">  <image id="image0" width="512" height="512" x="0" y="0"
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width={w} height={h} viewBox="0 0 512 512" enableBackground="new 0 0 512 512">  <image id="image0" width="512" height="512" x="0" y="0"
             href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAACBjSFJN
 AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAAAA
 CXBIWXMAAA7EAAAOxAGVKw4bAABIBklEQVR42u3dd5wcxZ0+/qe6e+LmXe0qokAQCAmwQcYgkISI

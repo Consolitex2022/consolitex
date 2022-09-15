@@ -59,20 +59,17 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
                     {/* Contenedor de la imagen del inmueble */}
                     <Grid item xs={12} sm={4}>
                         <Box sx={styles.imageContainer}>
-                            <Image src={`https://consolitex.org/img_sinmosca.php?i=${encodeURI(url_inmueble)}`} layout='fill'
+                            <Image alt={data.nombre} src={`https://consolitex.org/img_sinmosca.php?i=${encodeURI(url_inmueble)}`} layout='fill'
                                 objectFit='cover' />
                         </Box>
                     </Grid>
 
-                    <Grid item xs={12} sm={8} display="flex" flexDirection="column" justifyContent="space-between" sx={{ pb: 1, position: "relative" }}>
-                        <IconButton size="small" sx={{ position: "absolute", top: 10, right: 5, color: "rgb(210, 215, 255)" }}>
-                            <MoreVertRoundedIcon />
-                        </IconButton>
+                    <Grid item xs={12} sm={8} display="flex" flexDirection="column" justifyContent="space-between" sx={{ pb: 1 }}>
 
                         {/* Contenedor del codigo del inmueble */}
                         <Box sx={styles.codContainer}>
                             <Typography variant="body1" fontWeight="bold">REF {numberWithDots(Number(data.ref))}</Typography>
-                            <Chip variant="outlined" color="primary" size="small" label={`${ucfirst(data.inmueble.toLowerCase())} ${data.ficha_id0}`} sx={{ mr: 1 }} />
+                            <Chip variant="outlined" color="primary" size="small" label={`${ucfirst(data.inmueble.toLowerCase())} ${data.ficha_id0}`} sx={{}} />
                         </Box>
                         {/* Contenedor scrolleable de las caracteristicas */}
                         <Box sx={styles.scrollableContainer}>

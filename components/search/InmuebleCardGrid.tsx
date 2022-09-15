@@ -1,14 +1,29 @@
-import { FC } from 'react'
-import { Box, Grid, Typography, Chip } from '@mui/material';
-import { Inmueble } from '../../pages';
+import { FC, useState, MouseEvent } from 'react'
+
 import Image from "next/image";
-import { numberWithDots, ucfirst } from '../../utils/functions';
-import { BanosIcon, HabitacionesIcon, MetrajeIcon, TerrenoIcon, EstacionamientosIcon, PlantaIcon, PozoIcon } from '../icons';
+
+import { Box, Grid, Typography, Chip, IconButton, Popper } from '@mui/material';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
+import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
+
 import { CaracteristicaContainer, tieneCaracteristica } from './InmuebleCard';
+
+import { Inmueble } from '../../pages';
+
+import { BanosIcon, HabitacionesIcon, MetrajeIcon, TerrenoIcon, EstacionamientosIcon, PlantaIcon, PozoIcon } from '../icons';
+import { numberWithDots, ucfirst } from '../../utils/functions';
+
 interface Props {
     inmueble: Inmueble;
 }
 export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+    const togglePopup = (event: MouseEvent<HTMLElement>) => {
+        setAnchorEl(anchorEl ? null : event.currentTarget);
+    }
+
     const { url_inmueble, data } = inmueble;
     const info = `${ucfirst(data.urbanizacion)}, ${ucfirst(data.municipio)}, ${ucfirst(data.Estado)}`;
 
@@ -19,14 +34,27 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
                 {/* Contenedor de la imagen del inmueble */}
                 <Grid item xs={12} sm={4}>
                     <Box sx={styles.imageContainer}>
-                        <Image src={`https://consolitex.org/img_sinmosca.php?i=${encodeURI(url_inmueble)}`} layout='fill'
+                        <Image alt={data.nombre} src={`https://consolitex.org/img_sinmosca.php?i=${encodeURI(url_inmueble)}`} layout='fill'
                             objectFit='cover' />
                     </Box>
                 </Grid>
                 <Grid item xs={12}>
 
                     {/* Precio y codigo */}
-                    <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
+                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mt: 1, position: "relative", overflow: "hidden" }}>
+                        <Popper open={Boolean(anchorEl)} anchorEl={anchorEl} placement="bottom-end">
+                            <Box sx={{ bgcolor: 'background.paper', display: "flex", justifyContent: "space-evenly", ml: 1, p: 1, border: "1px solid rgba(0,0,0,0.1)", borderRadius: 4, width: 200 }}>
+                                <IconButton >
+                                    <FavoriteBorderRoundedIcon />
+                                </IconButton>
+                                <IconButton >
+                                    <ShareRoundedIcon />
+                                </IconButton>
+                            </Box>
+                        </Popper>
+                        <IconButton disableRipple onClick={togglePopup} size="small" sx={{ borderRadius: "10px", color: "grey", ml: -1.5, "&:hover": { background: "none" } }}>
+                            <MoreVertRoundedIcon />
+                        </IconButton>
                         <Typography variant="subtitle1" fontWeight="bold">
                             REF {numberWithDots(Number(data.ref))}
                         </Typography>
@@ -60,7 +88,7 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
                     </Box>
                 </Grid>
             </Grid>
-        </Box>
+        </Box >
     )
 }
 const styles = {
@@ -76,7 +104,8 @@ const styles = {
         height: { xs: "auto", sm: "auto" },
         position: "relative",
         borderRadius: 3,
-        overflow: "hidden"
+        overflow: "hidden",
+        cursor: "pointer"
     },
     codContainer: {
         display: "flex",

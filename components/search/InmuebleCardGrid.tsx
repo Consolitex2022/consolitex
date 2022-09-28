@@ -49,20 +49,7 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
 
                     {/* Precio y codigo */}
                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mt: 1, position: "relative", overflow: "hidden" }}>
-                        <Popper open={Boolean(anchorEl)} anchorEl={anchorEl} placement="top-start">
-                            <Box sx={{ bgcolor: 'background.paper', display: "flex", flexDirection: "column", ml: 1, p: 1, border: "1px solid rgba(0,0,0,0.1)", borderRadius: 4, width: 205, }}>
-                                <Box sx={{ display: "flex", justifyContent: "center" }}>
-                                    <Button fullWidth onClick={handleFav} color="error" variant="text" sx={{ "&:hover": { background: "none" } }}>
-                                        {favorite ? (<FavoriteIcon color="error" />) : (<FavoriteBorderIcon sx={{ color: "darkgrey !important" }} />)}
-                                    </Button>
-                                </Box>
-                                <Box sx={{ display: "flex", justifyContent: "center" }}>
-                                    <Button fullWidth sx={{ "&:hover": { background: "none" } }}>
-                                        <ShareRoundedIcon />
-                                    </Button>
-                                </Box>
-                            </Box>
-                        </Popper>
+
                         <IconButton disableRipple onClick={togglePopup} size="small" sx={{ borderRadius: "10px", color: "grey", ml: -1.5, "&:hover": { background: "none" } }}>
                             <MoreVertRoundedIcon />
                         </IconButton>
@@ -99,6 +86,21 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
                     </Box>
                 </Grid>
             </Grid>
+            {/* Popup de like y compartir */}
+            <Popper open={Boolean(anchorEl)} anchorEl={anchorEl} placement="top-start">
+                <Box sx={{ bgcolor: 'background.paper', display: "flex", flexDirection: "column", ml: 1, p: 1, border: "1px solid rgba(0,0,0,0.1)", borderRadius: 4, width: 50, }}>
+                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+                        <Button fullWidth onClick={handleFav} color="error" variant="text" sx={{ "&:hover": { background: "none" } }}>
+                            {favorite ? (<FavoriteIcon color="error" />) : (<FavoriteBorderIcon sx={{ color: "darkgrey !important" }} />)}
+                        </Button>
+                    </Box>
+                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+                        <Button fullWidth sx={{ "&:hover": { background: "none" } }}>
+                            <ShareRoundedIcon />
+                        </Button>
+                    </Box>
+                </Box>
+            </Popper>
         </Box >
     )
 }

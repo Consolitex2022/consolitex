@@ -12,33 +12,60 @@ interface PropsMenuSuperior {
 }
 
 export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare }) => {
+
+    // Control modal de filtros
+    const [open, setOpen] = useState<boolean>(false);
+
+    // Cantidad de habitaciones a filtrar
+    const [habitaciones, setHabitaciones] = useState<string>('0')
+
+    // Cantidad de baños a filtrar
+    const [banos, setBanos] = useState<string>('0')
+
+    // Cantidad de estacionamientos a filtrar
+    const [estacionamientos, setEstacionamientos] = useState<string>('0')
+
+    // Localidad a filtrar
+    const [localidad, setLocalidad] = useState<string>('Norte')
+
+    // Tipo de negocio a filtrar
+    const [negocio, setNegocio] = useState<string>('Venta')
+
+    // Enrutador
     const router = useRouter();
 
-    const [open, setOpen] = useState<boolean>(false);
-    const [habitaciones, setHabitaciones] = useState<string>('0')
-    const [banos, setBanos] = useState<string>('0')
-    const [estacionamientos, setEstacionamientos] = useState<string>('0')
+    /**
+     * Funcion para habir el modal de filtros
+     */
     const handleOpen = () => {
         setOpen(true)
     }
 
-    const props = { open, setOpen, habitaciones, setHabitaciones, banos, setBanos, estacionamientos, setEstacionamientos }
+    const props = { open, setOpen, habitaciones, setHabitaciones, banos, setBanos, estacionamientos, setEstacionamientos, negocio, setNegocio, localidad, setLocalidad }
     return (
         <Box sx={styles.stickyBar}>
+            {/* Modal de filtros */}
             <ModalFiltros {...props} />
+
             <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+
+                {/* Boton de volver */}
                 <IconButton onClick={() => router.push("/")}>
                     <LeftIcon />
                 </IconButton>
 
+                {/* Titulo */}
                 <Typography variant="h6" fontWeight="bold" sx={{ whiteSpace: "nowrap" }}>Inmuebles encontrados</Typography>
             </Box>
             <Box>
+                {/* Boton de filtros */}
                 <IconButton aria-label="" onClick={handleOpen}>
                     <Tooltip title="Filtros">
                         <TuneRoundedIcon />
                     </Tooltip>
                 </IconButton>
+
+                {/* Boton de vista de inmuebles */}
                 <IconButton aria-label="" onClick={toggleSquare}>
                     {squared ? (<GridSquared />) : (<GridRectangle />)}
                 </IconButton>

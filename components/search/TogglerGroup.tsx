@@ -27,7 +27,7 @@ export const TogglerGroup: FC<PropsToggler> = ({ setStateToggler, stateToggler, 
             >
                 {
                     optionsToggler.map(opt => (
-                        <ToggleButton key={opt.value} value={opt.value} sx={{ width: "25%", border: "none", color: "text.secondary", fontWeight: "bold" }}>{opt.name}</ToggleButton>
+                        <ToggleButton key={opt.value} value={opt.value} sx={{ width: "50%", border: "none", color: "text.secondary", fontWeight: "bold", textTransform: "none" }}>{opt.name}</ToggleButton>
                     ))
                 }
             </ToggleButtonGroup>

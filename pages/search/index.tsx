@@ -1,19 +1,18 @@
-import { useState } from 'react'
-import { GetServerSideProps, NextPage } from 'next'
-import { Inmueble } from '..'
-import { Layout } from '../../components/ui/Layout';
+import { useState } from 'react';
+import { GetServerSideProps, NextPage } from 'next';
 import { Box } from '@mui/material';
+
+import { Layout } from '../../components/ui/Layout';
 import { InmuebleList } from '../../components/search';
+
+import { Inmueble } from '..';
 
 interface Props {
     inmueblesSSR: Inmueble[] | null;
 }
 
 const SearchPage: NextPage<Props> = ({ inmueblesSSR }) => {
-
     const [inmuebles, setInmuebles] = useState<Inmueble[] | null>(inmueblesSSR);
-
-    console.log(inmuebles)
     return (
         <Layout title="Consolitex" description="1231">
             <Box sx={{ width: "80%", margin: "20px auto" }}>
@@ -44,8 +43,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (ctx.query['query'] && ctx.query['query'] !== '0') {
         params.push(['query', String(ctx.query['query'])])
     }
-
-
     const urlParams = new URLSearchParams(params).toString();
     const url = new URL(`https://consolitex.org/api/v1/inmuebles.php`);
     url.search = urlParams;

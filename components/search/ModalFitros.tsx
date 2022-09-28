@@ -17,6 +17,10 @@ interface ModalFiltrosProps {
     setBanos: Dispatch<SetStateAction<string>>;
     estacionamientos: string;
     setEstacionamientos: Dispatch<SetStateAction<string>>;
+    negocio: string;
+    setNegocio: Dispatch<SetStateAction<string>>;
+    localidad: string;
+    setLocalidad: Dispatch<SetStateAction<string>>;
 }
 
 const options: IOption[] = [
@@ -41,13 +45,43 @@ const options: IOption[] = [
         name: "4+",
     },
 ]
+const optionsLocalidad: IOption[] = [
+    {
+        value: 'Norte',
+        name: "Norte",
+    },
+    {
+        value: 'Sur',
+        name: "Sur",
+    },
+    {
+        value: 'Este',
+        name: "Este",
+    },
+    {
+        value: 'Oeste',
+        name: "Oeste",
+    },
+]
+const optionsNegocio: IOption[] = [
+    {
+        value: 'Venta',
+        name: "Venta",
+    },
+    {
+        value: 'Alquiler',
+        name: "Alquiler",
+    },
+]
 
-export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, habitaciones, setHabitaciones, banos, setBanos, estacionamientos, setEstacionamientos }) => {
+export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, habitaciones, setHabitaciones, banos, setBanos, estacionamientos, setEstacionamientos, negocio, setNegocio, localidad, setLocalidad }) => {
     const handleClose = () => {
         setOpen(false);
     }
     return (
-        <Dialog open={open} onClose={handleClose} maxWidth={"sm"} fullWidth sx={{ borderRadius: 8 }}>
+        <Dialog open={open} onClose={handleClose} maxWidth={"sm"} fullWidth PaperProps={{
+            style: { borderRadius: 16, padding: 8 }
+        }}>
             <Grid container display="flex" justifyContent="center" alignItems="center" spacing={1} sx={{ p: 2 }}>
 
                 <Grid item xs={12} sx={{ textAlign: "left" }}>
@@ -69,6 +103,20 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, habitacione
 
                     <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
                         <TogglerGroup stateToggler={estacionamientos} setStateToggler={setEstacionamientos} optionsToggler={options} />
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sx={{ textAlign: "left" }}>
+                    <Typography variant="overline">Negocio</Typography>
+
+                    <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
+                        <TogglerGroup stateToggler={negocio} setStateToggler={setNegocio} optionsToggler={optionsNegocio} />
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sx={{ textAlign: "left" }}>
+                    <Typography variant="overline">Localidad</Typography>
+
+                    <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
+                        <TogglerGroup stateToggler={localidad} setStateToggler={setLocalidad} optionsToggler={optionsLocalidad} />
                     </Box>
                 </Grid>
                 <Grid item xs={12} sx={{ textAlign: "left" }}>

@@ -2,8 +2,9 @@ import { FC, useState, MouseEvent } from 'react'
 
 import Image from "next/image";
 
-import { Box, Grid, Typography, Chip, IconButton, Popper } from '@mui/material';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import { Box, Grid, Typography, Chip, IconButton, Button, Popper } from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorderRounded';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 
@@ -19,6 +20,11 @@ interface Props {
 }
 export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+    const [favorite, setFavorite] = useState<boolean>(false);
+
+    const handleFav = () => {
+        setFavorite(prev => !prev);
+    }
 
     const togglePopup = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -27,9 +33,10 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
     const { url_inmueble, data } = inmueble;
     const info = `${ucfirst(data.urbanizacion)}, ${ucfirst(data.municipio)}, ${ucfirst(data.Estado)}`;
 
+
     return (
         <Box sx={styles.mainContainer}>
-            <Grid container flexWrap="wrap" justifyContent="space-between">
+            <Grid container flexWrap="wrap" justifyContent="space-between" sx={{ border: "1px solid rgb(210,210,210)", overflow: "hidden", borderRadius: 4 }}>
 
                 {/* Contenedor de la imagen del inmueble */}
                 <Grid item xs={12} sm={4}>
@@ -38,18 +45,22 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
                             objectFit='cover' />
                     </Box>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{ p: 1 }}>
 
                     {/* Precio y codigo */}
                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mt: 1, position: "relative", overflow: "hidden" }}>
-                        <Popper open={Boolean(anchorEl)} anchorEl={anchorEl} placement="bottom-end">
-                            <Box sx={{ bgcolor: 'background.paper', display: "flex", justifyContent: "space-evenly", ml: 1, p: 1, border: "1px solid rgba(0,0,0,0.1)", borderRadius: 4, width: 200 }}>
-                                <IconButton >
-                                    <FavoriteBorderRoundedIcon />
-                                </IconButton>
-                                <IconButton >
-                                    <ShareRoundedIcon />
-                                </IconButton>
+                        <Popper open={Boolean(anchorEl)} anchorEl={anchorEl} placement="top-start">
+                            <Box sx={{ bgcolor: 'background.paper', display: "flex", flexDirection: "column", ml: 1, p: 1, border: "1px solid rgba(0,0,0,0.1)", borderRadius: 4, width: 205, }}>
+                                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                                    <Button fullWidth onClick={handleFav} color="error" variant="text" sx={{ "&:hover": { background: "none" } }}>
+                                        {favorite ? (<FavoriteIcon color="error" />) : (<FavoriteBorderIcon sx={{ color: "darkgrey !important" }} />)}
+                                    </Button>
+                                </Box>
+                                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                                    <Button fullWidth sx={{ "&:hover": { background: "none" } }}>
+                                        <ShareRoundedIcon />
+                                    </Button>
+                                </Box>
                             </Box>
                         </Popper>
                         <IconButton disableRipple onClick={togglePopup} size="small" sx={{ borderRadius: "10px", color: "grey", ml: -1.5, "&:hover": { background: "none" } }}>
@@ -63,7 +74,7 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
 
                     {/* Localidad */}
                     <Typography variant="subtitle2" fontWeight="bold" color="text.secondary">
-                        {info.length > 31 ? info.substring(0, 30) + "..." : info}
+                        {info.length > 25 ? info.substring(0, 25) + "..." : info}
                     </Typography>
                     {/* Contenedor scrolleable de las caracteristicas */}
                     <Box sx={styles.scrollableContainer}>
@@ -95,15 +106,14 @@ const styles = {
     mainContainer: {
         width: 200,
         height: 220,
-        mb: 12,
-        mr: 2
+        mb: 16,
+        mr: 2,
     },
     imageContainer: {
         width: 200,
         minHeight: 200,
         height: { xs: "auto", sm: "auto" },
         position: "relative",
-        borderRadius: 3,
         overflow: "hidden",
         cursor: "pointer"
     },
@@ -116,7 +126,15 @@ const styles = {
         alignItems: "center"
     },
     scrollableContainer: {
-        display: "flex", flexWrap: "nowrap", justifyContent: "left", textAlign: "left", mr: 4, mb: 2, maxWidth: "100%", overflowX: "scroll",
+        display: "flex",
+        flexWrap: "nowrap",
+        justifyContent: "left",
+        textAlign: "left",
+        mr: 4,
+        mb: 2,
+        width: "96%",
+        maxWidth: "100%",
+        overflowX: "scroll",
         "&::-webkit-scrollbar": {
             height: 8,
             width: 16

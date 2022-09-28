@@ -1,14 +1,14 @@
-import { FC, useState } from 'react'
-import { Box, Grid, IconButton, Typography } from '@mui/material';
+import { FC, useState, } from 'react'
+
+import { Box, Typography } from '@mui/material';
+
 import { Inmueble } from '../../pages';
-import { InmuebleCard, InmuebleCardGrid } from '../search';
-import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
-import GridSquared from '@mui/icons-material/WindowRounded';
-import GridRectangle from '@mui/icons-material/ViewStreamRounded';
+import { InmuebleCard, InmuebleCardGrid, SeccionSuperior } from './';
 
 interface Props {
     inmuebles: Inmueble[];
 }
+
 
 export const InmuebleList: FC<Props> = ({ inmuebles }) => {
     const [squared, setSquared] = useState<boolean>(false);
@@ -17,19 +17,7 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
     }
     return (
         <>
-            <Box sx={{ width: "100%", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", mb: 2, pl: 2, pr: 2, pt: 1, pb: 1 }}>
-                <Box>
-                    <Typography variant="h6" fontWeight="bold" sx={{ whiteSpace: "nowrap" }}>Inmuebles encontrados</Typography>
-                </Box>
-                <Box>
-                    <IconButton aria-label="">
-                        <TuneRoundedIcon />
-                    </IconButton>
-                    <IconButton aria-label="" onClick={toggleSquare}>
-                        {squared ? (<GridSquared />) : (<GridRectangle />)}
-                    </IconButton>
-                </Box>
-            </Box>
+            <SeccionSuperior squared={squared} toggleSquare={toggleSquare} />
             {
                 inmuebles?.length > 0
                     ?

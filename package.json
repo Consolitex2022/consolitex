@@ -21,6 +21,7 @@
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-multi-carousel": "^2.8.2",
     "sweetalert2": "^11.4.32"
   },

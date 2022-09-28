@@ -1,17 +1,61 @@
-import { Box, Typography, Select, SelectChangeEvent, MenuItem, TextField, Button } from "@mui/material"
-import { FC } from "react"
+import { Box, Typography, Select, SelectChangeEvent, MenuItem, TextField, Button, IconButton } from "@mui/material"
+import LeftIcon from "@mui/icons-material/ChevronLeft"
+import RightIcon from "@mui/icons-material/ChevronRight"
+import { FC, MutableRefObject, useEffect, useRef } from "react"
 import { MenuProps } from "../../interfaces/menu-types"
+import { useRouter } from "next/router"
 
 export const MenuBusquedaMobile: FC<MenuProps> = ({ search, handleChange, handleChangeSelect, tipo, negocio, localidad, onSubmit }) => {
+    const refBotonera = useRef(null);
+    const router = useRouter();
+
+    const handleScrollLeft = (ref: MutableRefObject<HTMLElement>) => {
+        if (!ref.current) {
+            return false;
+        } else {
+            const scrollLeft = Number(ref.current.scrollLeft);
+            const newScroll = scrollLeft - 100;
+            const scrollOptions: ScrollToOptions = {
+                top: 0,
+                left: newScroll,
+                behavior: 'smooth'
+            };
+            ref.current.scroll(scrollOptions)
+
+        }
+    }
+    const handleScrollRight = (ref: MutableRefObject<HTMLElement>) => {
+        if (!ref.current) {
+            return false;
+        } else {
+            const scrollLeft = Number(ref.current.scrollLeft);
+            const newScroll = scrollLeft + 100;
+            const scrollOptions: ScrollToOptions = {
+                top: 0,
+                left: newScroll,
+                behavior: 'smooth'
+            };
+            ref.current.scroll(scrollOptions)
+        }
+    }
+
+    /**
+     * Funcion para filtrar al pulsar algun botón
+     * @param route Filtro de localidad
+     */
+    const handleFilter = (route: string) => {
+        router.push({
+            pathname: "/search",
+            query: {
+                localidad: route
+            }
+        });
+    }
     return (<>
-        <Box sx={{
-            width: "90%", minHeight: "150px", position: "absolute", top: "40%", left: "50%", transform: "translateX(-50%) translateY(-50%)", borderRadius: "15px", m: "auto", display: { xs: "flex", md: "none" }, alignItems: "center", justifyContent: "center", flexDirection: "column", padding: 2,
-            background: "rgba( 30,30,30, 0.6 )",
-            boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
-        }}>
+        <Box sx={styles.mainContainer}>
             <Typography component="h2" variant="h5" fontWeight="bold" sx={{ color: "white", mb: 4, fontFamily: "Hind" }}>Encuentra tu inmueble</Typography>
-            <Box sx={{ width: "100%", display: "flex", flexDirection: "column", }}>
-                <Box sx={{ display: "flex", flexDirection: "row", overflow: "hidden", m: "-2px 0" }}>
+            <Box sx={styles.contenedorBotonera}>
+                {/* <Box sx={{ display: "flex", flexDirection: "row", overflow: "hidden", m: "-2px 0" }}>
                     <Select
                         labelId="demo-simple-select-label"
                         value={String(negocio)}
@@ -97,11 +141,146 @@ export const MenuBusquedaMobile: FC<MenuProps> = ({ search, handleChange, handle
                         <MenuItem value={"Tocuyito"}>Tocuyito</MenuItem>
                         <MenuItem value={"Zona Industrial"}>Zona Industrial</MenuItem>
                     </Select>
+                </Box> */}
+                <IconButton
+                    size="small"
+                    onClick={() => handleScrollLeft(refBotonera as unknown as MutableRefObject<HTMLElement>)}
+                    id="scroll-left"
+                    sx={styles.buttonLeft}
+                >
+                    <LeftIcon sx={{ fontSize: 12 }} />
+                </IconButton>
+                <IconButton
+                    size="small"
+                    onClick={() => handleScrollRight(refBotonera as unknown as MutableRefObject<HTMLElement>)}
+                    id="scroll-right"
+                    sx={styles.buttonRight}
+                >
+                    <RightIcon sx={{ fontSize: 12 }} />
+                </IconButton>
+                <Box sx={{ position: "relative", overflowY: "hidden", }}>
+
+                    <Box id="button-banner" ref={refBotonera} sx={styles.botonera}>
+                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Norte")}>Norte</Button>
+                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Noreste")}>Noreste</Button>
+                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Noroeste")}>Noroeste</Button>
+                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Sur")}>Sur</Button>
+                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("San Diego")}>San Diego</Button>
+                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Naguanagua")}>Naguanagua</Button>
+                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Guacara")}>Guacara</Button>
+                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("San Joaquin")}>San Joaquin</Button>
+                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Tocuyito")}>Tocuyito</Button>
+                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Zona Industrial")}>Zona Industrial</Button>
+                    </Box>
                 </Box>
-                <TextField fullWidth onChange={handleChange} value={search} InputProps={{ disableUnderline: true, }} variant="standard" size="small" placeholder="Ingresa la ubicación del inmueble" color="primary" sx={{ input: { fontFamily: "Hind", background: "white", border: "none", borderRadius: "0 0 1.5em 1.5em", p: 2 }, border: "none" }} />
+                <TextField fullWidth onChange={handleChange} value={search} InputProps={{ disableUnderline: true, }} variant="standard" size="small" placeholder="Ingresa la ubicación del inmueble" color="primary" sx={styles.inputSearch} />
             </Box>
-            <Button sx={{ fontFamily: "Hind", textTransform: "none", boxShadow: "0", borderRadius: "10em", p: 2, width: "100%", mt: 2 }} variant="contained" onClick={onSubmit}>Buscar</Button>
+            <Button sx={styles.buttonSend} variant="contained" onClick={onSubmit}>Buscar</Button>
         </Box>
     </>
     )
+}
+const styles = {
+    mainContainer: {
+        alignItems: "center",
+        background: "rgba( 30,30,30, 0.6 )",
+        borderRadius: "15px",
+        boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+        display: {
+            md: "none",
+            xs: "flex",
+        },
+        flexDirection: "column",
+        justifyContent: "center",
+        left: "50%",
+        m: "auto",
+        minHeight: "150px",
+        padding: 2,
+        position: "absolute",
+        top: "40%",
+        transform: "translateX(-50%) translateY(-50%)",
+        width: "90%",
+    },
+    contenedorBotonera: {
+        display: "flex",
+        flexDirection: "column",
+        position: "relative",
+        width: "100%",
+        "&:hover > #scroll-left": {
+            display: "flex",
+        },
+        "&:hover > #scroll-right": {
+            display: "flex",
+        },
+    },
+    buttonLeft: {
+        background: "white",
+        border: "1px solid rgba(0,0,0,0)",
+        display: "none",
+        height: "20px",
+        left: 0,
+        position: "absolute",
+        top: 7,
+        width: "20px",
+        zIndex: 90,
+        "&:hover": {
+            background: "white",
+            color: "black"
+        }
+    },
+    buttonRight: {
+        background: "white",
+        border: "1px solid rgba(0,0,0,0)",
+        display: "none",
+        height: "20px",
+        position: "absolute",
+        right: 0,
+        top: 7,
+        width: "20px",
+        zIndex: 90,
+        "&:hover": {
+            background: "white",
+            color: "black"
+        }
+    },
+    botonera: {
+        alignItems: "center",
+        background: "white",
+        borderRadius: "1.3em 1.3em 0 0",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        overflowX: "scroll",
+        pl: 1,
+        pr: 2,
+        width: "100%",
+        "&::-webkit-scrollbar": {
+            height: 0,
+            width: 0
+        },
+    },
+    buttonLocalidad: {
+        minWidth: 130,
+        whiteSpace: "nowrap",
+        width: "100%",
+    },
+    inputSearch: {
+        input: {
+            fontFamily: "Hind",
+            background: "white",
+            border: "none",
+            borderRadius: "0 0 1.5em 1.5em",
+            p: 2
+        },
+        border: "none"
+    },
+    buttonSend: {
+        borderRadius: "10em",
+        boxShadow: "0",
+        fontFamily: "Hind",
+        mt: 2,
+        p: 2,
+        textTransform: "none",
+        width: "100%",
+    }
 }

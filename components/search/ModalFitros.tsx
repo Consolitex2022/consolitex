@@ -1,0 +1,101 @@
+import { Dispatch, SetStateAction, FC } from "react";
+
+import { Dialog, Grid, Typography, Box, TextField, Button, Theme } from "@mui/material";
+
+import SaveIcon from '@mui/icons-material/ManageSearchRounded';
+
+import { TogglerGroup } from ".";
+
+import { IOption } from "../../interfaces/toggler-options-type";
+
+interface ModalFiltrosProps {
+    open: boolean;
+    setOpen: Dispatch<SetStateAction<boolean>>;
+    habitaciones: string;
+    setHabitaciones: Dispatch<SetStateAction<string>>;
+    banos: string;
+    setBanos: Dispatch<SetStateAction<string>>;
+    estacionamientos: string;
+    setEstacionamientos: Dispatch<SetStateAction<string>>;
+}
+
+const options: IOption[] = [
+    {
+        value: '0',
+        name: "0",
+    },
+    {
+        value: '1',
+        name: "1",
+    },
+    {
+        value: '2',
+        name: "2",
+    },
+    {
+        value: '3',
+        name: "3",
+    },
+    {
+        value: '4',
+        name: "4+",
+    },
+]
+
+export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, habitaciones, setHabitaciones, banos, setBanos, estacionamientos, setEstacionamientos }) => {
+    const handleClose = () => {
+        setOpen(false);
+    }
+    return (
+        <Dialog open={open} onClose={handleClose} maxWidth={"sm"} fullWidth sx={{ borderRadius: 8 }}>
+            <Grid container display="flex" justifyContent="center" alignItems="center" spacing={1} sx={{ p: 2 }}>
+
+                <Grid item xs={12} sx={{ textAlign: "left" }}>
+                    <Typography variant="overline">Habitaciones</Typography>
+
+                    <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
+                        <TogglerGroup stateToggler={habitaciones} setStateToggler={setHabitaciones} optionsToggler={options} />
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sx={{ textAlign: "left" }}>
+                    <Typography variant="overline">Baños</Typography>
+
+                    <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
+                        <TogglerGroup stateToggler={banos} setStateToggler={setBanos} optionsToggler={options} />
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sx={{ textAlign: "left" }}>
+                    <Typography variant="overline">Estacionamientos</Typography>
+
+                    <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
+                        <TogglerGroup stateToggler={estacionamientos} setStateToggler={setEstacionamientos} optionsToggler={options} />
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sx={{ textAlign: "left" }}>
+                    <Typography variant="overline">Rango de precio</Typography>
+
+                    <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
+                        <TextField fullWidth label="Min" color="primary" variant="outlined" sx={styles.inputRounded} />
+                        <TextField fullWidth label="Max" color="primary" variant="outlined" sx={{ ...styles.inputRounded, ml: 1 }} />
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sx={{ textAlign: "left" }}>
+                    <Button fullWidth color="primary" variant="outlined" sx={{ borderRadius: 8, p: 1.8, mt: 2 }}><SaveIcon sx={{ fontWeight: 100 }} /></Button>
+                </Grid>
+
+            </Grid>
+        </Dialog>
+    )
+}
+
+
+const styles = {
+    inputRounded: {
+        '& label': { paddingLeft: (theme: Theme) => theme.spacing(2) },
+        '& input': { paddingLeft: (theme: Theme) => theme.spacing(3.5) },
+        '& fieldset': {
+            paddingLeft: (theme: Theme) => theme.spacing(2.5),
+            borderRadius: '30px',
+        },
+    },
+}

@@ -1,18 +1,56 @@
-import { FC } from "react"
-import { Box, Typography, Select, SelectChangeEvent, MenuItem, TextField, Button } from "@mui/material"
+import { FC, MutableRefObject, useEffect, useRef } from "react"
+import { Box, Typography, Select, SelectChangeEvent, MenuItem, TextField, Button, IconButton } from "@mui/material"
 import { MenuProps } from "../../interfaces/menu-types"
-
+import LeftIcon from "@mui/icons-material/ChevronLeft"
+import RightIcon from "@mui/icons-material/ChevronRight"
+import { useRouter } from "next/router"
 export const MenuBusquedaPc: FC<MenuProps> = ({ search, handleChange, handleChangeSelect, tipo, negocio, localidad, onSubmit }) => {
-    return (
-        <Box sx={{
-            position: "absolute", top: "50%", left: "50%", transform: "translateX(-50%) translateY(-50%)", borderRadius: "25px", pt: 6, pb: 6, pr: 4, pl: 4, width: "80%", display: { xs: "none", md: "flex" }, alignItems: "center", justifyContent: "center",
-            background: "rgba( 30,30,30, 0.6 )",
-            boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
-            flexDirection: "column"
-        }}>
-            <Typography component="h5" variant="h5" fontWeight="bold" sx={{ fontFamily: "Hind", color: "white", mb: 4 }}>Encuentra tu inmueble</Typography>
+    const refBotonera = useRef(null);
+    const router = useRouter();
+    const handleScrollLeft = (ref: MutableRefObject<HTMLElement>) => {
+        if (!ref.current) {
+            return false;
+        } else {
+            const scrollLeft = Number(ref.current.scrollLeft);
+            const newScroll = scrollLeft - 100;
+            const scrollOptions: ScrollToOptions = {
+                top: 0,
+                left: newScroll,
+                behavior: 'smooth'
+            };
+            ref.current.scroll(scrollOptions)
 
-            <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", m: "-1px 0", width: "80%", }}>
+        }
+    }
+    const handleScrollRight = (ref: MutableRefObject<HTMLElement>) => {
+        if (!ref.current) {
+            return false;
+        } else {
+            const scrollLeft = Number(ref.current.scrollLeft);
+            const newScroll = scrollLeft + 100;
+            const scrollOptions: ScrollToOptions = {
+                top: 0,
+                left: newScroll,
+                behavior: 'smooth'
+            };
+            ref.current.scroll(scrollOptions)
+        }
+    }
+
+    const handleFilter = (route: string) => {
+        router.push({
+            pathname: "/search",
+            query: {
+                localidad: route
+            }
+        });
+    }
+    return (
+        <Box sx={styles.mainContainer}>
+            <Typography component="h5" variant="h5" fontWeight="bold" sx={{ fontFamily: "Hind", color: "white", mb: 4 }}>Encuentra tu inmueble</Typography>
+            <Box sx={styles.contenedorBotonera}>
+
+                {/* <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", m: "-1px 0", width: "80%", }}>
                 <Select
                     value={String(negocio)}
                     onChange={(e: SelectChangeEvent) => handleChangeSelect(e, "Negocio")}
@@ -93,11 +131,150 @@ export const MenuBusquedaPc: FC<MenuProps> = ({ search, handleChange, handleChan
                     <MenuItem value={"Tocuyito"}>Tocuyito</MenuItem>
                     <MenuItem value={"Zona Industrial"}>Zona Industrial</MenuItem>
                 </Select>
-            </Box>
-            <Box sx={{ display: 'flex', alignItems: 'flex-end', width: "80%", m: 0 }}>
-                <TextField fullWidth value={search} onChange={handleChange} InputProps={{ disableUnderline: true }} id="input-with-sx" variant="standard" placeholder="Ingresa la ubicación del inmueble" color="warning" focused sx={{ input: { fontFamily: "Hind", padding: 2, color: 'black', background: "white", borderRadius: "0 0 0 1.5em" } }} />
-                <Button variant="contained" color="primary" sx={{ width: "45%", p: "15px", borderRadius: "0 0 1.7em 0", textTransform: 'none', boxShadow: "none", fontFamily: "Hind" }} onClick={onSubmit}>Buscar</Button>
+            </Box> */}
+                <IconButton
+                    size="small"
+                    id="scroll-left"
+                    onClick={() => handleScrollLeft(refBotonera as unknown as MutableRefObject<HTMLElement>)}
+                    sx={styles.botonLeft}
+                >
+                    <LeftIcon sx={{ fontSize: 12 }} />
+                </IconButton>
+                <IconButton
+                    size="small"
+                    id="scroll-right"
+                    onClick={() => handleScrollRight(refBotonera as unknown as MutableRefObject<HTMLElement>)}
+                    sx={styles.botonRight}
+                >
+                    <RightIcon sx={{ fontSize: 12 }} />
+                </IconButton>
+                <Box sx={{ position: "relative", overflowY: "hidden", }}>
+                    <Box id="button-banner" ref={refBotonera} sx={styles.botonera}>
+                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Norte")}>Norte</Button>
+                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Noreste")}>Noreste</Button>
+                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Noroeste")}>Noroeste</Button>
+                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Sur")}>Sur</Button>
+                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("San Diego")}>San Diego</Button>
+                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Naguanagua")}>Naguanagua</Button>
+                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Guacara")}>Guacara</Button>
+                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("San Joaquin")}>San Joaquin</Button>
+                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Tocuyito")}>Tocuyito</Button>
+                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Zona Industrial")}>Zona Industrial</Button>
+                    </Box>
+                    <Box sx={styles.contenedorSend}>
+                        <TextField fullWidth value={search} onChange={handleChange} InputProps={{ disableUnderline: true }} id="input-with-sx" variant="standard" placeholder="Ingresa la ubicación del inmueble" color="warning" focused sx={styles.inputBuscar} />
+                        <Button variant="contained" color="primary" sx={styles.botonBuscar} onClick={onSubmit}>Buscar</Button>
+                    </Box>
+                </Box>
             </Box>
         </Box>
     )
+}
+
+const styles = {
+    mainContainer: {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translateX(-50%) translateY(-50%)",
+        borderRadius: "25px",
+        pt: 6,
+        pb: 6,
+        pr: 4,
+        pl: 4,
+        width: "80%",
+        display: {
+            xs: "none",
+            md: "flex"
+        },
+        alignItems: "center",
+        justifyContent: "center",
+        background: "rgba( 30,30,30, 0.6 )",
+        boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+        flexDirection: "column"
+    },
+    contenedorBotonera: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        position: "relative",
+        "&:hover > #scroll-left": {
+            display: "flex",
+        },
+        "&:hover > #scroll-right": {
+            display: "flex",
+
+        },
+    },
+    botonera: {
+        display: "flex",
+        flexDirection: "row",
+        overflowX: "scroll",
+        background: "white",
+        borderRadius: "1.3em 1.3em 0 0",
+        pt: 1,
+        pb: 1,
+        pl: 1,
+        pr: 2,
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "100%",
+        "&::-webkit-scrollbar": {
+            height: 0,
+            width: 0
+        },
+    },
+    botonLeft: {
+        display: "none",
+        border: "1px solid rgba(0,0,0,0.3)",
+        background: "white",
+        width: "20px",
+        height: "20px",
+        position: "absolute",
+        top: 15,
+        left: 0,
+        zIndex: 90,
+        "&:hover": {
+            background: "white",
+            color: "black"
+        }
+    },
+    botonRight: {
+        display: "none",
+        border: "1px solid rgba(0,0,0,0.3)",
+        background: "white",
+        width: "20px",
+        height: "20px",
+        position: "absolute",
+        top: 15,
+        right: 0,
+        zIndex: 90,
+        "&:hover": {
+            background: "white",
+            color: "black"
+        }
+    },
+    botonLocalidad: {
+        width: "100%",
+        whiteSpace: "nowrap",
+        minWidth: 130,
+    },
+    botonBuscar: {
+        width: "45%",
+        p: "15px",
+        borderRadius: "0 0 1.7em 0",
+        textTransform: 'none',
+        boxShadow: "none",
+        fontFamily: "Hind"
+    },
+    inputBuscar: {
+        input: { fontFamily: "Hind", padding: 2, color: 'black', background: "white", borderRadius: "0 0 0 1.5em" }
+    },
+    contenedorSend: {
+        display: 'flex',
+        alignItems: 'flex-end',
+        width: "100%",
+        m: 0
+    },
+
 }

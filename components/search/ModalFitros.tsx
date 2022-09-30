@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, FC } from "react";
 
-import { Dialog, Grid, Typography, Box, TextField, Button, Theme } from "@mui/material";
+import { Dialog, Grid, Typography, Box, TextField, Button, IconButton, Theme } from "@mui/material";
 
 import SaveIcon from '@mui/icons-material/ManageSearchRounded';
+import CloseIcon from '@mui/icons-material/CloseRounded';
 
 import { TogglerGroup } from ".";
 
@@ -11,16 +12,16 @@ import { IOption } from "../../interfaces/toggler-options-type";
 interface ModalFiltrosProps {
     open: boolean;
     setOpen: Dispatch<SetStateAction<boolean>>;
-    habitaciones: string;
-    setHabitaciones: Dispatch<SetStateAction<string>>;
-    banos: string;
-    setBanos: Dispatch<SetStateAction<string>>;
-    estacionamientos: string;
-    setEstacionamientos: Dispatch<SetStateAction<string>>;
-    negocio: string;
-    setNegocio: Dispatch<SetStateAction<string>>;
-    localidad: string;
-    setLocalidad: Dispatch<SetStateAction<string>>;
+    habitaciones: string | null;
+    setHabitaciones: Dispatch<SetStateAction<string | null>>;
+    banos: string | null;
+    setBanos: Dispatch<SetStateAction<string | null>>;
+    estacionamientos: string | null;
+    setEstacionamientos: Dispatch<SetStateAction<string | null>>;
+    negocio: string | null;
+    setNegocio: Dispatch<SetStateAction<string | null>>;
+    localidad: string | null;
+    setLocalidad: Dispatch<SetStateAction<string | null>>;
 }
 
 const options: IOption[] = [
@@ -82,8 +83,10 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, habitacione
         <Dialog open={open} onClose={handleClose} maxWidth={"sm"} fullWidth PaperProps={{
             style: { borderRadius: 16, padding: 8 }
         }}>
-            <Grid container display="flex" justifyContent="center" alignItems="center" spacing={1} sx={{ p: 2 }}>
-
+            <Grid container display="flex" justifyContent="center" alignItems="center" spacing={1} sx={{ p: 2, position: "relative" }}>
+                <IconButton sx={{ position: "absolute", top: 5, right: 0 }} size="small" onClick={() => setOpen(false)}>
+                    <CloseIcon />
+                </IconButton>
                 <Grid item xs={12} sx={{ textAlign: "left" }}>
                     <Typography variant="overline">Habitaciones</Typography>
 

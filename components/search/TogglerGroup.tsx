@@ -3,8 +3,8 @@ import { Dispatch, SetStateAction, FC, MouseEvent } from "react";
 import { IOption } from "../../interfaces/toggler-options-type";
 
 interface PropsToggler {
-    setStateToggler: Dispatch<SetStateAction<string>>;
-    stateToggler: string;
+    setStateToggler: Dispatch<SetStateAction<string | null>>;
+    stateToggler: string | null;
     optionsToggler: IOption[];
 }
 

@@ -17,19 +17,19 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare }
     const [open, setOpen] = useState<boolean>(false);
 
     // Cantidad de habitaciones a filtrar
-    const [habitaciones, setHabitaciones] = useState<string>('0')
+    const [habitaciones, setHabitaciones] = useState<string | null>(null)
 
     // Cantidad de baños a filtrar
-    const [banos, setBanos] = useState<string>('0')
+    const [banos, setBanos] = useState<string | null>(null)
 
     // Cantidad de estacionamientos a filtrar
-    const [estacionamientos, setEstacionamientos] = useState<string>('0')
+    const [estacionamientos, setEstacionamientos] = useState<string | null>(null)
 
     // Localidad a filtrar
-    const [localidad, setLocalidad] = useState<string>('Norte')
+    const [localidad, setLocalidad] = useState<string | null>(null)
 
     // Tipo de negocio a filtrar
-    const [negocio, setNegocio] = useState<string>('Venta')
+    const [negocio, setNegocio] = useState<string | null>(null)
 
     // Enrutador
     const router = useRouter();

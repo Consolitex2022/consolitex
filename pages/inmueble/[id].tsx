@@ -27,20 +27,11 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble }) => {
             <Box sx={{
                 width: "100%", height: "500px", marginInline: "auto", position: "relative", display: "flex",
                 overflow: "hidden",
-                "&:hover > #img:after": {
-                    background: "rgba(0,0,0,0.5)",
-                },
                 "&:hover > #ver-mas": {
                     transform: "translateX(-50%) translateY(-50%) scale(1)"
                 },
-                "&:hover > div > #secondary-content1": {
-                    transform: "scale(0)"
-                },
-                "&:hover > div > div > #secondary-content2": {
-                    marginLeft: 2000
-                },
-                "&:hover > div > div > #secondary-content3": {
-                    marginLeft: 2000
+                "&:hover > #img > span > #imagen": {
+                    filter: "blur(8px) !important",
                 }
             }}>
                 <Box id="img" sx={{
@@ -53,22 +44,22 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble }) => {
                         left: 0,
                         transition: ".2s ease all",
                         zIndex: 90,
-
+                        background: "rgba(0,0,0,0.5)"
                     }
                 }}>
 
-                    <Image src={`https://consolitex.org/newImg.php?portrait=1&nowatermark=1&url=${encodeURI(url_inmueble)}`} layout="fill" objectFit='cover' alt={data.nombre} priority />
+                    <Image id="imagen" src={`https://consolitex.org/newImg.php?portrait=1&nowatermark=1&url=${encodeURI(url_inmueble)}`} layout="fill" objectFit='cover' alt={data.nombre} priority style={{ position: "fixed" }} placeholder="blur" blurDataURL={`https://consolitex.org/newImg.php?nowatermark=1&url=${encodeURI(url_inmueble)}`} />
                 </Box>
                 <Box component="div" sx={{ transition: ".2s ease all", zIndex: 200, position: "absolute", top: 0, left: 0, display: "flex", flexFlow: "row" }}>
-                    <Box id="secondary-content1" sx={{ ml: 4, mt: 5, position: "relative", width: "20px" }}>
-                        <Box sx={{ width: 10, height: 200, background: "white" }}></Box>
+                    <Box id="secondary-content1" sx={{ ml: 4, mt: 5, position: "relative", width: 20 }}>
+                        <Box sx={{ width: { xs: 5, md: 10 }, height: 200, background: "white" }}></Box>
                     </Box>
-                    <Box component="div">
-                        <Typography id="secondary-content2" sx={{ transition: ".2s ease all", color: "white", fontSize: "6em", fontFamily: "montserrat" }}>Consolitex®</Typography>
-                        <Typography id="secondary-content3" sx={{ transition: ".6s ease all", color: "white", fontSize: "2em", fontFamily: "montserrat", fontStyle: "italic" }}>Bienes raíces #hogarfamiliabienestar</Typography>
+                    <Box component="div" sx={{ mt: { xs: 3, md: 2 } }}>
+                        <Typography id="secondary-content2" sx={{ transition: ".2s ease all", color: "white", fontSize: { xs: "2em", md: "6em" }, fontFamily: "montserrat" }}>Consolitex®</Typography>
+                        <Typography id="secondary-content3" sx={{ transition: ".6s ease all", color: "white", fontSize: { xs: "1em", md: "2em" }, fontFamily: "montserrat", fontStyle: "italic" }}>Bienes raíces #hogarfamiliabienestar</Typography>
                     </Box>
                 </Box>
-                <Box id="ver-mas" sx={{ transition: ".2s ease all", position: "absolute", top: "50%", left: "50%", background: "white", borderRadius: 4, overflow: "hidden", transform: "translateX(-50%) translateY(-50%) scale(0)", p: 2, zIndex: 91 }}>
+                <Box id="ver-mas" sx={{ transition: ".2s ease all", position: "absolute", top: "50%", left: "50%", background: "white", borderRadius: 4, overflow: "hidden", transform: { xs: "translateX(-50%) translateY(-50%) scale(1)", md: "translateX(-50%) translateY(-50%) scale(0)" }, p: 2, zIndex: 91 }}>
                     <Button sx={{ textTransform: "none", p: 1.8 }} color="primary" onClick={handleOpen}>
                         Ver todas las fotos &nbsp;
                         <GalleryIcon />

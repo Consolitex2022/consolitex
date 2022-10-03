@@ -26,15 +26,49 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble }) => {
         <Layout title={data.nombre} description={data.descripcion_web}>
             <Box sx={{
                 width: "100%", height: "500px", marginInline: "auto", position: "relative", display: "flex",
-                "&:hover > #img": {
-                    filter: "brightness(0.2)"
+                overflow: "hidden",
+                "&:hover > #img:after": {
+                    background: "rgba(0,0,0,0.5)",
                 },
                 "&:hover > #ver-mas": {
                     transform: "translateX(-50%) translateY(-50%) scale(1)"
+                },
+                "&:hover > div > #secondary-content1": {
+                    transform: "scale(0)"
+                },
+                "&:hover > div > div > #secondary-content2": {
+                    marginLeft: 2000
+                },
+                "&:hover > div > div > #secondary-content3": {
+                    marginLeft: 2000
                 }
             }}>
-                <Image id="img" src={`https://consolitex.org/img_sinmosca.php?i=${encodeURI(url_inmueble)}`} layout="fill" objectFit='cover' alt={data.nombre} priority />
-                <Box id="ver-mas" sx={{ transition: "0.2s ease all", position: "absolute", top: "50%", left: "50%", background: "white", borderRadius: 4, overflow: "hidden", transform: "translateX(-50%) translateY(-50%) scale(0)", p: 2, }}>
+                <Box id="img" sx={{
+                    "&:after": {
+                        content: "''",
+                        position: "absolute",
+                        width: "100%",
+                        height: "100%",
+                        top: 0,
+                        left: 0,
+                        transition: ".2s ease all",
+                        zIndex: 90,
+
+                    }
+                }}>
+
+                    <Image src={`https://consolitex.org/newImg.php?portrait=1&nowatermark=1&url=${encodeURI(url_inmueble)}`} layout="fill" objectFit='cover' alt={data.nombre} priority />
+                </Box>
+                <Box component="div" sx={{ transition: ".2s ease all", zIndex: 200, position: "absolute", top: 0, left: 0, display: "flex", flexFlow: "row" }}>
+                    <Box id="secondary-content1" sx={{ ml: 4, mt: 5, position: "relative", width: "20px" }}>
+                        <Box sx={{ width: 10, height: 200, background: "white" }}></Box>
+                    </Box>
+                    <Box component="div">
+                        <Typography id="secondary-content2" sx={{ transition: ".2s ease all", color: "white", fontSize: "6em", fontFamily: "montserrat" }}>Consolitex®</Typography>
+                        <Typography id="secondary-content3" sx={{ transition: ".6s ease all", color: "white", fontSize: "2em", fontFamily: "montserrat", fontStyle: "italic" }}>Bienes raíces #hogarfamiliabienestar</Typography>
+                    </Box>
+                </Box>
+                <Box id="ver-mas" sx={{ transition: ".2s ease all", position: "absolute", top: "50%", left: "50%", background: "white", borderRadius: 4, overflow: "hidden", transform: "translateX(-50%) translateY(-50%) scale(0)", p: 2, zIndex: 91 }}>
                     <Button sx={{ textTransform: "none", p: 1.8 }} color="primary" onClick={handleOpen}>
                         Ver todas las fotos &nbsp;
                         <GalleryIcon />
@@ -64,16 +98,24 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble }) => {
                             {
                                 imagenes && imagenes.map((img: any) => (
                                     img && img.map((i: any) => (
-                                        <Box key={i} component="img" src={`https://consolitex.org/img2.php?i=${encodeURI(i)}`} sx={{ width: "100%", borderRadius: 5 }}></Box>
+                                        <Box key={i} component="img" src={`https://consolitex.org/newImg.php?url=${encodeURI(i)}`} sx={{ width: "100%", borderRadius: 5 }}></Box>
                                     )
                                     ))
                                 )
                             }
-                            <Box sx={{ background: "tomato", maxWidth: 370, minHeight: 200, borderRadius: 5 }}>
-                                <Image src='/logo.webp' alt='Logo Consolitex - Footer' width='80' height='80' />
+                            <Box sx={{ background: "paleturquoise", maxWidth: 370, minHeight: 185, borderRadius: 5, display: "flex", alignItems: "center", flexFlow: "column wrap" }}>
+                                <Image src='/logo.webp' alt='Logo Consolitex - Gallery' width='80' height='80' />
+                                <Box>
+                                    <Typography variant="h6" sx={{ fontStyle: "italic", textAlign: "center" }} color="common.white">¡Siempre te damos más!</Typography>
+                                    <Typography variant="h6" sx={{ fontStyle: "italic", textAlign: "center" }} color="common.white">¿Te gusta lo que ves?</Typography>
+                                </Box>
                             </Box>
-                            <Box sx={{ background: "dodgerblue", maxWidth: 370, minHeight: 200, borderRadius: 5 }}>
-                                <Image src='/logo.webp' alt='Logo Consolitex - Footer' width='80' height='80' />
+                            <Box sx={{ background: "khaki", maxWidth: 370, minHeight: 185, borderRadius: 5, display: "flex", alignItems: "center", flexFlow: "column wrap" }}>
+                                <Image src='/logo.webp' alt='Logo Consolitex - Gallery' width='80' height='80' />
+                                <Box>
+                                    <Typography variant="h6" sx={{ fontStyle: "italic", textAlign: "center" }} color="common.white">¡Síguenos en las redes sociales! @consolitex</Typography>
+                                    <Typography variant="h6" sx={{ fontStyle: "italic", textAlign: "center" }} color="common.white">#hogarfamiliabienestar</Typography>
+                                </Box>
                             </Box>
                         </Masonry>
 

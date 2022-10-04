@@ -1,11 +1,13 @@
-import { Dialog, Button, Box, IconButton, Typography, AppBar, Popover, Toolbar } from '@mui/material';
+import { Dialog, Button, Box, IconButton, Typography, AppBar, Toolbar } from '@mui/material';
 import { GetServerSideProps, NextPage } from 'next'
 import Image from 'next/image';
 import { Layout } from '../../components/ui/Layout';
 import GalleryIcon from '@mui/icons-material/CollectionsRounded';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { Masonry } from '@mui/lab';
+import { ucfirst } from '../../utils/functions';
+import styless from './Image.module.css';
 
 interface Props {
     data: any;
@@ -14,7 +16,7 @@ interface Props {
 }
 
 const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble }) => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
 
     const handleClose = () => {
         setOpen(false);
@@ -23,7 +25,7 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble }) => {
         setOpen(true);
     }
     return (
-        <Layout title={data.nombre} description={data.descripcion_web}>
+        <Layout title={ucfirst(`${data.inmueble.toLowerCase()} en ${ucfirst(data.urbanizacion.toLowerCase())} (${ucfirst(data.negocio.toLowerCase())})`)} description={data.descripcion_web}>
             <Box sx={{
                 width: "100%", height: "500px", marginInline: "auto", position: "relative", display: "flex",
                 overflow: "hidden",
@@ -48,7 +50,7 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble }) => {
                     }
                 }}>
 
-                    <Image id="imagen" src={`https://consolitex.org/newImg.php?portrait=1&nowatermark=1&url=${encodeURI(url_inmueble)}`} layout="fill" objectFit='cover' alt={data.nombre} priority style={{ position: "fixed" }} placeholder="blur" blurDataURL={`https://consolitex.org/newImg.php?nowatermark=1&url=${encodeURI(url_inmueble)}`} />
+                    <Image id="imagen" src={`https://consolitex.org/newImg.php?portrait=1&nowatermark=1&url=${encodeURI(url_inmueble)}`} layout="fill" objectFit='cover' alt={data.nombre} priority style={{ position: "fixed" }} placeholder="blur" blurDataURL={`./placeholder/placeholder.gif`} />
                 </Box>
                 <Box component="div" sx={{ transition: ".2s ease all", zIndex: 200, position: "absolute", top: 0, left: 0, display: "flex", flexFlow: "row" }}>
                     <Box id="secondary-content1" sx={{ ml: 4, mt: 5, position: "relative", width: 20 }}>
@@ -61,7 +63,7 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble }) => {
                 </Box>
                 <Box id="ver-mas" sx={{ transition: ".2s ease all", position: "absolute", top: "50%", left: "50%", background: "white", borderRadius: 4, overflow: "hidden", transform: { xs: "translateX(-50%) translateY(-50%) scale(1)", md: "translateX(-50%) translateY(-50%) scale(0)" }, p: 2, zIndex: 91 }}>
                     <Button sx={{ textTransform: "none", p: 1.8 }} color="primary" onClick={handleOpen}>
-                        Ver todas las fotos &nbsp;
+                        Ver fotos &nbsp;
                         <GalleryIcon />
                     </Button>
                 </Box>
@@ -83,13 +85,16 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble }) => {
                     </Toolbar>
                 </AppBar>
                 <Box sx={{ display: { xs: "none", md: "block" } }}>
-
-                    <Box sx={{ width: "80%", margin: "20px auto", minHeight: 829 }}>
+                    <Box sx={{ width: "80%", margin: "20px auto", minHeight: 829, overflow: "hidden" }}>
                         <Masonry columns={3} spacing={1}>
                             {
                                 imagenes && imagenes.map((img: any) => (
                                     img && img.map((i: any) => (
-                                        <Box key={i} component="img" src={`https://consolitex.org/newImg.php?url=${encodeURI(i)}`} sx={{ width: "100%", borderRadius: 5 }}></Box>
+                                        <Box key={i} sx={{ borderRadius: 5, overflow: "hidden" }}>
+                                            <Box component="div" className={styless["unset-img"]}>
+                                                <Image src={`https://consolitex.org/newImg.php?url=${encodeURI(i)}`} layout="fill" alt={data.nombre} className={styless["custom-img"]} />
+                                            </Box>
+                                        </Box>
                                     )
                                     ))
                                 )
@@ -142,7 +147,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     try {
         const respuesta = await fetch(url);
         const data = await respuesta.json();
-        console.log(data.imagenes.hasOwnProperty('fachada'));
         const newImagenes = [
             data.imagenes && data.imagenes.hasOwnProperty('fachada') ? data.imagenes.fachada.map((arr: any) => arr) : '',
             data.imagenes && data.imagenes.hasOwnProperty('sala') ? data.imagenes.sala.map((arr: any) => arr) : '',

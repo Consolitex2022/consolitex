@@ -309,7 +309,7 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
                                             </Grid>
                                             <Grid item xs={12} display="flex" flexDirection="column" >
                                                 <Button fullWidth variant="contained" sx={{ p: 1.5 }}>Enviar</Button>
-                                                <Typography variant="subtitle2" color="text.secondary" fontWeight="bold" sx={{ mt: 1, fontFamily: "Oxygen" }}>Al clickear "Enviar" aceptas los TERMINOS Y CONDICIONES</Typography>
+                                                <Typography variant="subtitle2" color="text.secondary" fontWeight="bold" sx={{ mt: 1, fontFamily: "Oxygen" }}>Al clickear &quot;Enviar&quot; aceptas los TERMINOS Y CONDICIONES</Typography>
                                             </Grid>
                                         </Grid>
                                     </Form>
@@ -320,7 +320,7 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
                     </Box>
                     <Box sx={{ ...styles.contentBox }}>
                         <Box sx={{ ...styles.gradientBoxSizes, ...styles.gradiantBoxShadow }}>
-                            <CustomImage upperBoxStyles={{ borderRadius: 5, width:"100%", overflow: "hidden" }} src="/related.jpg" alt="inmuebles recomendados consolitex" />
+                            <CustomImage upperBoxStyles={{ borderRadius: 5, width: "100%", overflow: "hidden" }} src="/related.jpg" alt="inmuebles recomendados consolitex" />
 
                             <Typography fontWeight="bold" variant="h6" sx={{ fontFamily: "Oxygen", textAlign: "center", fontSize: 16 }}>Inmuebles recomendados</Typography>
                             <Typography variant="subtitle2" sx={{ fontFamily: "Oxygen", textAlign: "center" }}>¡Estos son algunos inmuebles cerca de la zona del inmuele actual!</Typography>

@@ -1,5 +1,6 @@
 import { Box, Grid, Typography, IconButton, Tooltip, Chip, Button } from '@mui/material';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { FC, ReactNode } from 'react';
 import { Inmueble } from '../../pages';
 import { numberWithDots, ucfirst } from '../../utils/functions';
@@ -49,11 +50,14 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
 
     const { url_inmueble, data } = inmueble;
     const info = `${ucfirst(data.urbanizacion)}, ${ucfirst(data.municipio)}, ${ucfirst(data.Estado)}`;
-
+    const router = useRouter();
+    const redirect = (ficha_id: string) => {
+        router.push(`/inmueble/${ficha_id}`)
+    }
     return (
         <>
 
-            <Box sx={styles.mainContainer}>
+            <Box sx={styles.mainContainer} onClick={() => redirect(data.ficha_id)}>
                 <Grid container flexWrap="wrap" justifyContent="space-between">
 
                     {/* Contenedor de la imagen del inmueble */}

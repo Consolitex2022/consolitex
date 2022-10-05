@@ -1,6 +1,7 @@
 import { FC, useState, MouseEvent } from 'react'
 
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import { Box, Grid, Typography, Chip, IconButton, Button, Popper } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorderRounded';
@@ -29,13 +30,16 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
     const togglePopup = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
     }
-
+    const router = useRouter();
     const { url_inmueble, data } = inmueble;
     const info = `${ucfirst(data.urbanizacion)}, ${ucfirst(data.municipio)}, ${ucfirst(data.Estado)}`;
 
 
+    const redirect = (ficha_id: string) => {
+        router.push(`/inmueble/${ficha_id}`)
+    }
     return (
-        <Box sx={styles.mainContainer}>
+        <Box sx={styles.mainContainer} onClick={() => redirect(data.ficha_id)}>
             <Grid container flexWrap="wrap" justifyContent="space-between" sx={{ border: "1px solid rgb(210,210,210)", overflow: "hidden", borderRadius: 4 }}>
 
                 {/* Contenedor de la imagen del inmueble */}

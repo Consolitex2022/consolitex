@@ -25,6 +25,9 @@ declare module '@mui/material/IconButton' {
 const theme = createTheme({
     palette: {
         mode: 'light',
+        background: {
+            default: "#F5F5F5"
+        },
         primary: {
             main: '#01579b',
         },

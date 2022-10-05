@@ -13,7 +13,7 @@ export default class MyDocument extends Document {
           <link rel='preconnect' href='https://fonts.gstatic.com' />
           <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap' />
           <link href='https://fonts.googleapis.com/css2?family=Poppins&display=swap' rel='stylesheet' />
-          <link href='https://fonts.googleapis.com/css2?family=Hind:wght@300&family=Montserrat&display=swap' rel='stylesheet' />
+          <link href='https://fonts.googleapis.com/css2?family=Hind:wght@300&family=Oxygen&family=Montserrat&display=swap' rel='stylesheet' />
           {/* PWA primary color */}
           <meta name='theme-color' content={theme.palette.primary.main} />
           <link rel='shortcut icon' href='/favicon.ico' />

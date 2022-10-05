@@ -6,19 +6,10 @@
 }
 
 .unset-img {
+    position: relative;
     width: 100%;
 }
 
 .unset-img>span {
     position: unset !important;
-}
-
-.slick-next,
-.slick-prev {
-    background: none
-}
-
-.slick-prev:before,
-.slick-next:before {
-    color: rgba(0, 0, 0, 0.8);
 }

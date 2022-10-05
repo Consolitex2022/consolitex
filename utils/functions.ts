@@ -77,6 +77,25 @@ export const getFullDate = () => {
     const fulldate = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
     return fulldate;
 }
+export const exists = (data: string) => {
+    if (!data) return false;
+    switch (data.toUpperCase()) {
+        case 'N':
+            return false;
+        case 'NO':
+            return false;
+        case 'NOTIENE':
+            return false;
+        case 'NO TIENE':
+            return false;
+        case 'NOPOSEE':
+            return false;
+        case 'NO POSEE':
+            return false;
+        default:
+            return true;
+    }
+}
 /**
  * Función para seleccionar varios elementos del DOM
  * @param {string} selector La propiedad del elemento del DOM (clase, id, name, tag)

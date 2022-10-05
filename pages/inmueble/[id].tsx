@@ -138,7 +138,7 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
             <Grid container display="flex" flexDirection="row" alignItems="flex-start" columnSpacing={{ xs: 0, md: 1 }} rowSpacing={{ xs: 1, md: 1 }} sx={{ width: { xs: "100%", md: "100%" }, p: { xs: 0, md: 1 } }}>
 
 
-                <Grid item xs={12} sm={8} >
+                <Grid item xs={12} sm={7} md={8} >
                     <Box sx={{ width: "100%", p: 4, ...styles.gradiantBoxShadow }}>
                         <Box>
                             <Typography variant="subtitle1" color="text.primary" fontWeight="bold">Código del inmueble</Typography>
@@ -254,7 +254,7 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
 
                     </Box>
                 </Grid>
-                <Grid item xs={12} sm={4} display="flex" flexDirection="row" flexWrap="wrap" >
+                <Grid item xs={12} sm={5} md={4} display="flex" flexDirection="row" flexWrap="wrap" >
                     <Box sx={{ ...styles.contentBox }}>
                         <Box sx={{ ...styles.gradientBoxSizes, ...styles.gradiantBoxShadow }}>
                             <CustomImage upperBoxStyles={{ borderRadius: 5, overflow: "hidden" }} src="/sharing_image_11zon.webp" alt="imagen_de_compartir_redes" />

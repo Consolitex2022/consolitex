@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react'
+import { FC } from 'react'
 
 import { Box, Typography, Rating } from '@mui/material';
 
@@ -9,7 +9,7 @@ import Slider from 'react-slick';
 import { ucfirst } from '../../../../utils/functions';
 import { CustomImage } from '../../../images/CustomImage';
 
-import styless from '../../ImagesModal.module.css'
+import sliderClass from './Recomendados.module.css'
 import { styles } from '../styles';
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -17,24 +17,14 @@ import 'slick-carousel/slick/slick-theme.css'
 interface Props {
     related: any;
 }
-const settings = {
-    fade: true,
-    speed: 500,
-    autoplay: false,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    infinite: true,
-    autoplaySpeed: 3000,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />
-}
+
 
 function SampleNextArrow(props: any) {
     const { className, style, onClick } = props;
     return (
         <div
-            className={`${className} ${styless['slick-prev']}`}
-            style={{ ...style, display: "block" }}
+            className={`${className} ${sliderClass['slick-next']}`}
+            style={{ ...style, display: "block", }}
             onClick={onClick}
         />
     );
@@ -44,7 +34,7 @@ function SamplePrevArrow(props: any) {
     const { className, style, onClick } = props;
     return (
         <div
-            className={`${className} ${styless['slick-prev']}`}
+            className={`${className} ${sliderClass['slick-prev']}`}
             style={{
                 ...style, display: "block",
             }}
@@ -53,10 +43,20 @@ function SamplePrevArrow(props: any) {
     );
 }
 export const Recomendados: FC<Props> = ({ related }) => {
-    const sliderRef = useRef(null);
     const router = useRouter();
     const redirect = (ficha_id: string) => {
         router.push(`/inmueble/${ficha_id}`)
+    }
+    const settings = {
+        fade: true,
+        speed: 500,
+        autoplay: false,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        autoplaySpeed: 3000,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />
     }
     return (
         <Box sx={{ ...styles.contentBox }}>
@@ -67,7 +67,7 @@ export const Recomendados: FC<Props> = ({ related }) => {
                 <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <Box sx={{ textAlign: "center", width: 250, mt: 2 }}>
 
-                        <Slider ref={sliderRef} {...settings}>
+                        <Slider {...settings}>
 
                             {
                                 related.map((rel: any) => (

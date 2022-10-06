@@ -57,12 +57,12 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
     return (
         <>
 
-            <Box sx={styles.mainContainer} onClick={() => redirect(data.ficha_id)}>
+            <Box sx={styles.mainContainer} >
                 <Grid container flexWrap="wrap" justifyContent="space-between">
 
                     {/* Contenedor de la imagen del inmueble */}
                     <Grid item xs={12} sm={4}>
-                        <Box sx={styles.imageContainer}>
+                        <Box sx={styles.imageContainer} onClick={() => redirect(data.ficha_id)}>
                             <Image alt={data.nombre} src={`https://consolitex.org/img_sinmosca.php?i=${encodeURI(url_inmueble)}`} layout='fill'
                                 objectFit='cover' />
                         </Box>
@@ -141,12 +141,15 @@ const styles = {
     mainContainer: {
         width: "100%",
         minHeight: 220,
-        border: "1px solid rgb(210, 215, 255)",
+        background: "#FFF",
         mb: 2,
         borderRadius: 3,
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
+        "&:hover": {
+            boxShadow: "0 0 5px rgba(0,0,0,0.3)"
+        }
     },
     imageContainer: {
         width: "100%",

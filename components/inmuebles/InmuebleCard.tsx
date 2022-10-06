@@ -1,6 +1,6 @@
 import { Box, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import { FC } from 'react'
 import { Inmueble } from '../../pages/index';
 import { numberWithDots, ucfirst, utf8_encode } from '../../utils/functions';
@@ -19,7 +19,7 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
         router.push(`/inmueble/${ficha_id}`)
     }
     return (<>
-        <Box sx={{ width: "280px", height: "380", borderRadius: "12px", border: "1px solid #cbd6dc", overflow: "hidden", cursor: "pointer" }} onClick={()=>redirect(data.ficha_id)}>
+        <Box sx={{ width: "280px", height: "380", borderRadius: 5, background: "#FFF", overflow: "hidden", cursor: "pointer" }} onClick={() => redirect(data.ficha_id)}>
             {/* Img */}
             <Box sx={{ maxWidth: "100%", minWidth: "280px", minHeight: "250px", maxHeight: "250px" }}>
                 <Box component="img" src={`https://consolitex.org/img.php?i=${encodeURIComponent(url_inmueble)}`} width={"100%"} height={250}></Box>

@@ -33,9 +33,9 @@ export const ImagesModal: FC<Props> = ({ open, handleClose, imagenes, data }) =>
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <Box sx={{ display: { xs: "none", md: "block" } }}>
-                <Box sx={{ width: "80%", margin: "20px auto", minHeight: 829, overflow: "hidden" }}>
-                    <Masonry columns={3} spacing={1}>
+            <Box sx={{ display: { xs: "block", md: "block" } }}>
+                <Box sx={{ width: "80%", margin: "20px auto", minHeight: "100vh", overflow: "hidden" }}>
+                    <Masonry columns={{ xs: 1, md: 2 }} spacing={1}>
                         {
                             imagenes && imagenes.map((img: any) => (
                                 img && img.map((i: any) => (
@@ -44,7 +44,7 @@ export const ImagesModal: FC<Props> = ({ open, handleClose, imagenes, data }) =>
                                 ))
                             )
                         }
-                        <Box sx={{ background: "paleturquoise", maxWidth: 370, minHeight: 185, borderRadius: 5, display: "flex", alignItems: "center", flexFlow: "column wrap" }}>
+                        {/* <Box sx={{ background: "paleturquoise", maxWidth: 370, minHeight: 185, borderRadius: 5, display: "flex", alignItems: "center", flexFlow: "column wrap" }}>
                             <Image src='/logo.webp' alt='Logo Consolitex - Gallery' width='80' height='80' />
                             <Box>
                                 <Typography variant="h6" sx={{ fontStyle: "italic", textAlign: "center" }} color="common.white">¡Siempre te damos más!</Typography>
@@ -57,7 +57,7 @@ export const ImagesModal: FC<Props> = ({ open, handleClose, imagenes, data }) =>
                                 <Typography variant="h6" sx={{ fontStyle: "italic", textAlign: "center" }} color="common.white">¡Síguenos en las redes sociales! @consolitex</Typography>
                                 <Typography variant="h6" sx={{ fontStyle: "italic", textAlign: "center" }} color="common.white">#hogarfamiliabienestar</Typography>
                             </Box>
-                        </Box>
+                        </Box> */}
                     </Masonry>
 
                 </Box>

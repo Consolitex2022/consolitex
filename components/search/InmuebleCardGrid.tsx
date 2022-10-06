@@ -39,13 +39,13 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
         router.push(`/inmueble/${ficha_id}`)
     }
     return (
-        <Box sx={styles.mainContainer} onClick={() => redirect(data.ficha_id)}>
-            <Grid container flexWrap="wrap" justifyContent="space-between" sx={{ border: "1px solid rgb(210,210,210)", overflow: "hidden", borderRadius: 4 }}>
+        <Box sx={styles.mainContainer} >
+            <Grid container flexWrap="wrap" justifyContent="space-between" sx={{ background: "#FFF", overflow: "hidden", borderRadius: 5, "&:hover": { boxShadow: "0 0 5px rgba(0,0,0,0.3)" } }}>
 
                 {/* Contenedor de la imagen del inmueble */}
                 <Grid item xs={12} sm={4}>
-                    <Box sx={styles.imageContainer}>
-                        <Image alt={data.nombre} src={`https://consolitex.org/img_sinmosca.php?i=${encodeURI(url_inmueble)}`} layout='fill'
+                    <Box sx={styles.imageContainer} onClick={() => redirect(data.ficha_id)}>
+                        <Image alt={data.nombre} src={`https://consolitex.org/newImg.php?url=${encodeURI(url_inmueble)}`} layout='fill'
                             objectFit='cover' />
                     </Box>
                 </Grid>

@@ -88,6 +88,6 @@ const styles = {
         top: -1,
         left: 0,
         zIndex: 90,
-        background: "white"
+        background: "#F5F5F5"
     }
 }

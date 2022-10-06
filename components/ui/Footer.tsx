@@ -18,10 +18,12 @@ const Empresa = () => {
     return (
         <>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }}>
-                <Image src='/logo.webp' alt='Logo Consolitex - Footer' width='80' height='80' />
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography component='h5' variant='overline' fontSize={16} fontWeight='bold' sx={{ fontFamily: 'Hind' }}>Consolitex®</Typography>
-                    <Typography variant='subtitle2' fontWeight='100' sx={{ fontFamily: 'Hind', }}>Bienes Raíces</Typography>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Image src='/logo.png' alt='Logo Consolitex - Footer' width='125' height='125' />
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                        <Typography component='h5' variant='overline' fontSize={16} fontWeight='bold' sx={{ fontFamily: 'Hind' }}>Consolitex®</Typography>
+                        <Typography variant='subtitle2' fontWeight='100' sx={{ fontFamily: 'Hind', }}>Bienes Raíces</Typography>
+                    </Box>
                 </Box>
             </Box>
             <Typography component='p' sx={{ textAlign: 'justify', fontFamily: 'Hind', }}>Somos tu mejor opción a la hora de buscar un inmueble en el estado Carabobo. Siempre estamos para servirte, ¡Consolitex te da más! RIF: J-29820228-9</Typography>

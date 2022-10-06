@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState, useEffect } from 'react'
 import { Box, Typography } from '@mui/material';
 import { exists, ucfirst } from '../../../utils/functions';
 import { CaracteristicaComponent } from './CaracteristicaComponent';
@@ -9,27 +9,52 @@ interface Props {
 }
 
 export const Caracteristicas: FC<Props> = ({ caracteristicas }) => {
+    const [show, setShow] = useState<boolean>(false);
+    useEffect(() => {
+        if (!exists(caracteristicas.privado) &&
+            !exists(caracteristicas.antiguedad) &&
+            !exists(caracteristicas.E_tipo) &&
+            !exists(caracteristicas.E_nivel) &&
+            !exists(caracteristicas.maletero) &&
+            !exists(caracteristicas.aexcepcionde) &&
+            !exists(caracteristicas.salon) &&
+            !exists(caracteristicas.estar) &&
+            !exists(caracteristicas.estudio) &&
+            !exists(caracteristicas.cocina) &&
+            !exists(caracteristicas.marca_cocina) &&
+            !exists(caracteristicas.lavandero) &&
+            !exists(caracteristicas.entrada_deservicio) &&
+            !exists(caracteristicas.vestier) &&
+            !exists(caracteristicas.jacuzzi) &&
+            !exists(caracteristicas.balcon) &&
+            !exists(caracteristicas.tipo_aire_acondicionado) &&
+            !exists(caracteristicas.tipo_piso)) {
+            setShow(false);
+        } else {
+            setShow(true);
+        }
+    }, [caracteristicas])
     return (
-        <Box sx={{ width: "100%", p: 4, ...styles.gradiantBoxShadow, mb: 1 }}>
+        <Box sx={{ display: show ? "block" : "none", width: "100%", p: 4, ...styles.gradiantBoxShadow, mb: 1 }}>
             <Typography variant="subtitle1" fontWeight="bold" sx={{ fontFamily: "Oxygen", fontSize: 16, mb: 1 }}>Caracteristicas del inmueble</Typography>
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.privado) && (<CaracteristicaComponent title="Privado">{ucfirst(caracteristicas.data.privado.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.antiguedad) && (<CaracteristicaComponent title="Antigüedad">{ucfirst(caracteristicas.data.antiguedad.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.E_tipo) && (<CaracteristicaComponent title="Tipo de estacionamiento">{ucfirst(caracteristicas.data.E_tipo.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.E_nivel) && (<CaracteristicaComponent title="Nivel de estacionamiento">{ucfirst(caracteristicas.data.E_nivel.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.maletero) && (<CaracteristicaComponent title="Maletero">{ucfirst(caracteristicas.data.maletero.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.aexcepcionde) && (<CaracteristicaComponent title="Excepciones">{ucfirst(caracteristicas.data.aexcepcionde.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.salon) && (<CaracteristicaComponent title="Salon">{ucfirst(caracteristicas.data.salon.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.estar) && (<CaracteristicaComponent title="Sala de estar">{ucfirst(caracteristicas.data.estar.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.estudio) && (<CaracteristicaComponent title="Estudio">{ucfirst(caracteristicas.data.estudio.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.cocina) && (<CaracteristicaComponent title="Cocina">{ucfirst(caracteristicas.data.cocina.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.marca_cocina) && (<CaracteristicaComponent title="Marca de cocina">{ucfirst(caracteristicas.data.marca_cocina.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.lavandero) && (<CaracteristicaComponent title="Lavandero">{ucfirst(caracteristicas.data.lavandero.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.entrada_deservicio) && (<CaracteristicaComponent title="Entrada de servicio">{ucfirst(caracteristicas.data.entrada_deservicio.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.vestier) && (<CaracteristicaComponent title="Vestier">{ucfirst(caracteristicas.data.vestier.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.jacuzzi) && (<CaracteristicaComponent title="Jacuzzi">{ucfirst(caracteristicas.data.jacuzzi.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.balcon) && (<CaracteristicaComponent title="Balcon">{ucfirst(caracteristicas.data.balcon.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.tipo_aire_acondicionado) && (<CaracteristicaComponent title="Aire acondicionado">{ucfirst(caracteristicas.data.tipo_aire_acondicionado.toLowerCase())}</CaracteristicaComponent>)}
-            {caracteristicas.hasOwnProperty('data') && exists(caracteristicas.data.tipo_piso) && (<CaracteristicaComponent title="Tipo de piso">{ucfirst(caracteristicas.data.tipo_piso.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.privado) && (<CaracteristicaComponent title="Privado">{ucfirst(caracteristicas.privado.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.antiguedad) && (<CaracteristicaComponent title="Antigüedad">{ucfirst(caracteristicas.antiguedad.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.E_tipo) && (<CaracteristicaComponent title="Tipo de estacionamiento">{ucfirst(caracteristicas.E_tipo.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.E_nivel) && (<CaracteristicaComponent title="Nivel de estacionamiento">{ucfirst(caracteristicas.E_nivel.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.maletero) && (<CaracteristicaComponent title="Maletero">{ucfirst(caracteristicas.maletero.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.aexcepcionde) && (<CaracteristicaComponent title="Excepciones">{ucfirst(caracteristicas.aexcepcionde.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.salon) && (<CaracteristicaComponent title="Salon">{ucfirst(caracteristicas.salon.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.estar) && (<CaracteristicaComponent title="Sala de estar">{ucfirst(caracteristicas.estar.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.estudio) && (<CaracteristicaComponent title="Estudio">{ucfirst(caracteristicas.estudio.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.cocina) && (<CaracteristicaComponent title="Cocina">{ucfirst(caracteristicas.cocina.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.marca_cocina) && (<CaracteristicaComponent title="Marca de cocina">{ucfirst(caracteristicas.marca_cocina.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.lavandero) && (<CaracteristicaComponent title="Lavandero">{ucfirst(caracteristicas.lavandero.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.entrada_deservicio) && (<CaracteristicaComponent title="Entrada de servicio">{ucfirst(caracteristicas.entrada_deservicio.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.vestier) && (<CaracteristicaComponent title="Vestier">{ucfirst(caracteristicas.vestier.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.jacuzzi) && (<CaracteristicaComponent title="Jacuzzi">{ucfirst(caracteristicas.jacuzzi.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.balcon) && (<CaracteristicaComponent title="Balcon">{ucfirst(caracteristicas.balcon.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.tipo_aire_acondicionado) && (<CaracteristicaComponent title="Aire acondicionado">{ucfirst(caracteristicas.tipo_aire_acondicionado.toLowerCase())}</CaracteristicaComponent>)}
+            {exists(caracteristicas.tipo_piso) && (<CaracteristicaComponent title="Tipo de piso">{ucfirst(caracteristicas.tipo_piso.toLowerCase())}</CaracteristicaComponent>)}
         </Box>
     )
 }

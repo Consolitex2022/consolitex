@@ -6,11 +6,11 @@ import { useRouter } from 'next/router';
 
 import Slider from 'react-slick';
 
-import { ucfirst } from '../../../../utils/functions';
-import { CustomImage } from '../../../images/CustomImage';
+import { ucfirst } from '../../../../../utils/functions';
+import { CustomImage } from '../../../../images/CustomImage';
 
-import sliderClass from './Recomendados.module.css'
-import { styles } from '../styles';
+import styless from './Recomendados.module.css';
+import { styles } from '../../styles';
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
@@ -23,8 +23,8 @@ function SampleNextArrow(props: any) {
     const { className, style, onClick } = props;
     return (
         <div
-            className={`${className} ${sliderClass['slick-next']}`}
-            style={{ ...style, display: "block", }}
+            className={`${className} ${styless['slick-next']}`}
+            style={{ ...style, display: "flex" }}
             onClick={onClick}
         />
     );
@@ -34,10 +34,8 @@ function SamplePrevArrow(props: any) {
     const { className, style, onClick } = props;
     return (
         <div
-            className={`${className} ${sliderClass['slick-prev']}`}
-            style={{
-                ...style, display: "block",
-            }}
+            className={`${className} ${styless['slick-prev']}`}
+            style={{ ...style, display: "flex" }}
             onClick={onClick}
         />
     );

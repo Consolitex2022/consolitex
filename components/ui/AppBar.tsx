@@ -59,7 +59,7 @@ const MenuPc: FC<PropsMenuPc> = ({ title, handleOpenNavMenu, anchorElNav, handle
     return (
         <>
             <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }} >
-                <Image alt="Logo Consolitex" src="/logo.webp" width="50" height="50" />
+                <Image alt="Logo Consolitex" src="/logo.png" width="80" height="80" />
             </Box>
             <Typography
                 variant="h6"

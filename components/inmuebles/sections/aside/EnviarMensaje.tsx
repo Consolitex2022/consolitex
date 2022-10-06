@@ -32,19 +32,19 @@ export const EnviarMensaje: FC<Props> = () => {
                         <Form>
                             <Grid container spacing={1} sx={{ mt: 2 }}>
                                 <Grid item xs={12} sm={6}>
-                                    <TextField fullWidth label="Nombre" />
+                                    <TextField InputProps={{ sx: { "& fieldset": { border: "none", boxShadow: "0 0 5px rgba(0,0,0,0.1)" }, borderRadius: 5, } }} fullWidth label="Nombre" />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
-                                    <TextField fullWidth label="Telefono" />
+                                    <TextField InputProps={{ sx: { "& fieldset": { border: "none", boxShadow: "0 0 5px rgba(0,0,0,0.1)" }, borderRadius: 5, } }} fullWidth label="Telefono" />
                                 </Grid>
                                 <Grid item xs={12} >
-                                    <TextField fullWidth label="Email" />
+                                    <TextField InputProps={{ sx: { "& fieldset": { border: "none", boxShadow: "0 0 5px rgba(0,0,0,0.1)" }, borderRadius: 5, } }} fullWidth label="Email" />
                                 </Grid>
                                 <Grid item xs={12} >
-                                    <TextField multiline fullWidth label="Mensaje" />
+                                    <TextField InputProps={{ sx: { "& fieldset": { border: "none", boxShadow: "0 0 5px rgba(0,0,0,0.1)" }, borderRadius: 5, } }} multiline fullWidth label="Mensaje" />
                                 </Grid>
                                 <Grid item xs={12} display="flex" flexDirection="column" >
-                                    <Button fullWidth variant="contained" sx={{ p: 1.5 }}>Enviar</Button>
+                                    <Button fullWidth variant="contained" sx={{ p: 2, borderRadius: 5, textTransform: "none" }} disableElevation>Enviar</Button>
                                     <Typography variant="subtitle2" color="text.secondary" fontWeight="bold" sx={{ mt: 1, fontFamily: "Oxygen" }}>Al clickear &quot;Enviar&quot; aceptas los TERMINOS Y CONDICIONES</Typography>
                                 </Grid>
                             </Grid>

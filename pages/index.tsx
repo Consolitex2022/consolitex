@@ -1,6 +1,6 @@
 import { Box, Typography, CircularProgress, SelectChangeEvent, } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
-import { InmuebleList } from '../components/inmuebles';
+import { InmuebleList } from '../components/inmuebles/inmueblelist/InmuebleList';
 import { Layout } from '../components/ui/Layout';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -131,8 +131,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
 
 
       {/* Recomendados */}
-      <Box sx={{ width: { xs: "100%", md: "80%" }, m: "auto", p: { xs: 1, md: 5 }, mt: 4, }} component="div">
-        <Typography variant="body1" fontWeight={"bold"} component="h3" fontSize={24}>Recomendados para tí</Typography>
+      <Box sx={{ width: { xs: "100%", md: "80%" }, m: "auto", overflow: "hidden" }} component="div">
 
         {/* Inmuebles recomendados */}
         {

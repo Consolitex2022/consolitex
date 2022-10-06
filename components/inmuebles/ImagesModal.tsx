@@ -17,8 +17,8 @@ interface Props {
 }
 export const ImagesModal: FC<Props> = ({ open, handleClose, imagenes, data }) => {
     return (
-        <Dialog fullScreen open={open} onClose={handleClose}>
-            <AppBar sx={{ position: 'relative' }}>
+        <Dialog fullScreen open={open} onClose={handleClose} PaperProps={{ sx: { background: "#f5f5f5" } }}>
+            <AppBar sx={{ position: 'sticky', top: 0, left: 0, boxShadow: "0 0 5px rgba(0,0,0,0.1)" }} color="neutral" elevation={0}>
                 <Toolbar>
                     <IconButton
                         edge="start"

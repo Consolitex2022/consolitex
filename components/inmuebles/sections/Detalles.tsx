@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Box, Typography } from '@mui/material';
 import { exists, ucfirst } from '../../../utils/functions';
-import { CaracteristicaComponent } from './CaracteristicaComponent';
+import { CaracteristicaComponent } from './';
 import { styles } from './styles';
 
 interface Props {

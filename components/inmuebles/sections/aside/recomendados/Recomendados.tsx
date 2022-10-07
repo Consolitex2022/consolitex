@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Box, Typography, Rating } from '@mui/material';
+import { Box, Typography, Rating, Button } from '@mui/material';
 
 import { useRouter } from 'next/router';
 
@@ -70,7 +70,7 @@ export const Recomendados: FC<Props> = ({ related }) => {
                             {
                                 related.map((rel: any) => (
                                     <Box component="div" key={rel.data.key}>
-                                        <Box component="div" sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }} onClick={() => redirect(rel.data.ficha_id)} >
+                                        <Box component="div" sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                                             <CustomImage upperBoxStyles={{ width: 80, height: 80, borderRadius: 3, overflow: "hidden" }} src={`https://consolitex.org/img.php?i=${encodeURI(rel.imagenes[0][0])}`} alt={`Inmueble recomendado - ${rel.data.nombre}`} />
                                         </Box>
                                         <Typography variant="subtitle1" fontWeight="bold">{`Código de inmueble ${ucfirst(rel.data.ficha_id0)}`}</Typography>
@@ -79,6 +79,7 @@ export const Recomendados: FC<Props> = ({ related }) => {
                                         <Typography variant="subtitle2" fontWeight="400" color="text.secondary">{`${ucfirst(rel.data.habitaciones)} ${Number(rel.data.habitaciones) !== 1 ? "Habitaciones" : "Habitación"} `}</Typography>
                                         <Typography variant="subtitle2" fontWeight="400" color="text.secondary">{`${ucfirst(rel.data.banos)} ${Number(rel.data.banos) !== 1 ? "Baños" : "Baño"} `}</Typography>
                                         <Typography variant="subtitle2" fontWeight="400" color="text.secondary">{`${ucfirst(rel.data.estacionamiento)} ${Number(rel.data.estacionamiento) !== 1 ? "Estacionamientos" : "Estacionamiento"} `}</Typography>
+                                        <Button onClick={() => redirect(rel.data.ficha_id)} sx={{ p: 2, borderRadius: 5, textTransform: "none" }} variant="contained">Ver inmueble</Button>
                                     </Box>
                                 ))
                             }

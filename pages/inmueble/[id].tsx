@@ -49,7 +49,7 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
                         <Grid item xs={12} sm={6} md={12}>
                             <Recomendados related={related} />
                         </Grid>
-                        <Grid item xs={12} sm={6} md={12}>
+                        <Grid item xs={12} sm={12} md={12}>
                             <EnviarMensaje />
                         </Grid>
                     </Grid>
@@ -68,10 +68,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         return {
             redirect: {
                 destination: "/",
-                permanent: false,
+                permanent: true,
             }
         }
     }
+
     try {
         const url = `${process.env.BASE_URL}/inmueble/fulldata?id=${id}`
         const respuesta = await fetch(url);
@@ -99,7 +100,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         return {
             redirect: {
                 destination: "/",
-                permanent: false,
+                permanent: true,
             }
         }
     }

@@ -65,7 +65,30 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { id } = ctx.query;
-    if (id === "shape4.png" || id === "shape2.png") {
+    try {
+        const url = `${process.env.BASE_URL}/inmueble/fulldata?id=${id}`
+        const respuesta = await fetch(url);
+        const data = await respuesta.json();
+        const newImagenes = [
+            data.imagenes && data.imagenes.hasOwnProperty('fachada') ? data.imagenes.fachada.map((arr: any) => arr) : '',
+            data.imagenes && data.imagenes.hasOwnProperty('sala') ? data.imagenes.sala.map((arr: any) => arr) : '',
+            data.imagenes && data.imagenes.hasOwnProperty('banos') ? data.imagenes.banos.map((arr: any) => arr) : '',
+            data.imagenes && data.imagenes.hasOwnProperty('habitacion') ? data.imagenes.habitacion.map((arr: any) => arr) : '',
+            data.imagenes && data.imagenes.hasOwnProperty('areascomunes') ? data.imagenes.areascomunes.map((arr: any) => arr) : '',
+            data.imagenes && data.imagenes.hasOwnProperty('cocina') ? data.imagenes.cocina.map((arr: any) => arr) : '',
+        ]
+        return {
+            props: {
+                data: data.data,
+                zonas_comunes: data.zonas_comunes,
+                caracteristicas: data.caracteristicas,
+                url_inmueble: data.url_inmueble,
+                imagenes: newImagenes,
+                related: data.related
+            }
+        }
+    } catch (error) {
+        console.log(error);
         return {
             redirect: {
                 destination: "/",
@@ -73,50 +96,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
             }
         }
     }
-    // try {
-    const url = `${process.env.BASE_URL}/inmueble/fulldata?id=${id}`
-    const respuesta = await fetch(url);
-    const data = await respuesta.json();
-    const urlRelated = `${process.env.BASE_URL}/inmuebles.php?query=${data.data.municipio}`
-    const respuestaRelated = await fetch(urlRelated);
-    const dataRelated = await respuestaRelated.json();
-    // console.log(data.zonas_comunes, data.caracteristicas)
-    const newImagenes = [
-        data.imagenes && data.imagenes.hasOwnProperty('fachada') ? data.imagenes.fachada.map((arr: any) => arr) : '',
-        data.imagenes && data.imagenes.hasOwnProperty('sala') ? data.imagenes.sala.map((arr: any) => arr) : '',
-        data.imagenes && data.imagenes.hasOwnProperty('banos') ? data.imagenes.banos.map((arr: any) => arr) : '',
-        data.imagenes && data.imagenes.hasOwnProperty('habitacion') ? data.imagenes.habitacion.map((arr: any) => arr) : '',
-        data.imagenes && data.imagenes.hasOwnProperty('areascomunes') ? data.imagenes.areascomunes.map((arr: any) => arr) : '',
-        data.imagenes && data.imagenes.hasOwnProperty('cocina') ? data.imagenes.cocina.map((arr: any) => arr) : '',
-    ]
-    let related = [];
-    let keys = Object.keys(dataRelated);
-
-    for (let i = 0, len = keys.length; i < len; i++) {
-        if (dataRelated[keys[i]].hasOwnProperty('data')) {
-            related.push(dataRelated[keys[i]]);
-        }
-    }
-
-    return {
-        props: {
-            data: data.data,
-            zonas_comunes: data.zonas_comunes,
-            caracteristicas: data.caracteristicas,
-            url_inmueble: data.url_inmueble,
-            imagenes: newImagenes,
-            related
-        }
-    }
-    // } catch (error) {
-    //     console.log(error);
-    //     return {
-    //         redirect: {
-    //             destination: "/",
-    //             permanent: false,
-    //         }
-    //     }
-    // }
 }
 
 export default InmueblePage;

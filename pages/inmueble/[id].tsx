@@ -63,6 +63,14 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { id } = ctx.query;
+    if (id === "shape4.png" || id === "shape2.png") {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            }
+        }
+    }
     try {
         const url = `${process.env.BASE_URL}/inmueble/fulldata?id=${id}`
         const respuesta = await fetch(url);

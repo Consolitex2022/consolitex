@@ -49,15 +49,15 @@ interface Props {
     inmuebles: Inmueble[];
 }
 export const InmuebleList: FC<Props> = ({ inmuebles }) => {
-    const sliderRef = useRef<MutableRefObject<LegacyRef<Slider> | undefined> | null>(null);
+    const sliderRef = useRef<any>(null);
     return (
         <Box sx={{ width: "100%", overflow: "hidden" }}>
 
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <IconButton onClick={() => sliderRef !== null ? sliderRef?.current.slickPrev() : false}><LeftIcon /></IconButton>
+                <IconButton onClick={() => sliderRef.current !== null ? sliderRef?.current.slickPrev() : false}><LeftIcon /></IconButton>
                 <Typography variant="body1" fontWeight={"bold"} component="h3" fontSize={24} sx={{ flexGrow: 1, textAlign: "center" }}>Recomendados para tí</Typography>
 
-                <IconButton onClick={() => sliderRef !== null ? sliderRef?.current.slickNext() : false}><RightIcon /></IconButton>
+                <IconButton onClick={() => sliderRef.current !== null ? sliderRef?.current.slickNext() : false}><RightIcon /></IconButton>
             </Box>
 
             <Box>
@@ -65,21 +65,6 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
                     inmuebles && inmuebles.length > 0
                         ?
                         (
-                            // <Carousel
-                            //     responsive={responsive}
-                            //     infinite={true}
-                            //     ssr={false}
-                            //     showDots={false}
-                            //     swipeable={false}
-                            //     draggable={false}
-                            //     autoPlaySpeed={1000}
-                            //     keyBoardControl={true}
-                            //     customTransition="all .5s"
-                            //     transitionDuration={500}
-                            //     containerClass="carousel-container"
-                            //     dotListClass="custom-dot-list-style"
-                            //     itemClass="carousel-item-padding-40px"
-                            // >
                             <Slider ref={sliderRef} {...settings}>
 
                                 {

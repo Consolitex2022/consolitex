@@ -45,9 +45,9 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
                         <Grid item xs={12} sm={6} md={12}>
                             <Compartir />
                         </Grid>
-                        {/* <Grid item xs={12} sm={6} md={12}>
+                        <Grid item xs={12} sm={6} md={12}>
                             <Recomendados related={related} />
-                        </Grid> */}
+                        </Grid>
                         <Grid item xs={12} sm={6} md={12}>
                             <EnviarMensaje />
                         </Grid>

@@ -8,6 +8,7 @@ import { CustomImage } from '../../components/images/CustomImage';
 
 import { Header, Caracteristicas, Detalles, Informacion, ZonasComunes } from '../../components/inmuebles/sections';
 import { Compartir, EnviarMensaje } from '../../components/inmuebles/sections/aside';
+import { Recomendados } from '../../components/inmuebles/sections/aside/recomendados/Recomendados';
 
 interface Props {
     data: any;

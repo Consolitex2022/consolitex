@@ -59,7 +59,7 @@ export const Recomendados: FC<Props> = ({ related }) => {
                                         <Typography variant="subtitle2" fontWeight="400" color="text.secondary">{`${ucfirst(rel.data.habitaciones)} ${Number(rel.data.habitaciones) !== 1 ? "Habitaciones" : "Habitación"} `}</Typography>
                                         <Typography variant="subtitle2" fontWeight="400" color="text.secondary">{`${ucfirst(rel.data.banos)} ${Number(rel.data.banos) !== 1 ? "Baños" : "Baño"} `}</Typography>
                                         <Typography variant="subtitle2" fontWeight="400" color="text.secondary">{`${ucfirst(rel.data.estacionamiento)} ${Number(rel.data.estacionamiento) !== 1 ? "Estacionamientos" : "Estacionamiento"} `}</Typography>
-                                        <Button id={rel.data.ficha_id} onClick={redirect} sx={{ p: 2, borderRadius: 5, textTransform: "none" }} variant="contained">Ver inmueble</Button>
+                                        <Button id={rel.data.ficha_id} onClick={redirect} sx={{ p: 2, borderRadius: 5, textTransform: "none" }} variant="contained" disableElevation>Ver inmueble</Button>
                                     </Box>
                                 ))
                             }

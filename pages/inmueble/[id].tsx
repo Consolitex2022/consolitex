@@ -7,7 +7,7 @@ import { ucfirst } from '../../utils/functions';
 import { CustomImage } from '../../components/images/CustomImage';
 
 import { Header, Caracteristicas, Detalles, Informacion, ZonasComunes } from '../../components/inmuebles/sections';
-import { Compartir, EnviarMensaje } from '../../components/inmuebles/sections/aside';
+import { ChateaConNosotros, Compartir, EnviarMensaje } from '../../components/inmuebles/sections/aside';
 import { Recomendados } from '../../components/inmuebles/sections/aside/recomendados/Recomendados';
 
 interface Props {
@@ -38,6 +38,7 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
                     <Box sx={{ width: "100%" }}>
                         <CustomImage upperBoxStyles={{ borderRadius: 5, overflow: "hidden" }} src="/banner4.webp" alt="banner inferior" />
                     </Box>
+                    <ChateaConNosotros data={data} userLogged={''} />
                 </Grid>
 
                 {/* Seccion lateral/inferior */}
@@ -64,14 +65,6 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { id } = ctx.query;
-    if (id === "shape4.png" || id === "shape2.png") {
-        return {
-            redirect: {
-                destination: "/",
-                permanent: true,
-            }
-        }
-    }
 
     try {
         const url = `${process.env.BASE_URL}/inmueble/fulldata?id=${id}`

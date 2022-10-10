@@ -1,6 +1,7 @@
 import { Box, Typography, Grid, TextField, Button } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { FC } from 'react';
+import { CustomImage } from '../../../images/CustomImage';
 import { styles } from '../styles';
 
 interface Props {
@@ -14,6 +15,9 @@ export const EnviarMensaje: FC<Props> = () => {
     return (
         <Box sx={{ ...styles.contentBox, }}>
             <Box sx={{ ...styles.gradientBoxSizes, ...styles.gradiantBoxShadow }}>
+                <Box component="div" sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <CustomImage upperBoxStyles={{ width: 80, height: 80, borderRadius: 3, overflow: "hidden" }} src={`/likes.jpg`} alt={`Enviar mensaje interés - Consolitex`} />
+                </Box>
                 <Typography fontWeight="bold" variant="h6" sx={{ fontFamily: "Oxygen", fontSize: 16 }}>¿Te interesa este inmueble?</Typography>
                 <Typography fontWeight="400" variant="subtitle2" sx={{ fontFamily: "Oxygen" }}>¡Envíanos un mensaje!</Typography>
                 <Formik

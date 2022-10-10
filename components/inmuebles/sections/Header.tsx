@@ -45,7 +45,7 @@ export const Header: FC<Props> = ({ url_inmueble, data, imagenes }) => {
                     <Box sx={{ width: { xs: 5, md: 10 }, height: 200, background: "#FFF" }}></Box>
                 </Box>
                 <Box component="div" sx={{ mt: { xs: 3, md: 2 } }}>
-                    <Typography id="secondary-content2" sx={{ transition: ".2s ease all", color: "#FFF", fontSize: { xs: "2em", md: "6em" }, fontFamily: "montserrat" }}>Consolitex®</Typography>
+                    <Typography id="secondary-content2" sx={{ transition: ".2s ease all", color: "#FFF", fontSize: { xs: "2em", md: "6em" }, fontFamily: "montserrat" }}>Consolitex<sup>®</sup></Typography>
                     <Typography id="secondary-content3" sx={{ transition: ".6s ease all", color: "#FFF", fontSize: { xs: "1em", md: "2em" }, fontFamily: "montserrat", fontStyle: "italic" }}>Bienes raíces #hogarfamiliabienestar</Typography>
                 </Box>
             </Box>

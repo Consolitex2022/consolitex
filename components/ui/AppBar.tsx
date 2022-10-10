@@ -225,7 +225,7 @@ const ResponsiveAppBar: FC<Props> = ({ title = "Consolitex", transparent = false
      */
     const userMenuProps = { handleOpenUserMenu, anchorElUser, handleCloseUserMenu };
     return (
-        <AppBar position="static" elevation={0} color={!transparent ? "neutral" : undefined} sx={{ background: transparent ? "transparent" : '', boxShadow: "none", }}>
+        <AppBar position="static" elevation={0} color={!transparent ? "neutral" : undefined} sx={{ background: transparent ? "transparent" : '#FFF', boxShadow: "none", }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters >
                     <MenuPc {...pcMenuProps} />

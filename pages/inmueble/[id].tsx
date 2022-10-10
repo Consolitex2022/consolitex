@@ -44,13 +44,13 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
                 <Grid item xs={12} md={4}>
                     <Grid container display="flex" sx={{ width: "100%" }} spacing={1} >
                         <Grid item xs={12} sm={6} md={12}>
-                            <Compartir />
+                            <Compartir data={data} />
                         </Grid>
                         <Grid item xs={12} sm={6} md={12}>
                             <Recomendados related={related} />
                         </Grid>
                         <Grid item xs={12} sm={12} md={12}>
-                            <EnviarMensaje />
+                            <EnviarMensaje data={data} />
                         </Grid>
                     </Grid>
                 </Grid>

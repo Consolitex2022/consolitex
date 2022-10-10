@@ -28,7 +28,7 @@ const og = {
     description: "Gran variedad de inmuebles | Comprar, alquilar y vender apartamentos, casas, townhouses, terrenos y más ¡en Consolitex lo encuentras!"
 }
 
-export const Layout: FC<Props> = ({ title, description, children, transparent = false }) => {
+const Layout: FC<Props> = ({ title, description, children, transparent = false }) => {
     return (
         <Box sx={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", flexWrap: "nowrap" }}>
             <Head>
@@ -62,3 +62,5 @@ export const Layout: FC<Props> = ({ title, description, children, transparent = 
         </Box>
     )
 }
+
+export default Layout;

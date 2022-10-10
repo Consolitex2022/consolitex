@@ -25,6 +25,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-multi-carousel": "^2.8.2",
     "react-slick": "^0.29.0",
+    "sharp": "^0.31.1",
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.4.32"
   },

@@ -1,14 +1,23 @@
-import { Box, Grid } from '@mui/material';
-
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import { GetServerSideProps, NextPage } from 'next'
 
-import { Layout } from '../../components/ui/Layout';
+const Layout = dynamic(() => import('../../components/ui/Layout'));
+const Header = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Header));
+const Caracteristicas = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Caracteristicas));
+const Detalles = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Detalles));
+const Informacion = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Informacion));
+const ZonasComunes = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.ZonasComunes));
+const ChateaConNosotros = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.ChateaConNosotros));
+const Compartir = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.Compartir));
+const EnviarMensaje = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.EnviarMensaje));
+const Recomendados = dynamic(() => import('../../components/inmuebles/sections/aside/recomendados/Recomendados').then((mod) => mod.Recomendados));
+
+import { Box, Grid } from '@mui/material';
+
 import { ucfirst } from '../../utils/functions';
 import { CustomImage } from '../../components/images/CustomImage';
 
-import { Header, Caracteristicas, Detalles, Informacion, ZonasComunes } from '../../components/inmuebles/sections';
-import { ChateaConNosotros, Compartir, EnviarMensaje } from '../../components/inmuebles/sections/aside';
-import { Recomendados } from '../../components/inmuebles/sections/aside/recomendados/Recomendados';
 
 interface Props {
     data: any;
@@ -21,42 +30,44 @@ interface Props {
 const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, zonas_comunes, caracteristicas }) => {
     const headerProps = { imagenes, url_inmueble, data }
     return (
-        <Layout title={ucfirst(`${data.inmueble.toLowerCase()} en ${ucfirst(data.urbanizacion.toLowerCase())} (${ucfirst(data.negocio.toLowerCase())})`)} description={data.descripcion_web}>
+        <Suspense fallback={"Cargando..."}>
+            <Layout title={ucfirst(`${data.inmueble.toLowerCase()} en ${ucfirst(data.urbanizacion.toLowerCase())} (${ucfirst(data.negocio.toLowerCase())})`)} description={data.descripcion_web}>
 
-            {/* Seccion superior con modal de imagenes */}
-            <Header {...headerProps} />
+                {/* Seccion superior con modal de imagenes */}
+                <Header {...headerProps} />
 
-            {/* Seccion principal*/}
-            <Grid container display="flex" flexDirection="row" alignItems="flex-start" justifyContent="space-evenly" columnSpacing={{ xs: 0, md: 1 }} rowSpacing={1} sx={{ width: "100%", p: { xs: 0, md: 1 } }}>
+                {/* Seccion principal*/}
+                <Grid container display="flex" flexDirection="row" alignItems="flex-start" justifyContent="space-evenly" columnSpacing={{ xs: 0, md: 1 }} rowSpacing={1} sx={{ width: "100%", p: { xs: 0, md: 1 } }}>
 
-                {/* Seccion de Informacion del inmueble */}
-                <Grid item xs={12} sm={12} md={8} >
-                    <Informacion data={data} />
-                    <Detalles data={data} />
-                    <Caracteristicas caracteristicas={caracteristicas} />
-                    <ZonasComunes zonasComunes={zonas_comunes} />
-                    <Box sx={{ width: "100%" }}>
-                        <CustomImage upperBoxStyles={{ borderRadius: 5, overflow: "hidden" }} src="/banner4.webp" alt="banner inferior" />
-                    </Box>
-                    <ChateaConNosotros data={data} userLogged={''} />
-                </Grid>
+                    {/* Seccion de Informacion del inmueble */}
+                    <Grid item xs={12} sm={12} md={8} >
+                        <Informacion data={data} />
+                        <Detalles data={data} />
+                        <Caracteristicas caracteristicas={caracteristicas} />
+                        <ZonasComunes zonasComunes={zonas_comunes} />
+                        <Box sx={{ width: "100%" }}>
+                            <CustomImage upperBoxStyles={{ borderRadius: 5, overflow: "hidden" }} src="/banner4.webp" alt="banner inferior" />
+                        </Box>
+                        <ChateaConNosotros data={data} userLogged={''} />
+                    </Grid>
 
-                {/* Seccion lateral/inferior */}
-                <Grid item xs={12} md={4}>
-                    <Grid container display="flex" sx={{ width: "100%" }} spacing={1} >
-                        <Grid item xs={12} sm={6} md={12}>
-                            <Compartir data={data} />
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={12}>
-                            <Recomendados related={related} />
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={12}>
-                            <EnviarMensaje data={data} />
+                    {/* Seccion lateral/inferior */}
+                    <Grid item xs={12} md={4}>
+                        <Grid container display="flex" sx={{ width: "100%" }} spacing={1} >
+                            <Grid item xs={12} sm={6} md={12}>
+                                <Compartir data={data} />
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={12}>
+                                <Recomendados related={related} />
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={12}>
+                                <EnviarMensaje data={data} />
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-        </Layout >
+            </Layout >
+        </Suspense>
     )
 }
 

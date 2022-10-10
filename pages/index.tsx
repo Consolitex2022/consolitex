@@ -1,10 +1,15 @@
-import { Box, Typography, CircularProgress, SelectChangeEvent, } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
-import { InmuebleList } from '../components/inmuebles/inmueblelist/InmuebleList';
-import { Layout } from '../components/ui/Layout';
+import { ChangeEvent, useState, Suspense } from 'react';
+
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { MenuBusquedaPc, MenuBusquedaMobile } from '../components/index';
+import dynamic from "next/dynamic";
+
+import { Box, Typography, CircularProgress, SelectChangeEvent, } from '@mui/material';
+
+const Layout = dynamic(() => import('../components/ui/Layout'));
+const InmuebleList = dynamic(import('../components/inmuebles/inmueblelist/InmuebleList').then((mod) => mod.InmuebleList));
+const MenuBusquedaMobile = dynamic(import('../components/index').then((mod) => mod.MenuBusquedaMobile));
+const MenuBusquedaPc = dynamic(import('../components/index').then((mod) => mod.MenuBusquedaPc));
 
 export type InmuebleData = {
   Estado: string;
@@ -113,32 +118,34 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
   // Props de los menus
   const props = { search, handleChange, handleChangeSelect, tipo, negocio, localidad, onSubmit };
   return (
-    <Layout title="Buscar Inmueble" description={description} transparent={true}>
-      <Box sx={{ width: "100%", position: "absolute", top: 0, left: 0, zIndex: "1" }}>
+    <Suspense fallback="Cargando...">
+      <Layout title="Buscar Inmueble" description={description} transparent={true}>
+        <Box sx={{ width: "100%", position: "absolute", top: 0, left: 0, zIndex: "1" }}>
 
-        {/* Wallpaper */}
-        <Box sx={{ minHeight: { xs: "100vh", sm: "500px" }, maxHeight: { xs: "auto", sm: "500px" }, overflow: "hidden", background: "url(./compressed_wallpaper.jpg)", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "scroll" }}></Box>
+          {/* Wallpaper */}
+          <Box sx={{ minHeight: { xs: "100vh", sm: "500px" }, maxHeight: { xs: "auto", sm: "500px" }, overflow: "hidden", background: "url(./compressed_wallpaper.jpg)", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "scroll" }}></Box>
 
-        {/* Menu de busqueda en vista de PC */}
-        <MenuBusquedaPc {...props} />
+          {/* Menu de busqueda en vista de PC */}
+          <MenuBusquedaPc {...props} />
 
-        {/* Menu de busqueda en vista de mobile */}
-        <MenuBusquedaMobile {...props} />
-      </Box>
+          {/* Menu de busqueda en vista de mobile */}
+          <MenuBusquedaMobile {...props} />
+        </Box>
 
-      {/* Espacio en blanco de la imagen */}
-      <Box sx={{ minHeight: { xs: "100vh", sm: "450px", zIndex: "-10" } }}></Box>
+        {/* Espacio en blanco de la imagen */}
+        <Box sx={{ minHeight: { xs: "100vh", sm: "450px", zIndex: "-10" } }}></Box>
 
 
-      {/* Recomendados */}
-      <Box sx={{ width: { xs: "100%", md: "80%" }, m: "auto", overflow: "hidden" }} component="div">
+        {/* Recomendados */}
+        <Box sx={{ width: { xs: "100%", md: "80%" }, m: "auto", overflow: "hidden" }} component="div">
 
-        {/* Inmuebles recomendados */}
-        {
-          inmuebles !== null && (<InmuebleList inmuebles={inmuebles} />)
-        }
-      </Box>
-    </Layout>
+          {/* Inmuebles recomendados */}
+          {
+            inmuebles !== null && (<InmuebleList inmuebles={inmuebles} />)
+          }
+        </Box>
+      </Layout>
+    </Suspense>
   )
 }
 

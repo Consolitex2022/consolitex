@@ -16,7 +16,7 @@ export const EnviarMensaje: FC<Props> = () => {
         <Box sx={{ ...styles.contentBox, }}>
             <Box sx={{ ...styles.gradientBoxSizes, ...styles.gradiantBoxShadow }}>
                 <Box component="div" sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <CustomImage upperBoxStyles={{ width: 80, height: 80, borderRadius: 3, overflow: "hidden" }} src={`/likes.jpg`} alt={`Enviar mensaje interés - Consolitex`} />
+                    <CustomImage upperBoxStyles={{ borderRadius: 5, width: "100%", overflow: "hidden" }} src={`/likes.jpg`} alt={`Enviar mensaje interés - Consolitex`} />
                 </Box>
                 <Typography fontWeight="bold" variant="h6" sx={{ fontFamily: "Oxygen", fontSize: 16 }}>¿Te interesa este inmueble?</Typography>
                 <Typography fontWeight="400" variant="subtitle2" sx={{ fontFamily: "Oxygen" }}>¡Envíanos un mensaje!</Typography>

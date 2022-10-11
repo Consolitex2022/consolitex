@@ -2,16 +2,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { GetServerSideProps, NextPage } from 'next'
 
-const Layout = dynamic(() => import('../../components/ui/Layout'));
-const Header = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Header));
-const Caracteristicas = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Caracteristicas));
-const Detalles = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Detalles));
-const Informacion = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Informacion));
-const ZonasComunes = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.ZonasComunes));
-const ChateaConNosotros = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.ChateaConNosotros));
-const Compartir = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.Compartir));
-const EnviarMensaje = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.EnviarMensaje));
-const Recomendados = dynamic(() => import('../../components/inmuebles/sections/aside/recomendados/Recomendados').then((mod) => mod.Recomendados));
+import Layout from '../../components/ui/Layout';
 
 import { Box, Grid } from '@mui/material';
 
@@ -28,40 +19,70 @@ interface Props {
     related: any;
 }
 const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, zonas_comunes, caracteristicas }) => {
+    const Header = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Header));
+    const Caracteristicas = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Caracteristicas));
+    const Detalles = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Detalles));
+    const Informacion = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Informacion));
+    const ZonasComunes = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.ZonasComunes));
+    const ChateaConNosotros = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.ChateaConNosotros));
+    const Compartir = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.Compartir));
+    const EnviarMensaje = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.EnviarMensaje));
+    const Recomendados = dynamic(() => import('../../components/inmuebles/sections/aside/recomendados/Recomendados').then((mod) => mod.Recomendados));
     const headerProps = { imagenes, url_inmueble, data }
     return (
         <Suspense fallback={"Cargando..."}>
             <Layout title={ucfirst(`${data.inmueble.toLowerCase()} en ${ucfirst(data.urbanizacion.toLowerCase())} (${ucfirst(data.negocio.toLowerCase())})`)} description={data.descripcion_web}>
 
                 {/* Seccion superior con modal de imagenes */}
-                <Header {...headerProps} />
+                <Suspense fallback="Cargando...">
+                    <Header {...headerProps} />
+                </Suspense>
 
                 {/* Seccion principal*/}
                 <Grid container display="flex" flexDirection="row" alignItems="flex-start" justifyContent="space-evenly" columnSpacing={{ xs: 0, md: 1 }} rowSpacing={1} sx={{ width: "100%", p: { xs: 0, md: 1 } }}>
 
                     {/* Seccion de Informacion del inmueble */}
                     <Grid item xs={12} sm={12} md={8} >
-                        <Informacion data={data} />
-                        <Detalles data={data} />
-                        <Caracteristicas caracteristicas={caracteristicas} />
-                        <ZonasComunes zonasComunes={zonas_comunes} />
+                        <Suspense fallback="Cargando...">
+                            <Informacion data={data} />
+                        </Suspense>
+
+                        <Suspense fallback="Cargando...">
+                            <Detalles data={data} />
+                        </Suspense>
+
+                        <Suspense fallback="Cargando...">
+                            <Caracteristicas caracteristicas={caracteristicas} />
+                        </Suspense>
+
+                        <Suspense fallback="Cargando...">
+                            <ZonasComunes zonasComunes={zonas_comunes} />
+                        </Suspense>
                         <Box sx={{ width: "100%" }}>
                             <CustomImage upperBoxStyles={{ borderRadius: 5, overflow: "hidden" }} src="/banner4.webp" alt="banner inferior" />
                         </Box>
-                        <ChateaConNosotros data={data} userLogged={''} />
+                        <Suspense fallback="Cargando...">
+                            <ChateaConNosotros data={data} userLogged={''} />
+                        </Suspense>
                     </Grid>
 
                     {/* Seccion lateral/inferior */}
                     <Grid item xs={12} md={4}>
                         <Grid container display="flex" sx={{ width: "100%" }} spacing={1} >
                             <Grid item xs={12} sm={6} md={12}>
-                                <Compartir data={data} />
+                                <Suspense fallback="Cargando...">
+                                    <Compartir data={data} />
+                                </Suspense>
                             </Grid>
                             <Grid item xs={12} sm={6} md={12}>
-                                <Recomendados related={related} />
+                                <Suspense fallback="Cargando...">
+                                    <Recomendados related={related} />
+                                </Suspense>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12}>
-                                <EnviarMensaje data={data} />
+                                <Suspense fallback="Cargando...">
+                                    <EnviarMensaje data={data} />
+                                </Suspense>
                             </Grid>
                         </Grid>
                     </Grid>

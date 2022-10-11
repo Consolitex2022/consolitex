@@ -1,9 +1,13 @@
-import { FC, useState, } from 'react'
-
+import { FC, useState, Suspense } from 'react'
+import dynamic from "next/dynamic";
 import { Box, Typography } from '@mui/material';
 
 import { Inmueble } from '../../pages';
-import { InmuebleCard, InmuebleCardGrid, SeccionSuperior } from './';
+
+import PlaceholderGrid from "../placeholders/InmuebleCardGridPlaceholder"
+import PlaceholderNoGrid from "../placeholders/InmuebleCardNoGridPlaceholder"
+
+import { SeccionSuperior } from './';
 
 interface Props {
     inmuebles: Inmueble[];
@@ -11,7 +15,10 @@ interface Props {
 
 
 export const InmuebleList: FC<Props> = ({ inmuebles }) => {
-    const [squared, setSquared] = useState<boolean>(false);
+    const [squared, setSquared] = useState<boolean>(true);
+    const InmuebleCard = dynamic(() => import('./').then((mod) => mod.InmuebleCard));
+    const InmuebleCardGrid = dynamic(() => import('./').then((mod) => mod.InmuebleCardGrid));
+
     const toggleSquare = () => {
         setSquared(prev => !prev)
     }
@@ -21,9 +28,22 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
             {
                 inmuebles?.length > 0
                     ?
-                    squared ?
-                        inmuebles.map((inmueble: Inmueble) => (<InmuebleCard key={inmueble.data.key} inmueble={inmueble} />))
-                        : (<Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", width: "100%" }}>{inmuebles.map((inmueble: Inmueble) => (<InmuebleCardGrid key={inmueble.data.key} inmueble={inmueble} />))}</Box>)
+                    squared
+                        ? inmuebles.map((inmueble: Inmueble) => (
+                            <Suspense fallback={<PlaceholderNoGrid />} key={inmueble.data.key}>
+                                <InmuebleCard key={inmueble.data.key} inmueble={inmueble} />
+                            </Suspense>
+                        ))
+
+                        : (<Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", width: "100%" }}>
+                            {
+                                inmuebles.map((inmueble: Inmueble) => (
+                                    <Suspense fallback={<PlaceholderGrid />} key={inmueble.data.key}>
+                                        <InmuebleCardGrid inmueble={inmueble} />
+                                    </Suspense>
+                                ))
+                            }
+                        </Box>)
                     : (<Typography>Nada de nada</Typography>)
             }
         </>

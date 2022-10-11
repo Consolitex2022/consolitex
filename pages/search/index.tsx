@@ -3,8 +3,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { Box } from '@mui/material';
 
-const Layout = dynamic(() => import('../../components/ui/Layout'));
-const InmuebleList = dynamic(import('../../components/search').then((mod) => mod.InmuebleList));
+import Layout from '../../components/ui/Layout';
 
 import { Inmueble } from '..';
 
@@ -13,17 +12,16 @@ interface Props {
 }
 
 const SearchPage: NextPage<Props> = ({ inmueblesSSR }) => {
+    const InmuebleList = dynamic(() => import('../../components/search').then((mod) => mod.InmuebleList));
     const [inmuebles, setInmuebles] = useState<Inmueble[] | null>(inmueblesSSR);
     return (
-        <Suspense fallback="Cargando...">
-            <Layout title="Consolitex" description="1231">
-                <Box sx={{ width: "80%", margin: "20px auto" }}>
-                    {
-                        inmuebles && (<InmuebleList inmuebles={inmuebles} />)
-                    }
-                </Box>
-            </Layout>
-        </Suspense>
+        <Layout title="Consolitex" description="1231">
+            <Box sx={{ width: "80%", margin: "20px auto" }}>
+                {
+                    inmuebles && (<InmuebleList inmuebles={inmuebles} />)
+                }
+            </Box>
+        </Layout>
     )
 }
 

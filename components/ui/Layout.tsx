@@ -1,12 +1,9 @@
-import { ReactNode, FC } from "react"
+import { ReactNode, FC, Suspense } from "react";
+import dynamic from "next/dynamic";
+import { Box } from "@mui/material";
 
-import { Box } from "@mui/material"
+import Head from 'next/head';
 
-import Head from 'next/head'
-
-import ResponsiveAppBar from "./AppBar"
-
-import { Footer } from "./Footer";
 
 interface Props {
     title: string;
@@ -29,10 +26,14 @@ const og = {
 }
 
 const Layout: FC<Props> = ({ title, description, children, transparent = false }) => {
+    const ResponsiveAppBar = dynamic(() => import("./AppBar"));
+
+    const Footer = dynamic(() => import("./Footer").then((mod) => mod.Footer));
     return (
         <Box sx={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", flexWrap: "nowrap" }}>
-            <Head>
 
+            {/* Header */}
+            <Head>
                 <meta charSet="UTF-8" />
                 <meta name="author" content="Linz Web Development (Jose Linares)" />
                 <meta name="description" content={description} />
@@ -54,11 +55,22 @@ const Layout: FC<Props> = ({ title, description, children, transparent = false }
 
                 <title>{`${title} | Consolitex®`}</title>
             </Head>
+
+
+            {/* Navbar */}
             <Box sx={{ zIndex: "2" }}>
-                <ResponsiveAppBar title={title} transparent={transparent} />
+                <Suspense fallback="Cargando...">
+                    <ResponsiveAppBar title={title} transparent={transparent} />
+                </Suspense>
             </Box>
+
+            {/* Main content */}
             <Box sx={{ flexGrow: 1, minHeight: "100vh" }}>{children}</Box>
-            <Footer />
+
+            {/* Footer */}
+            <Suspense fallback="Cargando...">
+                <Footer />
+            </Suspense>
         </Box>
     )
 }

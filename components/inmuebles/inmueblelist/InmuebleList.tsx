@@ -1,16 +1,16 @@
-import { FC, LegacyRef, MutableRefObject, useRef } from 'react'
+import { FC, Suspense, useRef } from 'react';
+
+import dynamic from "next/dynamic";
+
 import { Box, IconButton, Typography } from '@mui/material';
+
 import LeftIcon from '@mui/icons-material/ChevronLeft';
 import RightIcon from '@mui/icons-material/ChevronRight';
 
-import Carousel from 'react-multi-carousel';
-import "react-multi-carousel/lib/styles.css";
-
 import { Inmueble } from '../../../pages/index';
-import { InmuebleCard } from '../InmuebleCard';
 
+import Placeholder from "../../placeholders/RecomendedIndex";
 import Slider from 'react-slick';
-import styless from './InmuebleList.module.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -49,13 +49,14 @@ interface Props {
     inmuebles: Inmueble[];
 }
 export const InmuebleList: FC<Props> = ({ inmuebles }) => {
+    const InmuebleCard = dynamic(() => import('../InmuebleCard').then((mod) => mod.InmuebleCard));
     const sliderRef = useRef<any>(null);
     return (
         <Box sx={{ width: "100%", overflow: "hidden" }}>
 
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <IconButton onClick={() => sliderRef.current !== null ? sliderRef?.current.slickPrev() : false}><LeftIcon /></IconButton>
-                <Typography variant="body1" fontWeight={"bold"} component="h3" fontSize={24} sx={{ flexGrow: 1, textAlign: "center" }}>Recomendados para tí</Typography>
+                <Typography variant="body1" fontWeight={"bold"} component="h3" fontSize={24} sx={{ flexGrow: 1, textAlign: "center" }}>Recomendados para ti</Typography>
 
                 <IconButton onClick={() => sliderRef.current !== null ? sliderRef?.current.slickNext() : false}><RightIcon /></IconButton>
             </Box>
@@ -69,7 +70,9 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
 
                                 {
                                     inmuebles.map((inmueble) => (
-                                        <InmuebleCard key={inmueble.data.key} inmueble={inmueble} />
+                                        <Suspense key={inmueble.data.key} fallback={<Placeholder />}>
+                                            <InmuebleCard inmueble={inmueble} />
+                                        </Suspense>
                                     ))
                                 }
                             </Slider>

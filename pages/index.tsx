@@ -6,10 +6,7 @@ import dynamic from "next/dynamic";
 
 import { Box, Typography, CircularProgress, SelectChangeEvent, } from '@mui/material';
 
-const Layout = dynamic(() => import('../components/ui/Layout'));
-const InmuebleList = dynamic(import('../components/inmuebles/inmueblelist/InmuebleList').then((mod) => mod.InmuebleList));
-const MenuBusquedaMobile = dynamic(import('../components/index').then((mod) => mod.MenuBusquedaMobile));
-const MenuBusquedaPc = dynamic(import('../components/index').then((mod) => mod.MenuBusquedaPc));
+
 
 export type InmuebleData = {
   Estado: string;
@@ -53,7 +50,10 @@ interface Props {
 }
 
 const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
-
+  const Layout = dynamic(() => import('../components/ui/Layout'));
+  const InmuebleList = dynamic(import('../components/inmuebles/inmueblelist/InmuebleList').then((mod) => mod.InmuebleList));
+  const MenuBusquedaMobile = dynamic(import('../components/index').then((mod) => mod.MenuBusquedaMobile));
+  const MenuBusquedaPc = dynamic(import('../components/index').then((mod) => mod.MenuBusquedaPc));
   // Router
   const Router = useRouter();
 
@@ -126,10 +126,14 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
           <Box sx={{ minHeight: { xs: "100vh", sm: "500px" }, maxHeight: { xs: "auto", sm: "500px" }, overflow: "hidden", background: "url(./compressed_wallpaper.jpg)", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "scroll" }}></Box>
 
           {/* Menu de busqueda en vista de PC */}
-          <MenuBusquedaPc {...props} />
+          <Suspense fallback="Cargando...">
+            <MenuBusquedaPc {...props} />
+          </Suspense>
 
           {/* Menu de busqueda en vista de mobile */}
-          <MenuBusquedaMobile {...props} />
+          <Suspense fallback="Cargando...">
+            <MenuBusquedaMobile {...props} />
+          </Suspense>
         </Box>
 
         {/* Espacio en blanco de la imagen */}
@@ -141,7 +145,11 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
 
           {/* Inmuebles recomendados */}
           {
-            inmuebles !== null && (<InmuebleList inmuebles={inmuebles} />)
+            inmuebles !== null && (
+              <Suspense fallback="Cargando...">
+                <InmuebleList inmuebles={inmuebles} />
+              </Suspense>
+            )
           }
         </Box>
       </Layout>

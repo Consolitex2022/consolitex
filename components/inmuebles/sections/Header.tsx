@@ -37,7 +37,6 @@ export const Header: FC<Props> = ({ url_inmueble, data, imagenes }) => {
                     background: "rgba(0,0,0,0.5)"
                 }
             }}>
-
                 <Image id="imagen" quality={50} src={`https://consolitex.org/newImg.php?nowatermark=1&url=${encodeURI(url_inmueble)}`} layout="fill" objectFit='cover' alt={data.nombre} priority />
             </Box>
             <Box component="div" sx={{ transition: ".2s ease all", zIndex: 200, position: "absolute", top: 0, left: 0, display: "flex", flexFlow: "row" }}>

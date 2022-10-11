@@ -146,20 +146,6 @@ export const Footer: FC = () => {
                 </Grid>
             </Grid>
             <Box sx={{ background: 'rgba(0,0,0,0.4)', padding: 1, width: '100%', textAlign: 'center', color: theme.palette.primary.contrastText }}>Desarrollado por Linz Web Dev</Box>
-            <Box sx={{
-                background: { xs: 'url(./shape4.png)', md: 'url(./shape2.png)' },
-                backgroundSize: { xs: 'cover', md: 'cover' },
-                opacity: { xs: 0.1, md: 0.1 },
-                filter: { xs: 'brightness(0.20)', md: 'brightness(0.20)' },
-                backgroundPosition: { xs: 'center', md: 'center' },
-                backgroundAttachment: { xs: 'scroll', md: 'scroll' },
-                backgroundRepeat: { xs: 'no-repeat', md: 'no-repeat' },
-                position: { xs: 'absolute', md: 'absolute' },
-                top: { xs: '0', md: '0' }, left: { xs: '0', md: '0' },
-                width: { xs: '100%', md: '100%' },
-                height: { xs: '100%', md: '100%' },
-                transform: { xs: 'scale(-1, -1)', md: 'scale(-1,-1)' }
-            }}></Box>
         </Box >
     </>
     )

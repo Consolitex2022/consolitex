@@ -42,12 +42,10 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
                 {/* Seccion de Informacion del inmueble */}
                 <Grid item xs={12} sm={12} md={8} >
                     <Informacion data={data} />
-
                     <Detalles data={data} />
-
                     <Caracteristicas caracteristicas={caracteristicas} />
-
                     <ZonasComunes zonasComunes={zonas_comunes} />
+
                     <Suspense fallback="Cargando...">
                         <ChateaConNosotros data={data} userLogged={''} />
                     </Suspense>

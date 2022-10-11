@@ -30,65 +30,63 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
     const Recomendados = dynamic(() => import('../../components/inmuebles/sections/aside/recomendados/Recomendados').then((mod) => mod.Recomendados));
     const headerProps = { imagenes, url_inmueble, data }
     return (
-        <Suspense fallback={"Cargando..."}>
-            <Layout title={ucfirst(`${data.inmueble.toLowerCase()} en ${ucfirst(data.urbanizacion.toLowerCase())} (${ucfirst(data.negocio.toLowerCase())})`)} description={data.descripcion_web}>
+        <Layout title={ucfirst(`${data.inmueble.toLowerCase()} en ${ucfirst(data.urbanizacion.toLowerCase())} (${ucfirst(data.negocio.toLowerCase())})`)} description={data.descripcion_web}>
 
-                {/* Seccion superior con modal de imagenes */}
-                <Suspense fallback="Cargando...">
-                    <Header {...headerProps} />
-                </Suspense>
+            {/* Seccion superior con modal de imagenes */}
+            <Suspense fallback="Cargando...">
+                <Header {...headerProps} />
+            </Suspense>
 
-                {/* Seccion principal*/}
-                <Grid container display="flex" flexDirection="row" alignItems="flex-start" justifyContent="space-evenly" columnSpacing={{ xs: 0, md: 1 }} rowSpacing={1} sx={{ width: "100%", p: { xs: 0, md: 1 } }}>
+            {/* Seccion principal*/}
+            <Grid container display="flex" flexDirection="row" alignItems="flex-start" justifyContent="space-evenly" columnSpacing={{ xs: 0, md: 1 }} rowSpacing={1} sx={{ width: "100%", p: { xs: 0, md: 1 } }}>
 
-                    {/* Seccion de Informacion del inmueble */}
-                    <Grid item xs={12} sm={12} md={8} >
-                        <Suspense fallback="Cargando...">
-                            <Informacion data={data} />
-                        </Suspense>
+                {/* Seccion de Informacion del inmueble */}
+                <Grid item xs={12} sm={12} md={8} >
+                    <Suspense fallback="Cargando...">
+                        <Informacion data={data} />
+                    </Suspense>
 
-                        <Suspense fallback="Cargando...">
-                            <Detalles data={data} />
-                        </Suspense>
+                    <Suspense fallback="Cargando...">
+                        <Detalles data={data} />
+                    </Suspense>
 
-                        <Suspense fallback="Cargando...">
-                            <Caracteristicas caracteristicas={caracteristicas} />
-                        </Suspense>
+                    <Suspense fallback="Cargando...">
+                        <Caracteristicas caracteristicas={caracteristicas} />
+                    </Suspense>
 
-                        <Suspense fallback="Cargando...">
-                            <ZonasComunes zonasComunes={zonas_comunes} />
-                        </Suspense>
-                        <Box sx={{ width: "100%" }}>
-                            <CustomImage upperBoxStyles={{ borderRadius: 5, overflow: "hidden" }} src="/banner4.webp" alt="banner inferior" />
-                        </Box>
-                        <Suspense fallback="Cargando...">
-                            <ChateaConNosotros data={data} userLogged={''} />
-                        </Suspense>
-                    </Grid>
+                    <Suspense fallback="Cargando...">
+                        <ZonasComunes zonasComunes={zonas_comunes} />
+                    </Suspense>
+                    <Box sx={{ width: "100%" }}>
+                        <CustomImage upperBoxStyles={{ borderRadius: 5, overflow: "hidden" }} src="/banner4.webp" alt="banner inferior" />
+                    </Box>
+                    <Suspense fallback="Cargando...">
+                        <ChateaConNosotros data={data} userLogged={''} />
+                    </Suspense>
+                </Grid>
 
-                    {/* Seccion lateral/inferior */}
-                    <Grid item xs={12} md={4}>
-                        <Grid container display="flex" sx={{ width: "100%" }} spacing={1} >
-                            <Grid item xs={12} sm={6} md={12}>
-                                <Suspense fallback="Cargando...">
-                                    <Compartir data={data} />
-                                </Suspense>
-                            </Grid>
-                            <Grid item xs={12} sm={6} md={12}>
-                                <Suspense fallback="Cargando...">
-                                    <Recomendados related={related} />
-                                </Suspense>
-                            </Grid>
-                            <Grid item xs={12} sm={12} md={12}>
-                                <Suspense fallback="Cargando...">
-                                    <EnviarMensaje data={data} />
-                                </Suspense>
-                            </Grid>
+                {/* Seccion lateral/inferior */}
+                <Grid item xs={12} md={4}>
+                    <Grid container display="flex" sx={{ width: "100%" }} spacing={1} >
+                        <Grid item xs={12} sm={6} md={12}>
+                            <Suspense fallback="Cargando...">
+                                <Compartir data={data} />
+                            </Suspense>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={12}>
+                            <Suspense fallback="Cargando...">
+                                <Recomendados related={related} />
+                            </Suspense>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12}>
+                            <Suspense fallback="Cargando...">
+                                <EnviarMensaje data={data} />
+                            </Suspense>
                         </Grid>
                     </Grid>
                 </Grid>
-            </Layout >
-        </Suspense>
+            </Grid>
+        </Layout >
     )
 }
 

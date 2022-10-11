@@ -1,6 +1,9 @@
 import { ReactNode, FC, Suspense } from "react";
 import dynamic from "next/dynamic";
 import { Box } from "@mui/material";
+import ResponsiveAppBar from "./AppBar";
+
+import { Footer } from "./Footer";
 
 import Head from 'next/head';
 
@@ -26,9 +29,6 @@ const og = {
 }
 
 const Layout: FC<Props> = ({ title, description, children, transparent = false }) => {
-    const ResponsiveAppBar = dynamic(() => import("./AppBar"));
-
-    const Footer = dynamic(() => import("./Footer").then((mod) => mod.Footer));
     return (
         <Box sx={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", flexWrap: "nowrap" }}>
 
@@ -59,18 +59,14 @@ const Layout: FC<Props> = ({ title, description, children, transparent = false }
 
             {/* Navbar */}
             <Box sx={{ zIndex: "2" }}>
-                <Suspense fallback="Cargando...">
-                    <ResponsiveAppBar title={title} transparent={transparent} />
-                </Suspense>
+                <ResponsiveAppBar title={title} transparent={transparent} />
             </Box>
 
             {/* Main content */}
             <Box sx={{ flexGrow: 1, minHeight: "100vh" }}>{children}</Box>
 
             {/* Footer */}
-            <Suspense fallback="Cargando...">
-                <Footer />
-            </Suspense>
+            <Footer />
         </Box>
     )
 }

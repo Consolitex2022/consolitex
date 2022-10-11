@@ -59,7 +59,7 @@ const MenuPc: FC<PropsMenuPc> = ({ title, handleOpenNavMenu, anchorElNav, handle
     return (
         <>
             <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }} >
-                <Image alt="Logo Consolitex" src="/logo.png" width="80" height="80" />
+                <Image alt="Logo Consolitex" src="/logo.png" width="80" height="80" loading="lazy" />
             </Box>
             <Typography
                 variant="h6"
@@ -120,7 +120,7 @@ const MenuMobile: FC<PropsMobile> = ({ title = "Consolitex", handleCloseNavMenu,
     return (
         <>
             <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }} >
-                <Image alt="Logo Consolitex" src="/logo.webp" width="50" height="50" />
+                <Image alt="Logo Consolitex" src="/logo.webp" width="50" height="50" loading='lazy' />
             </Box>
             <Typography
                 variant="h5"

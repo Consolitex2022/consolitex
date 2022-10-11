@@ -8,6 +8,8 @@ import { Box, Grid } from '@mui/material';
 
 import { ucfirst } from '../../utils/functions';
 import { CustomImage } from '../../components/images/CustomImage';
+import axios from "axios";
+import { Header, Informacion, Detalles, Caracteristicas, ZonasComunes } from '../../components/inmuebles/sections';
 
 
 interface Props {
@@ -19,47 +21,33 @@ interface Props {
     related: any;
 }
 const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, zonas_comunes, caracteristicas }) => {
-    const Header = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Header));
-    const Caracteristicas = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Caracteristicas));
-    const Detalles = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Detalles));
-    const Informacion = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Informacion));
-    const ZonasComunes = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.ZonasComunes));
     const ChateaConNosotros = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.ChateaConNosotros));
     const Compartir = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.Compartir));
     const EnviarMensaje = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.EnviarMensaje));
     const Recomendados = dynamic(() => import('../../components/inmuebles/sections/aside/recomendados/Recomendados').then((mod) => mod.Recomendados));
+
     const headerProps = { imagenes, url_inmueble, data }
+
+    const title = ucfirst(`${data.inmueble.toLowerCase()} en ${ucfirst(data.urbanizacion.toLowerCase())} (${ucfirst(data.negocio.toLowerCase())})`)
+
     return (
-        <Layout title={ucfirst(`${data.inmueble.toLowerCase()} en ${ucfirst(data.urbanizacion.toLowerCase())} (${ucfirst(data.negocio.toLowerCase())})`)} description={data.descripcion_web}>
+        <Layout title={title} description={data.descripcion_web}>
 
             {/* Seccion superior con modal de imagenes */}
-            <Suspense fallback="Cargando...">
-                <Header {...headerProps} />
-            </Suspense>
+            <Header {...headerProps} />
 
             {/* Seccion principal*/}
             <Grid container display="flex" flexDirection="row" alignItems="flex-start" justifyContent="space-evenly" columnSpacing={{ xs: 0, md: 1 }} rowSpacing={1} sx={{ width: "100%", p: { xs: 0, md: 1 } }}>
 
                 {/* Seccion de Informacion del inmueble */}
                 <Grid item xs={12} sm={12} md={8} >
-                    <Suspense fallback="Cargando...">
-                        <Informacion data={data} />
-                    </Suspense>
+                    <Informacion data={data} />
 
-                    <Suspense fallback="Cargando...">
-                        <Detalles data={data} />
-                    </Suspense>
+                    <Detalles data={data} />
 
-                    <Suspense fallback="Cargando...">
-                        <Caracteristicas caracteristicas={caracteristicas} />
-                    </Suspense>
+                    <Caracteristicas caracteristicas={caracteristicas} />
 
-                    <Suspense fallback="Cargando...">
-                        <ZonasComunes zonasComunes={zonas_comunes} />
-                    </Suspense>
-                    <Box sx={{ width: "100%" }}>
-                        <CustomImage upperBoxStyles={{ borderRadius: 5, overflow: "hidden" }} src="/banner4.webp" alt="banner inferior" />
-                    </Box>
+                    <ZonasComunes zonasComunes={zonas_comunes} />
                     <Suspense fallback="Cargando...">
                         <ChateaConNosotros data={data} userLogged={''} />
                     </Suspense>
@@ -97,9 +85,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { id } = ctx.query;
 
     try {
-        const url = `${process.env.BASE_URL}/inmueble/fulldata?id=${id}`
-        const respuesta = await fetch(url);
-        const data = await respuesta.json();
+        const url = `${process.env.BASE_URL}/inmueble/fulldata`
+        const respuesta = await axios.get(url, {
+            params: {
+                id
+            }
+        })
+        // const respuesta = await fetch(url);
+        const data = await respuesta.data;
         const newImagenes = [
             data.imagenes && data.imagenes.hasOwnProperty('fachada') ? data.imagenes.fachada.map((arr: any) => arr) : '',
             data.imagenes && data.imagenes.hasOwnProperty('sala') ? data.imagenes.sala.map((arr: any) => arr) : '',

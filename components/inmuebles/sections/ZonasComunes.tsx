@@ -3,6 +3,7 @@ import { Box, Typography } from '@mui/material';
 import { exists, ucfirst } from '../../../utils/functions';
 import { CaracteristicaComponent } from './CaracteristicaComponent';
 import { styles } from './styles';
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 interface Props {
     zonasComunes: any;
 }
@@ -34,7 +35,7 @@ export const ZonasComunes: FC<Props> = ({ zonasComunes }) => {
     }, [zonasComunes])
     return (
         <Box sx={{ display: show ? "block" : "none", width: "100%", p: 4, ...styles.gradiantBoxShadow, mb: 1 }}>
-            <Typography variant="subtitle1" fontWeight="bold" sx={{ fontFamily: "Oxygen", fontSize: 16, mb: 1 }}>Zonas comunes</Typography>
+            <Typography variant="subtitle1" fontWeight="bold" sx={{ fontFamily: "Oxygen", fontSize: 16, mb: 1 }}><ConnectWithoutContactIcon sx={{ color: "#a1a1a1" }} /> &nbsp; Zonas comunes</Typography>
             {exists(zonasComunes.vigilancia) && (<CaracteristicaComponent title="Vigilancia">{ucfirst(zonasComunes.vigilancia.toLowerCase())}</CaracteristicaComponent>)}
             {exists(zonasComunes.cant_deascensores) && (<CaracteristicaComponent title="Cantidad de ascensores">{ucfirst(zonasComunes.cant_deascensores.toLowerCase())}</CaracteristicaComponent>)}
             {exists(zonasComunes.ascensor_tipo) && (<CaracteristicaComponent title="Tipo de ascensor">{ucfirst(zonasComunes.ascensor_tipo.toLowerCase())}</CaracteristicaComponent>)}

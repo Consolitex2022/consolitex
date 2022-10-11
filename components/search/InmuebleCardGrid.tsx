@@ -36,7 +36,7 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
 
 
     const redirect = (ficha_id: string) => {
-        router.push(`/inmueble/${ficha_id}`)
+        window.open(`/inmueble/${ficha_id}`, '_blank')
     }
     return (
         <Box sx={styles.mainContainer} >

@@ -1,9 +1,7 @@
 import { Box, Typography, useTheme } from '@mui/material';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { FC } from 'react'
 import { Inmueble } from '../../pages/index';
-import { numberWithDots, ucfirst, utf8_encode } from '../../utils/functions';
+import { numberWithDots, ucfirst } from '../../utils/functions';
 import { BanosIcon, HabitacionesIcon, MetrajeIcon, TerrenoIcon } from '../icons';
 interface Props {
     inmueble: Inmueble;
@@ -11,12 +9,10 @@ interface Props {
 
 export const InmuebleCard: FC<Props> = ({ inmueble }) => {
     const { data, imagenes, url_inmueble } = inmueble;
-    const theme = useTheme();
     const info = `${ucfirst(data.urbanizacion)}, ${ucfirst(data.municipio)}, ${ucfirst(data.Estado)}`;
 
-    const router = useRouter();
     const redirect = (ficha_id: string) => {
-        router.push(`/inmueble/${ficha_id}`)
+        window.open(`/inmueble/${ficha_id}`, '_blank')
     }
     return (<>
         <Box sx={{ width: "280px", height: "380", borderRadius: 5, background: "#FFF", overflow: "hidden", cursor: "pointer" }} onClick={() => redirect(data.ficha_id)}>

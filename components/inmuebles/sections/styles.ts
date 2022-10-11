@@ -7,9 +7,11 @@ export const styles = {
         display: "flex",
         overflow: "hidden",
         "&:hover > #ver-mas": {
-            transform: "translateX(-50%) translateY(-50%) scale(1)"
+            transform: "translateX(-50%) translateY(-50%) scale(1)",
+            boxShadow: "0 0 10px rgba(255,255,255,0.6)"
         },
         "&:hover > #img > span > #imagen": {
+            WebKitFilter: "blur(8px) !important",
             filter: "blur(8px) !important",
         }
     },

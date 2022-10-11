@@ -52,7 +52,7 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
     const info = `${ucfirst(data.urbanizacion)}, ${ucfirst(data.municipio)}, ${ucfirst(data.Estado)}`;
     const router = useRouter();
     const redirect = (ficha_id: string) => {
-        router.push(`/inmueble/${ficha_id}`)
+        window.open(`/inmueble/${ficha_id}`, '_blank')
     }
     return (
         <>

@@ -3,6 +3,7 @@ import { Box, Typography } from '@mui/material';
 import { exists, ucfirst } from '../../../utils/functions';
 import { CaracteristicaComponent } from './';
 import { styles } from './styles';
+import ApartmentIcon from '@mui/icons-material/Apartment';
 
 interface Props {
     caracteristicas: any;
@@ -36,7 +37,7 @@ export const Caracteristicas: FC<Props> = ({ caracteristicas }) => {
     }, [caracteristicas])
     return (
         <Box sx={{ display: show ? "block" : "none", width: "100%", p: 4, ...styles.gradiantBoxShadow, mb: 1 }}>
-            <Typography variant="subtitle1" fontWeight="bold" sx={{ fontFamily: "Oxygen", fontSize: 16, mb: 1 }}>Caracteristicas del inmueble</Typography>
+            <Typography variant="subtitle1" fontWeight="bold" sx={{ fontFamily: "Oxygen", fontSize: 16, mb: 1 }}><ApartmentIcon sx={{ color: "#a1a1a1" }} />&nbsp;Caracteristicas del inmueble</Typography>
             {exists(caracteristicas.privado) && (<CaracteristicaComponent title="Privado">{ucfirst(caracteristicas.privado.toLowerCase())}</CaracteristicaComponent>)}
             {exists(caracteristicas.antiguedad) && (<CaracteristicaComponent title="Antigüedad">{ucfirst(caracteristicas.antiguedad.toLowerCase())}</CaracteristicaComponent>)}
             {exists(caracteristicas.E_tipo) && (<CaracteristicaComponent title="Tipo de estacionamiento">{ucfirst(caracteristicas.E_tipo.toLowerCase())}</CaracteristicaComponent>)}

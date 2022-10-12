@@ -4,10 +4,9 @@ import { GetServerSideProps, NextPage } from 'next'
 
 import Layout from '../../components/ui/Layout';
 
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 
 import { ucfirst } from '../../utils/functions';
-import { CustomImage } from '../../components/images/CustomImage';
 import axios from "axios";
 import { Header, Informacion, Detalles, Caracteristicas, ZonasComunes } from '../../components/inmuebles/sections';
 
@@ -21,14 +20,14 @@ interface Props {
     related: any;
 }
 const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, zonas_comunes, caracteristicas }) => {
-    const ChateaConNosotros = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.ChateaConNosotros));
-    const Compartir = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.Compartir));
-    const EnviarMensaje = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.EnviarMensaje));
-    const Recomendados = dynamic(() => import('../../components/inmuebles/sections/aside/recomendados/Recomendados').then((mod) => mod.Recomendados));
 
     const headerProps = { imagenes, url_inmueble, data }
 
     const title = ucfirst(`${data.inmueble.toLowerCase()} en ${ucfirst(data.urbanizacion.toLowerCase())} (${ucfirst(data.negocio.toLowerCase())})`)
+    const ChateaConNosotros = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.ChateaConNosotros));
+    const Compartir = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.Compartir));
+    const EnviarMensaje = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.EnviarMensaje));
+    const Recomendados = dynamic(() => import('../../components/inmuebles/sections/aside/recomendados/Recomendados').then((mod) => mod.Recomendados));
 
     return (
         <Layout title={title} description={data.descripcion_web}>
@@ -89,6 +88,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
                 id
             }
         })
+
         // const respuesta = await fetch(url);
         const data = await respuesta.data;
         const newImagenes = [

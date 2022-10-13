@@ -4,12 +4,13 @@ import { GetServerSideProps, NextPage } from 'next'
 
 import Layout from '../../components/ui/Layout';
 
-import { Grid } from '@mui/material';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
 import { ucfirst } from '../../utils/functions';
 import axios from "axios";
-import { Header, Informacion, Detalles, Caracteristicas, ZonasComunes } from '../../components/inmuebles/sections';
-
+import { Header, Informacion } from '../../components/inmuebles/sections';
+import { CustomImage } from "../../components/images/CustomImage";
 
 interface Props {
     data: any;
@@ -24,10 +25,13 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
     const headerProps = { imagenes, url_inmueble, data }
 
     const title = ucfirst(`${data.inmueble.toLowerCase()} en ${ucfirst(data.urbanizacion.toLowerCase())} (${ucfirst(data.negocio.toLowerCase())})`)
-    const ChateaConNosotros = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.ChateaConNosotros));
-    const Compartir = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.Compartir));
-    const EnviarMensaje = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.EnviarMensaje));
-    const Recomendados = dynamic(() => import('../../components/inmuebles/sections/aside/recomendados/Recomendados').then((mod) => mod.Recomendados));
+    const Detalles = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Detalles), { ssr: true });
+    const Caracteristicas = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Caracteristicas), { ssr: true });
+    const ZonasComunes = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.ZonasComunes), { ssr: true });
+    const ChateaConNosotros = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.ChateaConNosotros), { ssr: true });
+    const Compartir = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.Compartir), { ssr: true });
+    const EnviarMensaje = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.EnviarMensaje), { ssr: true });
+    const Recomendados = dynamic(() => import('../../components/inmuebles/sections/aside/recomendados/Recomendados').then((mod) => mod.Recomendados), { ssr: true });
 
     return (
         <Layout title={title} description={data.descripcion_web}>
@@ -41,10 +45,18 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
                 {/* Seccion de Informacion del inmueble */}
                 <Grid item xs={12} sm={12} md={8} >
                     <Informacion data={data} />
-                    <Detalles data={data} />
-                    <Caracteristicas caracteristicas={caracteristicas} />
-                    <ZonasComunes zonasComunes={zonas_comunes} />
-
+                    <Suspense fallback="Cargando detalles...">
+                        <Detalles data={data} />
+                    </Suspense>
+                    <Suspense fallback="Cargando caracteristicas...">
+                        <Caracteristicas caracteristicas={caracteristicas} />
+                    </Suspense>
+                    <Suspense fallback="Cargando zonas comunes...">
+                        <ZonasComunes zonasComunes={zonas_comunes} />
+                    </Suspense>
+                    <Box sx={{ width: "100%", borderRadius: 5, overflow: "hidden" }}>
+                        <CustomImage src={"/banner4.webp"} alt="Banner de publicidad - Consolitex" />
+                    </Box>
                     <Suspense fallback="Cargando...">
                         <ChateaConNosotros data={data} userLogged={''} />
                     </Suspense>

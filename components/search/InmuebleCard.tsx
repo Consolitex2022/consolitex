@@ -140,7 +140,8 @@ const styles = {
     mainContainer: {
         width: "100%",
         minHeight: 220,
-        background: "#FFF",
+        background: "none",
+        border: "1px solid rgba(10, 10, 10, 0.1)",
         mb: 2,
         borderRadius: 3,
         overflow: "hidden",

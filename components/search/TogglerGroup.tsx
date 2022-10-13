@@ -3,22 +3,31 @@ import { Dispatch, SetStateAction, FC, MouseEvent } from "react";
 import { IOption } from "../../interfaces/toggler-options-type";
 
 interface PropsToggler {
-    setStateToggler: Dispatch<SetStateAction<string | null>>;
-    stateToggler: string | null;
+    setStateToggler: Dispatch<SetStateAction<any>>;
+    stateToggler: any;
     optionsToggler: IOption[];
+    filterName: string;
 }
 
-export const TogglerGroup: FC<PropsToggler> = ({ setStateToggler, stateToggler, optionsToggler }) => {
-    const handleChange = (event: MouseEvent<HTMLElement>, newAlignment: string) => {
-        setStateToggler(newAlignment);
+export const TogglerGroup: FC<PropsToggler> = ({ setStateToggler, stateToggler, optionsToggler, filterName }) => {
+    const handleChange = (event: MouseEvent<HTMLElement>, newAlignment: string, filter: string) => {
+        setStateToggler({
+            ...stateToggler,
+            [filter]: newAlignment
+        });
+        console.log({
+            ...stateToggler,
+            [filter]: newAlignment
+        })
     };
     return (
         <Paper elevation={0} sx={{ width: "100%", textAlign: "center", border: "1px solid rgba(0,0,0,0.3)", overflow: "hidden", borderRadius: 10 }}>
             <ToggleButtonGroup
+                size="small"
                 color="primary"
-                value={stateToggler}
+                value={stateToggler[filterName]}
                 exclusive
-                onChange={handleChange}
+                onChange={(event, newAlignment) => handleChange(event, newAlignment, filterName)}
                 aria-label="Platform"
                 sx={{
                     width: "100%",

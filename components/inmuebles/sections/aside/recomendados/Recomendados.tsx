@@ -12,7 +12,8 @@ import { CustomImage } from '../../../../images/CustomImage';
 import { styles } from '../../styles';
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import { ChevronLeftRounded, ChevronRightRounded } from '@mui/icons-material';
+import ChevronLeftRounded from '@mui/icons-material/ChevronLeftRounded';
+import ChevronRightRounded from '@mui/icons-material/ChevronRightRounded';
 
 interface Props {
     related: any;

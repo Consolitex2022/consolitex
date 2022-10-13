@@ -1,6 +1,11 @@
 import { FC } from 'react';
-import { WhatsApp, Facebook, Twitter, Mail } from '@mui/icons-material';
-import { Box, Typography, Button } from '@mui/material';
+import WhatsApp from '@mui/icons-material/WhatsApp';
+import Facebook from '@mui/icons-material/Facebook';
+import Twitter from '@mui/icons-material/Twitter';
+import Mail from '@mui/icons-material/Mail';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import { CustomImage } from '../../../images/CustomImage';
 import { styles } from '../styles';
 import { ucfirst, utf8_encode } from '../../../../utils/functions';

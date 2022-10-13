@@ -1,12 +1,12 @@
-import { FC } from "react";
-
 import Image from "next/image"
-
-import { AppBar, Box, Dialog, IconButton, Toolbar, Typography } from "@mui/material";
-
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Toolbar from '@mui/material/Toolbar';
+import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
+import Dialog from '@mui/material/Dialog';
 import CloseIcon from "@mui/icons-material/Close";
-
-import { Masonry } from "@mui/lab";
+import Masonry from "@mui/lab/Masonry";
 import styles from "./ImagesModal.module.css";
 import { CustomImage } from "../images/CustomImage";
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
     imagenes: any;
     data: any;
 }
-export const ImagesModal: FC<Props> = ({ open, handleClose, imagenes, data }) => {
+export const ImagesModal: React.FC<Props> = ({ open, handleClose, imagenes, data }) => {
     return (
         <Dialog fullScreen open={open} onClose={handleClose} PaperProps={{ sx: { background: "#f5f5f5" } }}>
             <AppBar sx={{ position: 'sticky', top: 0, left: 0, boxShadow: "0 0 5px rgba(0,0,0,0.1)", background: "#FFF" }} color="neutral" elevation={0}>

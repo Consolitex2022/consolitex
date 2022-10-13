@@ -16,7 +16,7 @@ const SearchPage: NextPage<Props> = ({ inmueblesSSR }) => {
     const [inmuebles, setInmuebles] = useState<Inmueble[] | null>(inmueblesSSR);
     return (
         <Layout title="Consolitex" description="1231">
-            <Box sx={{ width: "80%", margin: "20px auto" }}>
+            <Box sx={{ width: { xs: "100%", md: "80%" }, margin: "20px auto" }}>
                 {
                     inmuebles && (<InmuebleList inmuebles={inmuebles} />)
                 }

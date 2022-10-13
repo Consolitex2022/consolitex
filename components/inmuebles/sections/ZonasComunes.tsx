@@ -1,15 +1,16 @@
-import { FC, useState, useEffect } from 'react'
-import { Box, Typography } from '@mui/material';
+import React from 'react'
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { exists, ucfirst } from '../../../utils/functions';
 import { CaracteristicaComponent } from './CaracteristicaComponent';
 import { styles } from './styles';
-import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContactRounded';
 interface Props {
     zonasComunes: any;
 }
-export const ZonasComunes: FC<Props> = ({ zonasComunes }) => {
-    const [show, setShow] = useState<boolean>(false);
-    useEffect(() => {
+export const ZonasComunes: React.FC<Props> = ({ zonasComunes }) => {
+    const [show, setShow] = React.useState<boolean>(false);
+    React.useEffect(() => {
         if (!exists(zonasComunes.vigilancia) &&
             !exists(zonasComunes.cant_deascensores) &&
             !exists(zonasComunes.ascensor_tipo) &&

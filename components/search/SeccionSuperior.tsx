@@ -1,6 +1,6 @@
-import { Box, IconButton, Typography, Tooltip } from "@mui/material";
+import { Box, IconButton, Typography, Tooltip, Button, TextField } from "@mui/material";
 import { useRouter } from "next/router";
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import { ModalFiltros } from "./ModalFitros";
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import GridSquared from '@mui/icons-material/WindowRounded';
@@ -9,27 +9,14 @@ import LeftIcon from '@mui/icons-material/ArrowBackRounded';
 interface PropsMenuSuperior {
     squared: boolean;
     toggleSquare: () => void;
+    filters: any;
+    setFilters: Dispatch<SetStateAction<any>>;
 }
 
-export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare }) => {
+export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare, filters, setFilters }) => {
 
     // Control modal de filtros
     const [open, setOpen] = useState<boolean>(false);
-
-    // Cantidad de habitaciones a filtrar
-    const [habitaciones, setHabitaciones] = useState<string | null>(null)
-
-    // Cantidad de baños a filtrar
-    const [banos, setBanos] = useState<string | null>(null)
-
-    // Cantidad de estacionamientos a filtrar
-    const [estacionamientos, setEstacionamientos] = useState<string | null>(null)
-
-    // Localidad a filtrar
-    const [localidad, setLocalidad] = useState<string | null>(null)
-
-    // Tipo de negocio a filtrar
-    const [negocio, setNegocio] = useState<string | null>(null)
 
     // Enrutador
     const router = useRouter();
@@ -41,13 +28,13 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare }
         setOpen(true)
     }
 
-    const props = { open, setOpen, habitaciones, setHabitaciones, banos, setBanos, estacionamientos, setEstacionamientos, negocio, setNegocio, localidad, setLocalidad }
+    const props = { open, setOpen, filters, setFilters }
     return (
         <Box sx={styles.stickyBar}>
             {/* Modal de filtros */}
             <ModalFiltros {...props} />
 
-            <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            <Box sx={{ display: { xs: 'none', md: "flex" }, flexDirection: "row", alignItems: "center", flexGrow: 1 }}>
 
                 {/* Boton de volver */}
                 <IconButton onClick={() => router.push("/")}>
@@ -57,7 +44,19 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare }
                 {/* Titulo */}
                 <Typography variant="h6" fontWeight="bold" sx={{ whiteSpace: "nowrap" }}>Inmuebles encontrados</Typography>
             </Box>
-            <Box>
+            <Box sx={{ flexGrow: 1, display: "flex", flexFlow: "row nowrap" }}>
+
+                {/* Boton de volver */}
+                <IconButton sx={{ display: { xs: 'block', md: 'none' } }} onClick={() => router.push("/")}>
+                    <LeftIcon />
+                </IconButton>
+                <Box sx={{ display: "flex", flexFlow: "row nowrap", flexGrow: 1 }}>
+
+                    <TextField size="small" fullWidth color="primary" sx={{ "& fieldset": { borderRadius: " 25px 0 0 25px" } }} />
+                    <Button size="small" color="primary" sx={{ textTransform: "none", p: 0, height: 40, borderRadius: "0 25px 25px 0" }} disableElevation variant="contained">Buscar</Button>
+                </Box>
+            </Box>
+            <Box sx={{ display: "flex", flexFlow: "row nowrap", justifyContent: "end", flexGrow: 1 }}>
                 {/* Boton de filtros */}
                 <IconButton aria-label="" onClick={handleOpen}>
                     <Tooltip title="Filtros">

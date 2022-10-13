@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import { Box, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { ucfirst, numberWithDots } from '../../../utils/functions';
-import { styles } from './styles';
 import DescriptionIcon from '@mui/icons-material/Description';
 interface Props {
     data: any;
@@ -24,4 +24,14 @@ export const Informacion: FC<Props> = ({ data }) => {
             </Box>
         </Box>
     )
+}
+const styles = {
+    gradiantBoxShadow: {
+        background: "#FFF",
+        position: "relative",
+        borderRadius: 5,
+        "&:hover": {
+            boxShadow: "0 0 5px rgba(0,0,0,0.2)"
+        }
+    },
 }

@@ -1,6 +1,8 @@
-import { WhatsApp } from '@mui/icons-material';
-import { Box, Button, Typography } from '@mui/material';
 import { FC } from 'react'
+import WhatsApp from '@mui/icons-material/WhatsApp';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import { ucfirst } from '../../../../utils/functions';
 import { CustomImage } from '../../../images/CustomImage';
 

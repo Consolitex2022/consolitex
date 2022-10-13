@@ -40,12 +40,12 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
     }
     return (
         <Box sx={styles.mainContainer} >
-            <Grid container flexWrap="wrap" justifyContent="space-between" sx={{ background: "#FFF", overflow: "hidden", borderRadius: 5, "&:hover": { boxShadow: "0 0 5px rgba(0,0,0,0.3)" } }}>
+            <Grid container flexWrap="wrap" justifyContent="space-between" sx={{ background: "none", overflow: "hidden", borderRadius: 3, "&:hover": { boxShadow: "0 0 5px rgba(0,0,0,0.1)" } }}>
 
                 {/* Contenedor de la imagen del inmueble */}
                 <Grid item xs={12} sm={4}>
                     <Box sx={styles.imageContainer} onClick={() => redirect(data.ficha_id)}>
-                        <Image alt={data.nombre} src={`https://consolitex.org/newImg.php?url=${encodeURI(url_inmueble)}`} layout='fill'
+                        <Image alt={data.nombre} src={`https://consolitex.org/newImg.php?nowatermark=1&url=${encodeURI(url_inmueble)}`} layout='fill'
                             objectFit='cover' />
                     </Box>
                 </Grid>
@@ -63,10 +63,6 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
                         <Chip variant="outlined" color="primary" size="small" label={`${data.ficha_id0}`} sx={{ mr: 1 }} />
                     </Box>
 
-                    {/* Localidad */}
-                    <Typography variant="subtitle2" fontWeight="bold" color="text.secondary">
-                        {info.length > 25 ? info.substring(0, 25) + "..." : info}
-                    </Typography>
                     {/* Contenedor scrolleable de las caracteristicas */}
                     <Box sx={styles.scrollableContainer}>
                         <CaracteristicaContainer icon={<BanosIcon />} conditionalText={`${data.banos} ${Number(data.banos) !== 1 ? 'Baños' : 'Baño'}`} />
@@ -88,6 +84,10 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
                             (tieneCaracteristica(String(data.pozo))) && (<CaracteristicaContainer icon={<PozoIcon />} conditionalText={`Pozo profundo `} />)
                         }
                     </Box>
+                    {/* Localidad */}
+                    <Typography variant="subtitle2" fontWeight="bold" color="text.secondary">
+                        {info.length > 25 ? info.substring(0, 25) + "..." : info}
+                    </Typography>
                 </Grid>
             </Grid>
             {/* Popup de like y compartir */}
@@ -110,15 +110,16 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
 }
 const styles = {
     mainContainer: {
-        width: 200,
+        width: 190,
         height: 220,
-        mb: 16,
+        mb: 20,
         mr: 2,
     },
     imageContainer: {
-        width: 200,
+        width: 190,
         minHeight: 200,
         height: { xs: "auto", sm: "auto" },
+        borderRadius: 3,
         position: "relative",
         overflow: "hidden",
         cursor: "pointer"

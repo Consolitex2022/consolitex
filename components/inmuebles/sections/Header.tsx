@@ -1,6 +1,8 @@
-import { FC, useState } from 'react'
-import Image from 'next/image'
-import { Box, Typography, Button } from '@mui/material';
+import React from "react";
+import Image from 'next/image';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import GalleryIcon from '@mui/icons-material/CollectionsRounded';
 import { styles } from './styles';
 import { ImagesModal } from '../ImagesModal';
@@ -11,8 +13,8 @@ interface Props {
     imagenes: any;
 }
 
-export const Header: FC<Props> = ({ url_inmueble, data, imagenes }) => {
-    const [open, setOpen] = useState<boolean>(false);
+export const Header: React.FC<Props> = ({ url_inmueble, data, imagenes }) => {
+    const [open, setOpen] = React.useState<boolean>(false);
     const handleClose = () => {
         setOpen(false);
     }

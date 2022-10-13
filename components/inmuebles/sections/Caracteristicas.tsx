@@ -1,5 +1,6 @@
-import { FC, useState, useEffect } from 'react'
-import { Box, Typography } from '@mui/material';
+import React from 'react'
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { exists, ucfirst } from '../../../utils/functions';
 import { CaracteristicaComponent } from './';
 import { styles } from './styles';
@@ -9,9 +10,9 @@ interface Props {
     caracteristicas: any;
 }
 
-export const Caracteristicas: FC<Props> = ({ caracteristicas }) => {
-    const [show, setShow] = useState<boolean>(false);
-    useEffect(() => {
+export const Caracteristicas: React.FC<Props> = ({ caracteristicas }) => {
+    const [show, setShow] = React.useState<boolean>(false);
+    React.useEffect(() => {
         if (!exists(caracteristicas.privado) &&
             !exists(caracteristicas.antiguedad) &&
             !exists(caracteristicas.E_tipo) &&

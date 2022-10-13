@@ -1,6 +1,10 @@
-import { CloseRounded } from '@mui/icons-material'
-import { AppBar, Box, Button, Dialog, DialogContent, IconButton, Toolbar, Typography } from '@mui/material'
-import { FC, useState } from 'react'
+import { FC, useState } from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 
 export const TerminosCondiciones: FC = () => {
     const [open, setOpen] = useState<boolean>(false)

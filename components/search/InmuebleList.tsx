@@ -1,6 +1,6 @@
 import { FC, useState, Suspense } from 'react';
 import dynamic from "next/dynamic";
-import { Box, LinearProgress, Typography } from '@mui/material';
+import { Box, Button, LinearProgress, Typography } from '@mui/material';
 
 import { Inmueble } from '../../pages';
 
@@ -8,6 +8,9 @@ import PlaceholderGrid from "../placeholders/InmuebleCardGridPlaceholder";
 import PlaceholderNoGrid from "../placeholders/InmuebleCardNoGridPlaceholder";
 import InfinityScroll from "react-infinite-scroll-component";
 import { SeccionSuperior } from './';
+import { CustomImage } from '../images/CustomImage';
+import search from '../../pages/search';
+import { useRouter } from 'next/router';
 
 interface Props {
     inmuebles: Inmueble[];
@@ -35,6 +38,15 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
     const toggleSquare = () => {
         setSquared(prev => !prev)
     }
+    const router = useRouter();
+    const search = (data: string) => {
+        router.push({
+            pathname: `/search`,
+            query: {
+                query: data
+            }
+        })
+    }
     const fetchData = async () => {
         const url = `/api/infiniteScroll?lastItem=${lastItemKey}`;
 
@@ -48,6 +60,24 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
         const newInmuebles = [...inmueblesState, ...inm]
         console.log(newInmuebles);
         setInmueblesState(newInmuebles);
+        setLastItemKey(newLastItemKey);
+        if (inm.length < 20) {
+            setHasMore(false);
+        } else {
+            setHasMore(true);
+        }
+    }
+    const fetchNewData = async (query: string) => {
+        const url = `/api/infiniteScroll?query=${query}`;
+
+        const respuesta = await fetch(url);
+
+        const data = await respuesta.json();
+
+        const inm = data.data;
+        const lastPosition = inm.length - 1;
+        const newLastItemKey = inm[lastPosition].data.key;
+        setInmueblesState(inm);
         setLastItemKey(newLastItemKey);
         if (inm.length < 20) {
             setHasMore(false);
@@ -91,7 +121,8 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
         url.search = urlParams;
     }
     return (
-        <>
+        <Box sx={{ width: { xs: "100%", md: "90%" }, margin: "20px auto" }}>
+
             <SeccionSuperior squared={squared} toggleSquare={toggleSquare} setFilters={setFilters} filters={filters} />
             <InfinityScroll
                 dataLength={inmueblesState.length}
@@ -100,9 +131,19 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
                     <LinearProgress />
                 }
                 endMessage={
-                    <p style={{ textAlign: 'center' }}>
-                        ¡Lo has visto todo!
-                    </p>
+                    <Box sx={{ display: "flex", flexFlow: "row wrap", width: "100%", justifyContent: "center", p: 2, borderRadius: 5 }}>
+                        <CustomImage upperBoxStyles={{ width: 300 }} src="/searching-done.png" alt="No hay mas resultados - Consolitex" />
+                        <Box sx={{ flexGrow: 1, textAlign: "center", }}>
+                            <Typography variant="subtitle1" fontWeight="bold" sx={{ fontFamily: "Oxygen" }}>¡No hay más resultados!</Typography>
+                            <Typography variant="subtitle2" sx={{ fontFamily: "Oxygen" }}>Al parecer se han agotado los resultados para tu búsqueda, te invitamos a ver algunas de las búsquedas más frecuentes</Typography>
+                            <Button sx={{ textTransform: "none", mr: 1, mt: 1, borderRadius: 5 }} size="small" variant="outlined" onClick={() => fetchNewData('Apartamentos en Valencia')}>Apartamentos en Valencia</Button>
+                            <Button sx={{ textTransform: "none", mr: 1, mt: 1, borderRadius: 5 }} size="small" variant="outlined" onClick={() => fetchNewData('Apartamentos en San Diego')}>Apartamentos en San Diego</Button>
+                            <Button sx={{ textTransform: "none", mr: 1, mt: 1, borderRadius: 5 }} size="small" variant="outlined" onClick={() => fetchNewData('Apartamentos en Naguanagua')}>Apartamentos en Naguanagua</Button>
+                            <Button sx={{ textTransform: "none", mr: 1, mt: 1, borderRadius: 5 }} size="small" variant="outlined" onClick={() => fetchNewData('Quintas en Valencia')}>Quintas en Valencia</Button>
+                            <Button sx={{ textTransform: "none", mr: 1, mt: 1, borderRadius: 5 }} size="small" variant="outlined" onClick={() => fetchNewData('Townhouse en San Diego')}>Townhouse en San Diego</Button>
+                            <Button sx={{ textTransform: "none", mr: 1, mt: 1, borderRadius: 5 }} size="small" variant="outlined" onClick={() => fetchNewData('Quintas en Naguanagua')}>Quintas en Naguanagua</Button>
+                        </Box>
+                    </Box>
                 }
                 next={fetchData}
             >
@@ -130,6 +171,6 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
                         : (<Typography>Nada de nada</Typography>)
                 }
             </InfinityScroll>
-        </>
+        </Box>
     )
 }

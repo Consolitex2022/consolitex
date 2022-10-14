@@ -40,7 +40,7 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
     }
     return (
         <Box sx={styles.mainContainer} >
-            <Grid container flexWrap="wrap" justifyContent="space-between" sx={{ background: "none", overflow: "hidden", borderRadius: 3, "&:hover": { boxShadow: "0 0 5px rgba(0,0,0,0.1)" } }}>
+            <Grid container flexWrap="wrap" justifyContent="space-between" sx={{ background: "#f9f9f9", overflow: "hidden", borderRadius: 3, "&:hover": { boxShadow: "0 0 5px rgba(0,0,0,0.1)" } }}>
 
                 {/* Contenedor de la imagen del inmueble */}
                 <Grid item xs={12} sm={4}>
@@ -114,14 +114,13 @@ const styles = {
         height: 220,
         mb: 20,
         mr: 2,
+        background: "#f9f9f9"
     },
     imageContainer: {
         width: 190,
         minHeight: 200,
         height: { xs: "auto", sm: "auto" },
-        borderRadius: 3,
         position: "relative",
-        overflow: "hidden",
         cursor: "pointer"
     },
     codContainer: {

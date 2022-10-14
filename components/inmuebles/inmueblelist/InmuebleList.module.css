@@ -1,9 +1,4 @@
-.slick-next,
-.slick-prev {
-    background: none
-}
-
-.slick-prev:before,
-.slick-next:before {
-    color: rgba(0, 0, 0, 0.804);
+.slick-slider-container>div>div>div {
+    display: grid !important;
+    place-items: center !important;
 }

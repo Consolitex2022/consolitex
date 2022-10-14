@@ -123,7 +123,7 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
                                     <IconButton sx={{ mr: 2 }}>
                                         <ShareRoundedIcon />
                                     </IconButton>
-                                    <Button size="small" color="primary" variant="contained" sx={{ borderRadius: 2, boxShadow: 0 }}>Info</Button>
+                                    <Button size="small" color="primary" variant="contained" sx={{ borderRadius: 5, textTransform: "none" }} disableElevation onClick={() => redirect(data.ficha_id)}>Informacion</Button>
                                 </Box>
                             </Box>
                         </Box>
@@ -140,15 +140,16 @@ const styles = {
     mainContainer: {
         width: "100%",
         minHeight: 220,
-        background: "none",
-        border: "1px solid rgba(10, 10, 10, 0.1)",
+        border: "1px solid #f9f9f9",
         mb: 2,
         borderRadius: 3,
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
+        background: "#f9f9f9",
+        transition: ".2s ease all",
         "&:hover": {
-            boxShadow: "0 0 5px rgba(0,0,0,0.3)"
+            border: "1px solid rgba(10, 10, 10, 0.1)",
         }
     },
     imageContainer: {
@@ -195,7 +196,7 @@ const styles = {
             backgroundColor: "transparent",
         },
         "&::-webkit-scrollbar-thumb": {
-            backgroundColor: "#edf5ff",
+            backgroundColor: "#e1e1e1",
             borderRadius: 10,
             backgroundClip: "padding-box",
             border: "2px solid transparent",
@@ -208,7 +209,8 @@ const styles = {
             height: "12px",
             width: "16px",
             backgroundPosition: "center 4px",
-            backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(210, 215, 255)'><polygon points='50,00 0,50 100,50'/></svg>")`,
+            cursor: "pointer",
+            backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(180,180,180)'><polygon points='50,00 0,50 100,50'/></svg>")`,
         },
 
         "&::-webkit-scrollbar-button:single-button:vertical:decrement:hover": {
@@ -222,7 +224,8 @@ const styles = {
             height: "12px",
             width: "16px",
             backgroundPosition: "center 2px",
-            backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(210, 215, 255)'><polygon points='0,0 100,0 50,50'/></svg>")`,
+            cursor: "pointer",
+            backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(180,180,180)'><polygon points='0,0 100,0 50,50'/></svg>")`,
         },
         "&::-webkit-scrollbar-button:single-button:vertical:increment:hover": {
             backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='0,0 100,0 50,50'/></svg>")`,
@@ -240,7 +243,8 @@ const styles = {
             height: "12px",
             width: "12px",
             backgroundPosition: "1.45px 1.45px",
-            backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(210, 215, 255)'><polygon points='0,50 50,100 50,0'/></svg>")`,
+            cursor: "pointer",
+            backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(180,180,180)'><polygon points='0,50 50,100 50,0'/></svg>")`,
         },
         "&::-webkit-scrollbar-button:single-button:horizontal:decrement:hover": {
             backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='0,50 50,100 50,0'/></svg>")`,
@@ -252,7 +256,8 @@ const styles = {
             height: "12px",
             width: "12px",
             backgroundPosition: "1.45px 1.45px",
-            backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(210, 215, 255)'><polygon points='0,0 0,100 50,50'/></svg>")`,
+            cursor: "pointer",
+            backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(180,180,180)'><polygon points='0,0 0,100 50,50'/></svg>")`,
         },
         "&::-webkit-scrollbar-button:single-button:horizontal:increment:hover": {
             backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='0,0 0,100 50,50'/></svg>")`,

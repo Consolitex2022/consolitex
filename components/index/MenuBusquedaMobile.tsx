@@ -1,14 +1,21 @@
-import { Box, Typography, Select, SelectChangeEvent, MenuItem, TextField, Button, IconButton } from "@mui/material"
+import { Box, Typography, Select, SelectChangeEvent, MenuItem, TextField, Button, IconButton, Chip } from "@mui/material"
 import LeftIcon from "@mui/icons-material/ChevronLeft"
 import RightIcon from "@mui/icons-material/ChevronRight"
-import { FC, MutableRefObject, useEffect, useRef } from "react"
+import { ChangeEvent, FC, MutableRefObject, useEffect, useRef, useState } from "react"
 import { MenuProps } from "../../interfaces/menu-types"
 import { useRouter } from "next/router"
 
-export const MenuBusquedaMobile: FC<MenuProps> = ({ search, handleChange, handleChangeSelect, tipo, negocio, localidad, onSubmit }) => {
+export const MenuBusquedaMobile: FC = () => {
     const refBotonera = useRef(null);
     const router = useRouter();
+    const [open, setOpen] = useState<boolean>(false);
+    const [search, setSearch] = useState<string>('');
+    const [localidad, setLocalidad] = useState<string>('');
 
+    /**
+     * Funcion para hacer scroll a la izquierda de la barra de localidad
+     * @param ref Referencia del elemento a scrollear
+     */
     const handleScrollLeft = (ref: MutableRefObject<HTMLElement>) => {
         if (!ref.current) {
             return false;
@@ -24,6 +31,13 @@ export const MenuBusquedaMobile: FC<MenuProps> = ({ search, handleChange, handle
 
         }
     }
+    const openInfo = () => {
+        setOpen(true);
+    }
+    /**
+     * Funcion para hacer scroll a la derecha de la barra de localidad
+     * @param ref Referencia del elemento a scrollear
+     */
     const handleScrollRight = (ref: MutableRefObject<HTMLElement>) => {
         if (!ref.current) {
             return false;
@@ -40,16 +54,41 @@ export const MenuBusquedaMobile: FC<MenuProps> = ({ search, handleChange, handle
     }
 
     /**
-     * Funcion para filtrar al pulsar algun botón
-     * @param route Filtro de localidad
+     * Funcion para seleccionar una localidad al pulsar el boton correspondiente
+     * @param route localidad
      */
     const handleFilter = (route: string) => {
+        setLocalidad(route);
+    }
+
+    /**
+     * Funcion para cambiar el valor del input de busqueda
+     * @param e Evento del input
+     */
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearch(String(e.target.value));
+    }
+
+    /**
+     * Funcion para aplicar los filtros
+     */
+    const onSubmit = () => {
         router.push({
             pathname: "/search",
             query: {
-                localidad: route
+                localidad,
+                query: search
             }
         });
+    }
+
+    /**
+     * Funcion para remover un filtro al clickear la X de un chip
+     * @param tipo Chip a remover
+     */
+    const handleDelete = (tipo: string) => {
+        tipo === 'localidad' && setLocalidad('');
+        tipo === 'search' && setSearch('');
     }
     return (<>
         <Box sx={styles.mainContainer}>
@@ -176,6 +215,18 @@ export const MenuBusquedaMobile: FC<MenuProps> = ({ search, handleChange, handle
                 <TextField fullWidth onChange={handleChange} value={search} InputProps={{ disableUnderline: true, }} variant="standard" size="small" placeholder="Ingresa la ubicación del inmueble" color="primary" sx={styles.inputSearch} />
             </Box>
             <Button sx={styles.buttonSend} variant="contained" onClick={onSubmit}>Buscar</Button>
+            <Box sx={{ mt: 1 }}>
+                {
+                    (search || localidad) && (<Typography variant="subtitle2" sx={{ color: "common.white" }}>Filtro aplicados</Typography>)
+                }
+
+                {
+                    search && (<Chip sx={{ background: "#FFF", mr: 1, mt: 1 }} onDelete={() => handleDelete('search')} label={search} />)
+                }
+                {
+                    localidad && (<Chip sx={{ background: "#FFF", mr: 1, mt: 1 }} onDelete={() => handleDelete('localidad')} label={localidad} />)
+                }
+            </Box>
         </Box>
     </>
     )

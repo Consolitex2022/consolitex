@@ -1,12 +1,21 @@
-import { FC, MutableRefObject, useEffect, useRef } from "react"
-import { Box, Typography, Select, SelectChangeEvent, MenuItem, TextField, Button, IconButton } from "@mui/material"
+import { FC, MutableRefObject, useState, useRef, ChangeEvent } from "react"
+import { Box, Typography, Select, SelectChangeEvent, MenuItem, TextField, Button, IconButton, Chip } from "@mui/material"
 import { MenuProps } from "../../interfaces/menu-types"
+import InfoIcon from "@mui/icons-material/HelpOutlineRounded"
 import LeftIcon from "@mui/icons-material/ChevronLeft"
 import RightIcon from "@mui/icons-material/ChevronRight"
 import { useRouter } from "next/router"
-export const MenuBusquedaPc: FC<MenuProps> = ({ search, handleChange, handleChangeSelect, tipo, negocio, localidad, onSubmit }) => {
+export const MenuBusquedaPc: FC = () => {
     const refBotonera = useRef(null);
     const router = useRouter();
+    const [open, setOpen] = useState<boolean>(false);
+    const [search, setSearch] = useState<string>('');
+    const [localidad, setLocalidad] = useState<string>('');
+
+    /**
+     * Funcion para hacer scroll a la izquierda de la barra de localidad
+     * @param ref Referencia del elemento a scrollear
+     */
     const handleScrollLeft = (ref: MutableRefObject<HTMLElement>) => {
         if (!ref.current) {
             return false;
@@ -22,6 +31,13 @@ export const MenuBusquedaPc: FC<MenuProps> = ({ search, handleChange, handleChan
 
         }
     }
+    const openInfo = () => {
+        setOpen(true);
+    }
+    /**
+     * Funcion para hacer scroll a la derecha de la barra de localidad
+     * @param ref Referencia del elemento a scrollear
+     */
     const handleScrollRight = (ref: MutableRefObject<HTMLElement>) => {
         if (!ref.current) {
             return false;
@@ -37,101 +53,50 @@ export const MenuBusquedaPc: FC<MenuProps> = ({ search, handleChange, handleChan
         }
     }
 
+    /**
+     * Funcion para seleccionar una localidad al pulsar el boton correspondiente
+     * @param route localidad
+     */
     const handleFilter = (route: string) => {
+        setLocalidad(route);
+    }
+
+    /**
+     * Funcion para cambiar el valor del input de busqueda
+     * @param e Evento del input
+     */
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearch(String(e.target.value));
+    }
+
+    /**
+     * Funcion para aplicar los filtros
+     */
+    const onSubmit = () => {
         router.push({
             pathname: "/search",
             query: {
-                localidad: route
+                localidad,
+                query: search
             }
         });
     }
+
+    /**
+     * Funcion para remover un filtro al clickear la X de un chip
+     * @param tipo Chip a remover
+     */
+    const handleDelete = (tipo: string) => {
+        tipo === 'localidad' && setLocalidad('');
+        tipo === 'search' && setSearch('');
+    }
     return (
         <Box sx={styles.mainContainer}>
-            <Typography component="h5" variant="h5" fontWeight="bold" sx={{ fontFamily: "Hind", color: "white", mb: 4 }}>Encuentra tu inmueble</Typography>
+            <Box sx={{ width: "100%", display: "flex", flexFlow: "row nowrap", justifyContent: "center", alignItems: "center", mb: 3 }}>
+                <Typography component="h5" variant="h5" fontWeight="bold" sx={{ fontFamily: "Hind", color: "white" }}>Encuentra tu inmueble</Typography>
+                <IconButton color="info" onClick={openInfo}><InfoIcon /></IconButton>
+            </Box>
             <Box sx={styles.contenedorBotonera}>
-
-                {/* <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", m: "-1px 0", width: "80%", }}>
-                <Select
-                    value={String(negocio)}
-                    onChange={(e: SelectChangeEvent) => handleChangeSelect(e, "Negocio")}
-                    disableUnderline
-                    defaultValue="0"
-                    MenuProps={{ disableScrollLock: true }}
-                    sx={{
-                        pb: 1.2, pt: 1.2, color: 'black', background: negocio !== "0" ? "white" : "#F3F7F8", transition: ".3s ease all", border: "0", outline: "0", boxShadow: "none", borderRadius: "1.5em 0 0 0", width: "34%", textAlign: "center", fontFamily: "Hind",
-                        "&:hover": {
-                            background: "white"
-                        },
-                        "&:hover ~ #espacio ": {
-                            background: "white"
-                        }
-                    }}
-                    variant="standard"
-                >
-                    <MenuItem value={"0"} disabled selected>Negocio</MenuItem>
-                    <MenuItem value={"Venta"}>Venta</MenuItem>
-                    <MenuItem value={"Alquiler"}>Alquiler</MenuItem>
-                </Select>
-                <Box component="div" id="espacio" sx={{ width: "2.3%", background: (negocio !== "0" && tipo !== "0") ? "white" : "#F3F7F8", transition: ".3s ease all", height: "60px", padding: "10px 0px 10px 10px", display: "flex", alignItems: "center", justifyContent: "end", m: "0 -1px " }}>
-                    <Box sx={{ width: "2px", background: "rgba(72,69,64,0.9)", height: "100%", p: "0.6px" }}>
-                    </Box>
-                </Box>
-                <Select
-                    value={String(tipo)}
-                    defaultValue="0"
-                    MenuProps={{ disableScrollLock: true }}
-                    onChange={(e: SelectChangeEvent) => handleChangeSelect(e, "Tipo")}
-                    disableUnderline
-                    sx={{
-                        pb: 1.2, pt: 1.2, color: 'black', background: tipo !== "0" ? "white" : "#F3F7F8", transition: ".3s ease all", border: "0", outline: "0", boxShadow: "none", width: "34%", textAlign: "center", fontFamily: "Hind",
-                        "&:hover": {
-                            background: "white"
-                        }
-
-                    }}
-                    variant="standard"
-                >
-                    <MenuItem value={"0"} disabled selected>Tipo de inmuble</MenuItem>
-                    <MenuItem value={"Apartamento"}>Apartamento</MenuItem>
-                    <MenuItem value={"Quinta"}>Quinta</MenuItem>
-                    <MenuItem value={"Townhouse"}>Townhouse</MenuItem>
-                    <MenuItem value={"Apartoquinta"}>Apartoquinta</MenuItem>
-                    <MenuItem value={"Local Comercial"}>Local Comercial</MenuItem>
-                    <MenuItem value={"Galpon"}>Galpon</MenuItem>
-                    <MenuItem value={"Terreno"}>Terreno</MenuItem>
-                </Select>
-                <Box component="div" id="espacio" sx={{ width: "2.3%", background: (tipo !== "0" && localidad !== "0") ? "white" : "#F3F7F8", transition: ".3s ease all", height: "60px", padding: "10px 0px 10px 10px", display: "flex", alignItems: "center", justifyContent: "end", m: "0 -1px " }}>
-                    <Box sx={{ width: "2px", background: "rgba(72,69,64,0.9)", height: "100%", p: "0.6px" }}>
-                    </Box>
-                </Box>
-                <Select
-                    value={String(localidad)}
-                    defaultValue="0"
-                    MenuProps={{ disableScrollLock: true }}
-                    onChange={(e: SelectChangeEvent) => handleChangeSelect(e, "Localidad")}
-                    disableUnderline
-                    sx={{
-                        pb: 1.2, pt: 1.2, color: 'black', background: localidad !== "0" ? "white" : "#F3F7F8", transition: ".3s ease all", borderRadius: "0 1.5em 0 0", border: "0", outline: "0", boxShadow: "none", width: "34%", textAlign: "center", fontFamily: "Hind",
-                        "&:hover": {
-                            background: "white"
-                        }
-
-                    }}
-                    variant="standard"
-                >
-                    <MenuItem value={"0"} disabled selected>Localidad</MenuItem>
-                    <MenuItem value={"Norte"}>Norte</MenuItem>
-                    <MenuItem value={"Noreste"}>Noreste</MenuItem>
-                    <MenuItem value={"Noroeste"}>Noroeste</MenuItem>
-                    <MenuItem value={"Sur"}>Sur</MenuItem>
-                    <MenuItem value={"San Diego"}>San Diego</MenuItem>
-                    <MenuItem value={"Naguanagua"}>Naguanagua</MenuItem>
-                    <MenuItem value={"Guacara"}>Guacara</MenuItem>
-                    <MenuItem value={"San Joaquin"}>San Joaquin</MenuItem>
-                    <MenuItem value={"Tocuyito"}>Tocuyito</MenuItem>
-                    <MenuItem value={"Zona Industrial"}>Zona Industrial</MenuItem>
-                </Select>
-            </Box> */}
                 <IconButton
                     size="small"
                     id="scroll-left"
@@ -164,6 +129,18 @@ export const MenuBusquedaPc: FC<MenuProps> = ({ search, handleChange, handleChan
                     <Box sx={styles.contenedorSend}>
                         <TextField fullWidth value={search} onChange={handleChange} InputProps={{ disableUnderline: true }} id="input-with-sx" variant="standard" placeholder="Ingresa la ubicación del inmueble" color="warning" focused sx={styles.inputBuscar} />
                         <Button variant="contained" color="primary" sx={styles.botonBuscar} onClick={onSubmit}>Buscar</Button>
+                    </Box>
+                    <Box sx={{ mt: 1 }}>
+                        {
+                            (search || localidad) && (<Typography variant="subtitle2" sx={{ color: "common.white" }}>Filtro aplicados</Typography>)
+                        }
+
+                        {
+                            search && (<Chip sx={{ background: "#FFF", mr: 1 }} onDelete={() => handleDelete('search')} label={search} />)
+                        }
+                        {
+                            localidad && (<Chip sx={{ background: "#FFF", mr: 1 }} onDelete={() => handleDelete('localidad')} label={localidad} />)
+                        }
                     </Box>
                 </Box>
             </Box>

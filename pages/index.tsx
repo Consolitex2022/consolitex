@@ -4,9 +4,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import dynamic from "next/dynamic";
 
-import { Box, Typography, CircularProgress, SelectChangeEvent, } from '@mui/material';
-
-
+import { Box, SelectChangeEvent, useTheme, } from '@mui/material';
 
 export type InmuebleData = {
   Estado: string;
@@ -54,69 +52,13 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
   const InmuebleList = dynamic(import('../components/inmuebles/inmueblelist/InmuebleList').then((mod) => mod.InmuebleList));
   const MenuBusquedaMobile = dynamic(import('../components/index').then((mod) => mod.MenuBusquedaMobile));
   const MenuBusquedaPc = dynamic(import('../components/index').then((mod) => mod.MenuBusquedaPc));
-  // Router
-  const Router = useRouter();
-
-  // Valor del input
-  const [search, setSearch] = useState<string>("");
-
-  // Tipo de negocio
-  const [negocio, setNegocio] = useState<string>("0");
-
-  // Tipo de inmueble
-  const [tipo, setTipo] = useState<string>("0");
-
-  // Localidad
-  const [localidad, setLocalidad] = useState<string>("0");
 
   // Inmuebles a mostrar
   const [inmuebles, setInmuebles] = useState<Inmueble[] | null>(inmueblesRecomendados);
 
-  /**
-   * Funcion que se encarga de asignar el valor del input en el state
-   * @param e Event
-   */
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(String(e.currentTarget.value));
-  }
-
-  /**
-   * Funcion que se encarga de asignar el valor del select en el state correspondiente
-   * @param e Event
-   * @param tipo Tipo de select
-   */
-  const handleChangeSelect = (e: SelectChangeEvent, tipo: string) => {
-    switch (tipo) {
-      case "Negocio":
-        setNegocio(String(e.target.value));
-        break;
-      case "Tipo":
-        setTipo(String(e.target.value));
-        break;
-      case "Localidad":
-        setLocalidad(String(e.target.value));
-        break;
-    }
-  }
-
-  /**
-   * Funcion para buscar inmuebles
-   */
-  const onSubmit = async () => {
-    const query = {
-      tipo: tipo ? tipo : '',
-      negocio: negocio ? negocio : '',
-      localidad: localidad ? localidad : '',
-      query: search ? search : '',
-    };
-
-    Router.push({
-      pathname: '/search',
-      query
-    });
-  }
   // Props de los menus
-  const props = { search, handleChange, handleChangeSelect, tipo, negocio, localidad, onSubmit };
+  const theme = useTheme();
+
   return (
     <Suspense fallback="Cargando...">
       <Layout title="Buscar Inmueble" description={description} transparent={true}>
@@ -127,12 +69,11 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
 
           {/* Menu de busqueda en vista de PC */}
           <Suspense fallback="Cargando...">
-            <MenuBusquedaPc {...props} />
+            <MenuBusquedaPc />
           </Suspense>
-
           {/* Menu de busqueda en vista de mobile */}
           <Suspense fallback="Cargando...">
-            <MenuBusquedaMobile {...props} />
+            <MenuBusquedaMobile />
           </Suspense>
         </Box>
 

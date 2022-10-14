@@ -8,15 +8,16 @@ import { Inmueble } from '..';
 
 interface Props {
     inmueblesSSR: Inmueble[] | null;
+    localidad?: string;
+    query?: string;
 }
 
-const SearchPage: NextPage<Props> = ({ inmueblesSSR }) => {
+const SearchPage: NextPage<Props> = ({ inmueblesSSR, query = '', localidad = '' }) => {
     const InmuebleList = dynamic(() => import('../../components/search').then((mod) => mod.InmuebleList));
-    const [inmuebles, setInmuebles] = useState<Inmueble[] | null>(inmueblesSSR);
     return (
         <Layout title="Consolitex" description="1231">
             {
-                inmuebles && (<InmuebleList inmuebles={inmuebles} />)
+                inmueblesSSR && (<InmuebleList inmuebles={inmueblesSSR} />)
             }
         </Layout>
     )
@@ -25,14 +26,6 @@ const SearchPage: NextPage<Props> = ({ inmueblesSSR }) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
     const params = []
-
-    if (ctx.query['tipo'] && ctx.query['tipo'] !== '0') {
-        params.push(['tipo', String(ctx.query['tipo'])])
-    }
-
-    if (ctx.query['negocio'] && ctx.query['negocio'] !== '0') {
-        params.push(['negocio', String(ctx.query['negocio'])])
-    }
 
     if (ctx.query['localidad'] && ctx.query['localidad'] !== '0') {
         params.push(['localidad', String(ctx.query['localidad'])])
@@ -61,7 +54,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
         return {
             props: {
-                inmueblesSSR: newInmuebles
+                inmueblesSSR: newInmuebles,
+                localidad: ctx.query['localidad'],
+                query: ctx.query['query'],
+
             }
         }
     } catch (err) {

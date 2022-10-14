@@ -117,8 +117,23 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
             params.push(['query', String(filters.query)])
         }
         const urlParams = new URLSearchParams(params).toString();
-        const url = new URL(`https://consolitex.org/api/v1/inmuebles.php`);
+        const url = new URL(`/api/filter`);
         url.search = urlParams;
+
+        const respuesta = await fetch(url);
+
+        const data = await respuesta.json();
+
+        const inm = data.data;
+        const lastPosition = inm.length - 1;
+        const newLastItemKey = inm[lastPosition].data.key;
+        setInmueblesState(inm);
+        setLastItemKey(newLastItemKey);
+        if (inm.length < 20) {
+            setHasMore(false);
+        } else {
+            setHasMore(true);
+        }
     }
     return (
         <Box sx={{ width: { xs: "100%", md: "90%" }, margin: "20px auto" }}>

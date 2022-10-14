@@ -8,6 +8,7 @@ import { BanosIcon, EstacionamientosIcon, HabitacionesIcon, MetrajeIcon, PlantaI
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
+import { CustomImage } from '../images/CustomImage';
 
 interface Props {
     inmueble: Inmueble;
@@ -63,6 +64,7 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
                     {/* Contenedor de la imagen del inmueble */}
                     <Grid item xs={12} sm={4}>
                         <Box sx={styles.imageContainer} onClick={() => redirect(data.ficha_id)}>
+                            {/* <CustomImage */}
                             <Image alt={data.nombre} src={`https://consolitex.org/newImg.php?nowatermark=1&url=${encodeURI(url_inmueble)}`} layout='fill' loading="lazy" objectFit='cover' />
                         </Box>
                     </Grid>
@@ -187,7 +189,17 @@ const styles = {
         pr: 4
     },
     scrollableContainer: {
-        display: "flex", flexWrap: "nowrap", justifyContent: "left", textAlign: "left", ml: 4, mr: 4, mb: 2, maxWidth: "100%", overflowX: "scroll",
+        paddingBlock: 1,
+        display: "flex",
+        flexWrap: "nowrap",
+        justifyContent: "left",
+        textAlign: "left",
+        ml: 4,
+        mr: 4,
+        mb: 2,
+        maxWidth: "100%",
+        overflowX: "scroll",
+        overflowY: "hidden",
         "&::-webkit-scrollbar": {
             height: 8,
             width: 16

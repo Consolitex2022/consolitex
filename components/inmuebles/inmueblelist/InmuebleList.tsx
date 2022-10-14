@@ -78,25 +78,6 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
                     }
                 </Box>
             </Box>
-            {/* <Box>
-                {
-                    inmuebles && inmuebles.length > 0
-                        ?
-                        (
-                            <Slider ref={sliderRef} {...settings}>
-
-                                {
-                                    inmuebles.map((inmueble) => (
-                                        <Suspense key={inmueble.data.key} fallback={<Placeholder />}>
-                                            <InmuebleCard inmueble={inmueble} />
-                                        </Suspense>
-                                    ))
-                                }
-                            </Slider>
-                        )
-                        : (<Typography color="text.secondary">No se encontraron inmuebles</Typography>)
-                }
-            </Box> */}
         </Box>
     )
 }

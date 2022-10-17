@@ -3,7 +3,13 @@ import { FC, useState, MouseEvent } from 'react'
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-import { Box, Grid, Typography, Chip, IconButton, Button, Popper } from '@mui/material';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Chip from '@mui/material/Chip';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import Popper from '@mui/material/Popper';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded';

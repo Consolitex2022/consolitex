@@ -1,4 +1,6 @@
-import { Paper, ToggleButtonGroup, ToggleButton } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { Dispatch, SetStateAction, FC, MouseEvent } from "react";
 import { IOption } from "../../interfaces/toggler-options-type";
 

@@ -9,14 +9,10 @@ import LeftIcon from '@mui/icons-material/ArrowBackRounded';
 interface PropsMenuSuperior {
     squared: boolean;
     toggleSquare: () => void;
-    filters: any;
-    setFilters: Dispatch<SetStateAction<any>>;
+    setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare, filters, setFilters }) => {
-
-    // Control modal de filtros
-    const [open, setOpen] = useState<boolean>(false);
+export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare, setOpen }) => {
 
     // Enrutador
     const router = useRouter();
@@ -28,11 +24,8 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare, 
         setOpen(true)
     }
 
-    const props = { open, setOpen, filters, setFilters }
     return (
         <Box sx={styles.stickyBar}>
-            {/* Modal de filtros */}
-            <ModalFiltros {...props} />
 
             <Box sx={{ display: { xs: 'none', md: "flex" }, flexDirection: "row", alignItems: "center", flexGrow: 1 }}>
 

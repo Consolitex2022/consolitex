@@ -1,14 +1,20 @@
-import { Box, Grid, Typography, IconButton, Tooltip, Chip, Button } from '@mui/material';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { FC, ReactNode } from 'react';
+
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Chip from '@mui/material/Chip';
+import Button from '@mui/material/Button';
+import Image from 'next/image';
+
+import { useRouter } from 'next/router';
 import { Inmueble } from '../../pages';
 import { numberWithDots, ucfirst } from '../../utils/functions';
 import { BanosIcon, EstacionamientosIcon, HabitacionesIcon, MetrajeIcon, PlantaIcon, PozoIcon, TerrenoIcon } from '../icons';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
-import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
-import { CustomImage } from '../images/CustomImage';
 
 interface Props {
     inmueble: Inmueble;

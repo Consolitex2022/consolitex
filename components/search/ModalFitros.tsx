@@ -1,6 +1,12 @@
 import { Dispatch, SetStateAction, FC, ChangeEvent, useState } from "react";
 
-import { Dialog, Grid, Typography, Box, TextField, Button, IconButton, Theme } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 
 import SaveIcon from '@mui/icons-material/ManageSearchRounded';
 import CloseIcon from '@mui/icons-material/CloseRounded';
@@ -14,6 +20,10 @@ interface ModalFiltrosProps {
     setOpen: Dispatch<SetStateAction<boolean>>;
     filters: any;
     setFilters: Dispatch<SetStateAction<any>>;
+    inmueblesState: any;
+    setInmueblesState: Dispatch<SetStateAction<any>>;
+    setLastItemKey: Dispatch<SetStateAction<number>>;
+    setHasMore: Dispatch<SetStateAction<boolean>>
 }
 
 const options: IOption[] = [
@@ -67,11 +77,10 @@ const optionsNegocio: IOption[] = [
     },
 ]
 
-export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, setFilters }) => {
+export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, setFilters, setLastItemKey, setHasMore, inmueblesState, setInmueblesState }) => {
 
     const [from, setFrom] = useState<number>(0);
     const [to, setTo] = useState<number>(0);
-
     const handleClose = () => {
         setOpen(false);
     }
@@ -79,9 +88,62 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, se
         const onlyNums = e.target.value.replace(/[^0-9]/g, '');
         e.target.name === 'from' && setFrom(Number(onlyNums))
         e.target.name === 'to' && setTo(Number(onlyNums));
-
     }
-    const onApply = () => {
+    const onApply = async () => {
+
+        const params = [];
+
+        if (filters.tipo && filters.tipo !== '0') {
+            params.push(['tipo', String(filters.tipo)])
+        }
+        if (filters.negocio && filters.negocio !== '0') {
+            params.push(['negocio', String(filters.negocio)])
+        }
+        if (filters.habitaciones && filters.habitaciones !== '0') {
+            params.push(['habitaciones', String(filters.habitaciones)])
+        }
+        if (filters.banos && filters.banos !== '0') {
+            params.push(['banos', String(filters.banos)])
+        }
+        if (filters.estacionamientos && filters.estacionamientos !== '0') {
+            params.push(['estacionamientos', String(filters.estacionamientos)])
+        }
+        if (filters.localidad && filters.localidad !== '0') {
+            params.push(['localidad', String(filters.localidad)])
+        }
+        if (from && from !== 0) {
+            params.push(['from', String(from)])
+        }
+        if (to && to !== 0) {
+            params.push(['to', String(to)])
+        }
+        if (filters.query && filters.query !== '0') {
+            params.push(['query', String(filters.query)])
+        }
+        const url = new URL(`http://localhost:3000/api/filter`);
+        const urlParams = new URLSearchParams(params).toString();
+        url.search = urlParams;
+
+        const respuesta = await fetch(url);
+
+        const data = await respuesta.json();
+
+        const inm = data.data;
+        const lastPosition = inm.length - 1;
+        const newLastItemKey = inm[lastPosition].data.key;
+        setInmueblesState(inm);
+        setLastItemKey(newLastItemKey);
+        setOpen(false);
+        setFilters({
+            ...filters,
+            to,
+            from
+        })
+        if (inm.length < 20) {
+            setHasMore(false);
+        } else {
+            setHasMore(true);
+        }
 
     }
     return (
@@ -136,7 +198,7 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, se
                     </Box>
                 </Grid>
                 <Grid item xs={12} sx={{ textAlign: "left" }}>
-                    <Button fullWidth size="small" color="primary" variant="contained" disableElevation sx={{ borderRadius: 8, p: 1.5, mt: 2 }}>Aplicar filtros &nbsp;<SaveIcon sx={{ fontWeight: 100 }} /></Button>
+                    <Button fullWidth size="small" onClick={onApply} color="primary" variant="contained" disableElevation sx={{ borderRadius: 8, p: 1.5, mt: 2 }}>Aplicar filtros &nbsp;<SaveIcon sx={{ fontWeight: 100 }} /></Button>
                 </Grid>
 
             </Grid>
@@ -147,10 +209,7 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, se
 
 const styles = {
     inputRounded: {
-        '& label': { paddingLeft: (theme: Theme) => theme.spacing(2) },
-        '& input': { paddingLeft: (theme: Theme) => theme.spacing(3.5) },
         '& fieldset': {
-            paddingLeft: (theme: Theme) => theme.spacing(2.5),
             borderRadius: '30px',
         },
     },

@@ -9,6 +9,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     const params = []
 
+    if (req.query['lastItem'] && String(req.query['lastItem']) !== '0') {
+        params.push(['key', String(req.query['lastItem'])])
+    }
     if (req.query['tipo'] && String(req.query['tipo']) !== '0') {
         params.push(['tipo', String(req.query['tipo'])])
     }
@@ -18,8 +21,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (req.query['from'] && String(req.query['from']) !== '0') {
         params.push(['from', String(req.query['from'])])
     }
-    if (req.query['to+'] && String(req.query['to+']) !== '0') {
-        params.push(['to+', String(req.query['to+'])])
+    if (req.query['to'] && String(req.query['to']) !== '0') {
+        params.push(['to', String(req.query['to'])])
     }
     if (req.query['banos'] && String(req.query['banos']) !== '0') {
         params.push(['banos', String(req.query['banos'])])
@@ -37,11 +40,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         params.push(['query', String(req.query['query'])])
     }
     const urlParams = new URLSearchParams(params).toString();
-    const url = new URL(`${process.env.BASE_URL}/filtros/inmuebles.php`);
+    const url = new URL(`${process.env.BASE_URL}/inmuebles_rango.php`);
     if (params.length > 0) {
         url.search = urlParams;
     }
-
+    console.log(params)
     try {
         const respuesta = await fetch(url);
 

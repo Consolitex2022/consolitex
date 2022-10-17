@@ -1,13 +1,16 @@
 import { FC, useState, Suspense } from 'react';
 import dynamic from "next/dynamic";
-import { Box, Button, LinearProgress, Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import LinearProgress from '@mui/material/LinearProgress';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 import { Inmueble } from '../../pages';
 
 import PlaceholderGrid from "../placeholders/InmuebleCardGridPlaceholder";
 import PlaceholderNoGrid from "../placeholders/InmuebleCardNoGridPlaceholder";
 import InfinityScroll from "react-infinite-scroll-component";
-import { SeccionSuperior } from './';
+import { ModalFiltros, SeccionSuperior } from './';
 import { CustomImage } from '../images/CustomImage';
 import search from '../../pages/search';
 import { useRouter } from 'next/router';
@@ -48,47 +51,7 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
         })
     }
     const fetchData = async () => {
-        const url = `/api/infiniteScroll?lastItem=${lastItemKey}`;
-
-        const respuesta = await fetch(url);
-
-        const data = await respuesta.json();
-
-        const inm = data.data;
-        const lastPosition = inm.length - 1;
-        const newLastItemKey = inm[lastPosition].data.key;
-        const newInmuebles = [...inmueblesState, ...inm]
-        console.log(newInmuebles);
-        setInmueblesState(newInmuebles);
-        setLastItemKey(newLastItemKey);
-        if (inm.length < 20) {
-            setHasMore(false);
-        } else {
-            setHasMore(true);
-        }
-    }
-    const fetchNewData = async (query: string) => {
-        const url = `/api/infiniteScroll?query=${query}`;
-
-        const respuesta = await fetch(url);
-
-        const data = await respuesta.json();
-
-        const inm = data.data;
-        const lastPosition = inm.length - 1;
-        const newLastItemKey = inm[lastPosition].data.key;
-        setInmueblesState(inm);
-        setLastItemKey(newLastItemKey);
-        if (inm.length < 20) {
-            setHasMore(false);
-        } else {
-            setHasMore(true);
-        }
-    }
-    const onApply = async () => {
-
         const params = [];
-
         if (filters.tipo && filters.tipo !== '0') {
             params.push(['tipo', String(filters.tipo)])
         }
@@ -116,9 +79,30 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
         if (filters.query && filters.query !== '0') {
             params.push(['query', String(filters.query)])
         }
+        const url = params.length > 0 ? new URL(`http://localhost:3000/api/infiniteScroll?lastItem=${lastItemKey}`) : new URL(`http://localhost:3000/api/filter`);
+        params.push(["lastItem", String(lastItemKey)]);
+
         const urlParams = new URLSearchParams(params).toString();
-        const url = new URL(`/api/filter`);
         url.search = urlParams;
+
+        const respuesta = await fetch(url);
+
+        const data = await respuesta.json();
+
+        const inm = data.data;
+        const lastPosition = inm.length - 1;
+        const newLastItemKey = inm[lastPosition].data.key;
+        const newInmuebles = [...inmueblesState, ...inm]
+        setInmueblesState(newInmuebles);
+        setLastItemKey(newLastItemKey);
+        if (inm.length < 20) {
+            setHasMore(false);
+        } else {
+            setHasMore(true);
+        }
+    }
+    const fetchNewData = async (query: string) => {
+        const url = `/api/infiniteScroll?query=${query}`;
 
         const respuesta = await fetch(url);
 
@@ -135,10 +119,16 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
             setHasMore(true);
         }
     }
+    // Control modal de filtros
+    const [open, setOpen] = useState<boolean>(false);
+    const props = { open, setOpen, filters, setFilters, setInmueblesState, inmueblesState, setLastItemKey, setHasMore }
+
     return (
         <Box sx={{ width: { xs: "100%", md: "90%" }, margin: "20px auto" }}>
 
-            <SeccionSuperior squared={squared} toggleSquare={toggleSquare} setFilters={setFilters} filters={filters} />
+            {/* Modal de filtros */}
+            <ModalFiltros {...props} />
+            <SeccionSuperior squared={squared} toggleSquare={toggleSquare} setOpen={setOpen} />
             <InfinityScroll
                 dataLength={inmueblesState.length}
                 hasMore={hasMore}
@@ -164,7 +154,7 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
             >
 
                 {
-                    inmuebles?.length > 0
+                    inmueblesState?.length > 0
                         ?
                         squared
                             ?

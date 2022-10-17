@@ -120,7 +120,7 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, se
         if (filters.query && filters.query !== '0') {
             params.push(['query', String(filters.query)])
         }
-        const url = new URL(`http://localhost:3000/api/filter`);
+        const url = new URL(`/api/filter`, window.location.pathname);
         const urlParams = new URLSearchParams(params).toString();
         url.search = urlParams;
 
@@ -144,7 +144,6 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, se
         } else {
             setHasMore(true);
         }
-
     }
     return (
         <Dialog open={open} onClose={handleClose} maxWidth={"sm"} fullWidth PaperProps={{

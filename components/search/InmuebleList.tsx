@@ -79,7 +79,7 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
         if (filters.query && filters.query !== '0') {
             params.push(['query', String(filters.query)])
         }
-        const url = params.length > 0 ? new URL(`/api/infiniteScroll?lastItem=${lastItemKey}`, window.location.host) : new URL(`/api/filter`, window.location.host);
+        const url = params.length > 0 ? new URL(`/api/infiniteScroll?lastItem=${lastItemKey}`, window.location.origin) : new URL(`/api/filter`, window.location.origin);
         params.push(["lastItem", String(lastItemKey)]);
 
         const urlParams = new URLSearchParams(params).toString();

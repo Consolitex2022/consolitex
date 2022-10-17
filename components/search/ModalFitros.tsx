@@ -120,7 +120,7 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, se
         if (filters.query && filters.query !== '0') {
             params.push(['query', String(filters.query)])
         }
-        const url = new URL(`/api/filter`, window.location.host);
+        const url = new URL(`/api/filter`, window.location.origin);
         const urlParams = new URLSearchParams(params).toString();
         url.search = urlParams;
 

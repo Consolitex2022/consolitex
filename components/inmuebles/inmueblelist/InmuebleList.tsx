@@ -17,6 +17,7 @@ import styles from './InmuebleList.module.css';
 
 const settings = {
     autoplay: false,
+    arrows: false,
     slidesToShow: 4,
     slidesToScroll: 4,
     infinite: true,

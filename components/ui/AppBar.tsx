@@ -230,7 +230,7 @@ const ResponsiveAppBar: FC<Props> = ({ title = "Consolitex", transparent = false
                 <Toolbar disableGutters >
                     <MenuPc {...pcMenuProps} />
                     <MenuMobile {...mobileMenuProps} transparent={transparent} />
-                    {
+                    {/* {
                         token && (<MenuUsuario {...userMenuProps} />)
                     }
                     {
@@ -239,7 +239,7 @@ const ResponsiveAppBar: FC<Props> = ({ title = "Consolitex", transparent = false
                             <Button color="secondary" variant="contained" size="small" sx={{ fontWeight: "bold", boxShadow: "0", textTransform: "none", }}>LogIn</Button>
                         </>
                         )
-                    }
+                    } */}
                 </Toolbar>
             </Container>
         </AppBar>

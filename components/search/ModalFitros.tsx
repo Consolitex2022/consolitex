@@ -14,6 +14,7 @@ import CloseIcon from '@mui/icons-material/CloseRounded';
 import { TogglerGroup } from ".";
 
 import { IOption } from "../../interfaces/toggler-options-type";
+import Swal from "sweetalert2";
 
 interface ModalFiltrosProps {
     open: boolean;
@@ -124,25 +125,65 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, se
         const urlParams = new URLSearchParams(params).toString();
         url.search = urlParams;
 
-        const respuesta = await fetch(url);
+        try {
+            const respuesta = await fetch(url);
 
-        const data = await respuesta.json();
+            switch (respuesta.status) {
+                case 200:
+                    const data = await respuesta.json();
 
-        const inm = data.data;
-        const lastPosition = inm.length - 1;
-        const newLastItemKey = inm[lastPosition].data.key;
-        setInmueblesState(inm);
-        setLastItemKey(newLastItemKey);
-        setOpen(false);
-        setFilters({
-            ...filters,
-            to,
-            from
-        })
-        if (inm.length < 20) {
+                    const inm = data.data;
+                    const lastPosition = inm.length - 1;
+                    const newLastItemKey = inm[lastPosition].data.key;
+                    setInmueblesState(inm);
+                    setLastItemKey(newLastItemKey);
+                    setOpen(false);
+                    setFilters({
+                        ...filters,
+                        to,
+                        from
+                    })
+                    if (inm.length < 20) {
+                        setHasMore(false);
+                    } else {
+                        setHasMore(true);
+                    }
+                    break;
+                case 204:
+                    Swal.fire({
+                        title: "Oops!",
+                        text: "No se encontraron resultados",
+                        icon: "error"
+                    })
+                    setInmueblesState(null);
+                    setLastItemKey(0);
+                    setOpen(false);
+                    setHasMore(false);
+                    break;
+                default:
+                    Swal.fire({
+                        title: "Oops!",
+                        text: "No se encontraron resultados",
+                        icon: "error"
+                    })
+                    setInmueblesState(null);
+                    setLastItemKey(0);
+                    setOpen(false);
+                    setHasMore(false);
+                    break;
+            }
+
+        } catch (err) {
+            console.log(err);
+            Swal.fire({
+                title: "Oops!",
+                text: "No se encontraron resultados",
+                icon: "error"
+            })
+            setInmueblesState(null);
+            setLastItemKey(0);
+            setOpen(false);
             setHasMore(false);
-        } else {
-            setHasMore(true);
         }
     }
     return (

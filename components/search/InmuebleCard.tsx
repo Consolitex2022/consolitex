@@ -165,7 +165,8 @@ const styles = {
         minHeight: 260,
         height: { xs: "auto", sm: "auto" },
         position: "relative",
-        overflow: "hidden"
+        overflow: "hidden",
+        cursor: "pointer",
     },
     codContainer: {
         display: "flex",

@@ -14,6 +14,7 @@ import { ModalFiltros, SeccionSuperior } from './';
 import { CustomImage } from '../images/CustomImage';
 import search from '../../pages/search';
 import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
 
 interface Props {
     inmuebles: Inmueble[];
@@ -85,20 +86,57 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
         const urlParams = new URLSearchParams(params).toString();
         url.search = urlParams;
 
-        const respuesta = await fetch(url);
+        try {
 
-        const data = await respuesta.json();
+            const respuesta = await fetch(url);
+            switch (respuesta.status) {
+                case 200:
 
-        const inm = data.data;
-        const lastPosition = inm.length - 1;
-        const newLastItemKey = inm[lastPosition].data.key;
-        const newInmuebles = [...inmueblesState, ...inm]
-        setInmueblesState(newInmuebles);
-        setLastItemKey(newLastItemKey);
-        if (inm.length < 20) {
+                    const data = await respuesta.json();
+
+                    const inm = data.data;
+                    const lastPosition = inm.length - 1;
+                    const newLastItemKey = inm[lastPosition].data.key;
+                    const newInmuebles = [...inmueblesState, ...inm]
+                    setInmueblesState(newInmuebles);
+                    setLastItemKey(newLastItemKey);
+                    if (inm.length < 20) {
+                        setHasMore(false);
+                    } else {
+                        setHasMore(true);
+                    }
+                    break;
+                case 204:
+                    Swal.fire({
+                        title: "Oops!",
+                        text: "No se encontraron resultados",
+                        icon: "error"
+                    })
+                    setLastItemKey(0);
+                    setInmueblesState(null);
+                    setHasMore(false);
+                    break;
+                default:
+                    Swal.fire({
+                        title: "Oops!",
+                        text: "No se encontraron resultados",
+                        icon: "error"
+                    })
+                    setLastItemKey(0);
+                    setInmueblesState(null);
+                    setHasMore(false);
+                    break;
+            }
+        } catch (error) {
+            console.log(error);
+            Swal.fire({
+                title: "Oops!",
+                text: "No se encontraron resultados",
+                icon: "error"
+            })
+            setLastItemKey(0);
+            setInmueblesState(null);
             setHasMore(false);
-        } else {
-            setHasMore(true);
         }
     }
     const fetchNewData = async (query: string) => {
@@ -122,15 +160,16 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
     // Control modal de filtros
     const [open, setOpen] = useState<boolean>(false);
     const props = { open, setOpen, filters, setFilters, setInmueblesState, inmueblesState, setLastItemKey, setHasMore }
+    const propsSeccion = { filters, setFilters, setInmueblesState, setLastItemKey, setHasMore, toggleSquare, squared, setOpen }
 
     return (
         <Box sx={{ width: { xs: "100%", md: "90%" }, margin: "20px auto" }}>
 
             {/* Modal de filtros */}
             <ModalFiltros {...props} />
-            <SeccionSuperior squared={squared} toggleSquare={toggleSquare} setOpen={setOpen} />
+            <SeccionSuperior {...propsSeccion} />
             <InfinityScroll
-                dataLength={inmueblesState.length}
+                dataLength={inmueblesState && inmueblesState.length > 0 ? inmueblesState.length : 0}
                 hasMore={hasMore}
                 loader={
                     <LinearProgress />
@@ -173,7 +212,7 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
                                     ))
                                 }
                             </Box>)
-                        : (<Typography>Nada de nada</Typography>)
+                        : ''
                 }
             </InfinityScroll>
         </Box>

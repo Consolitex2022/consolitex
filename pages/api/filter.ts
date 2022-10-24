@@ -47,20 +47,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     console.log(params)
     try {
         const respuesta = await fetch(url);
+        switch (respuesta.status) {
+            case 200:
+                const data = await respuesta.json();
 
-        const data = await respuesta.json();
+                const newInmuebles = [];
+                const length = Object.keys(data).length;
 
-        const newInmuebles = [];
-        const length = Object.keys(data).length;
+                for (let i = 0; i < Number(length); i++) {
+                    data[i] && newInmuebles.push(data[i]);
+                }
 
-        for (let i = 0; i < Number(length); i++) {
-            data[i] && newInmuebles.push(data[i]);
+                res.status(200).json({ message: "Datos encontrados", data: newInmuebles })
+                break;
+            case 204:
+                res.status(204).end();
+                break;
+            default:
+                res.status(204).end();
+                break;
         }
-
-        res.status(200).json({ message: "Datos encontrados", data: newInmuebles })
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Error interno" })
+        res.status(204).end();
     }
 }

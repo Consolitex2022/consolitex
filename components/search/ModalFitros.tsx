@@ -15,6 +15,7 @@ import { TogglerGroup } from ".";
 
 import { IOption } from "../../interfaces/toggler-options-type";
 import Swal from "sweetalert2";
+import { IFilter } from "../../interfaces";
 
 interface ModalFiltrosProps {
     open: boolean;
@@ -24,7 +25,8 @@ interface ModalFiltrosProps {
     inmueblesState: any;
     setInmueblesState: Dispatch<SetStateAction<any>>;
     setLastItemKey: Dispatch<SetStateAction<number>>;
-    setHasMore: Dispatch<SetStateAction<boolean>>
+    setHasMore: Dispatch<SetStateAction<boolean>>;
+    fetchData: () => Promise<void>;
 }
 
 const options: IOption[] = [
@@ -78,22 +80,42 @@ const optionsNegocio: IOption[] = [
     },
 ]
 
-export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, setFilters, setLastItemKey, setHasMore, inmueblesState, setInmueblesState }) => {
+export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, setFilters, setLastItemKey, setHasMore, inmueblesState, setInmueblesState, fetchData }) => {
 
     const [from, setFrom] = useState<number>(0);
     const [to, setTo] = useState<number>(0);
     const handleClose = () => {
         setOpen(false);
     }
+
+    /**
+     * Funcion para cambiar el valor del state de from y to (min / max)
+     * @param e Event handler HTMLInput
+     */
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const onlyNums = e.target.value.replace(/[^0-9]/g, '');
         e.target.name === 'from' && setFrom(Number(onlyNums))
         e.target.name === 'to' && setTo(Number(onlyNums));
     }
+
+    /**
+     * Funcion para aplicar los cambios de los filtros y realizar la busqueda de inmuebles
+     */
     const onApply = async () => {
 
+        const newFilter: IFilter = {
+            to,
+            from,
+            tipo: filters.tipo,
+            banos: filters.banos,
+            query: filters.query,
+            negocio: filters.negocio,
+            localidad: filters.localidad,
+            habitaciones: filters.habitaciones,
+            estacionamientos: filters.estacionamientos,
+            filterAnterior: Number(to) === 0 && Number(from) === 0 ? filters.filterAnterior : filters,
+        }
         const params = [];
-
         if (filters.tipo && filters.tipo !== '0') {
             params.push(['tipo', String(filters.tipo)])
         }
@@ -138,11 +160,7 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, se
                     setInmueblesState(inm);
                     setLastItemKey(newLastItemKey);
                     setOpen(false);
-                    setFilters({
-                        ...filters,
-                        to,
-                        from
-                    })
+                    setFilters(newFilter)
                     if (inm.length < 20) {
                         setHasMore(false);
                     } else {
@@ -198,35 +216,35 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, se
                     <Typography variant="overline">Habitaciones</Typography>
 
                     <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
-                        <TogglerGroup stateToggler={filters} filterName={"habitaciones"} setStateToggler={setFilters} optionsToggler={options} />
+                        <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"habitaciones"} setStateToggler={setFilters} optionsToggler={options} />
                     </Box>
                 </Grid>
                 <Grid item xs={12} sx={{ textAlign: "left" }}>
                     <Typography variant="overline">Baños</Typography>
 
                     <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
-                        <TogglerGroup stateToggler={filters} filterName={"banos"} setStateToggler={setFilters} optionsToggler={options} />
+                        <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"banos"} setStateToggler={setFilters} optionsToggler={options} />
                     </Box>
                 </Grid>
                 <Grid item xs={12} sx={{ textAlign: "left" }}>
                     <Typography variant="overline">Estacionamientos</Typography>
 
                     <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
-                        <TogglerGroup stateToggler={filters} filterName={"estacionamientos"} setStateToggler={setFilters} optionsToggler={options} />
+                        <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"estacionamientos"} setStateToggler={setFilters} optionsToggler={options} />
                     </Box>
                 </Grid>
                 <Grid item xs={12} sx={{ textAlign: "left" }}>
                     <Typography variant="overline">Negocio</Typography>
 
                     <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
-                        <TogglerGroup stateToggler={filters} filterName={"negocio"} setStateToggler={setFilters} optionsToggler={optionsNegocio} />
+                        <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"negocio"} setStateToggler={setFilters} optionsToggler={optionsNegocio} />
                     </Box>
                 </Grid>
                 <Grid item xs={12} sx={{ textAlign: "left" }}>
                     <Typography variant="overline">Localidad</Typography>
 
                     <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
-                        <TogglerGroup stateToggler={filters} filterName={"localidad"} setStateToggler={setFilters} optionsToggler={optionsLocalidad} />
+                        <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"localidad"} setStateToggler={setFilters} optionsToggler={optionsLocalidad} />
                     </Box>
                 </Grid>
                 <Grid item xs={12} sx={{ textAlign: "left" }}>
@@ -245,7 +263,6 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, se
         </Dialog>
     )
 }
-
 
 const styles = {
     inputRounded: {

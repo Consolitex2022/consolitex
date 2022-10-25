@@ -8,4 +8,5 @@ export type IFilter = {
     localidad: string;
     habitaciones: string;
     estacionamientos: string;
+    filterAnterior: IFilter | null;
 }

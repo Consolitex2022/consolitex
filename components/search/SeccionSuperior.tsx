@@ -103,6 +103,7 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ initialFilter, squared,
                     setOpen(false);
                     setFilters({
                         ...filters,
+                        filterAnterior: filters,
                         [filterName]: filterName === "to" || filterName === "from" ? 0 : '',
                     })
                     if (inm.length < 20) {
@@ -178,84 +179,87 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ initialFilter, squared,
      * Funcion para reestablecer los filtros a los primeros obtenidos al cargar la página
      */
     const resetFilters = async () => {
+        if (!filters.filterAnterior) {
+            return false;
+        } else {
+            setFilters(filters.filterAnterior);
 
-        setFilters(initialFilter);
+            const params = [];
 
-        const params = [];
-
-        if (initialFilter.tipo && initialFilter.tipo !== '0') {
-            params.push(['tipo', String(initialFilter.tipo)])
-        }
-        if (initialFilter.negocio && initialFilter.negocio !== '0') {
-            params.push(['negocio', String(initialFilter.negocio)])
-        }
-        if (initialFilter.habitaciones && initialFilter.habitaciones !== '0') {
-            params.push(['habitaciones', String(initialFilter.habitaciones)])
-        }
-        if (initialFilter.banos && initialFilter.banos !== '0') {
-            params.push(['banos', String(initialFilter.banos)])
-        }
-        if (initialFilter.estacionamientos && initialFilter.estacionamientos !== '0') {
-            params.push(['estacionamientos', String(initialFilter.estacionamientos)])
-        }
-        if (initialFilter.localidad && initialFilter.localidad !== '0') {
-            params.push(['localidad', String(initialFilter.localidad)])
-        }
-        if (initialFilter.from && initialFilter.from !== 0) {
-            params.push(['from', String(initialFilter.from)])
-        }
-        if (initialFilter.to && initialFilter.to !== 0) {
-            params.push(['to', String(initialFilter.to)])
-        }
-        if (initialFilter.query && initialFilter.query !== '0') {
-            params.push(['query', String(initialFilter.query)])
-        }
-        const url = new URL(`/api/filter`, window.location.origin);
-        const urlParams = new URLSearchParams(params).toString();
-        url.search = urlParams;
-        try {
-            const respuesta = await fetch(url);
-            switch (respuesta.status) {
-                case 200:
-                    const data = await respuesta.json();
-
-                    const inm = data.data;
-                    const lastPosition = inm.length - 1;
-                    const newLastItemKey = inm[lastPosition].data.key;
-                    setInmueblesState(inm);
-                    setLastItemKey(newLastItemKey);
-                    setOpen(false);
-                    if (inm.length < 20) {
-                        setHasMore(false);
-                    } else {
-                        setHasMore(true);
-                    }
-                    break;
-                case 204:
-                    Swal.fire({
-                        title: "Oops!",
-                        text: "No se encontraron resultados",
-                        icon: "error"
-                    })
-                    setLastItemKey(0);
-                    setInmueblesState(null);
-                    setHasMore(false);
-                    break;
-                default:
-                    Swal.fire({
-                        title: "Oops!",
-                        text: "No se encontraron resultados",
-                        icon: "error"
-                    })
-                    setLastItemKey(0);
-                    setInmueblesState(null);
-                    setHasMore(false);
-                    break;
+            if (filters.filterAnterior?.tipo && filters.filterAnterior?.tipo !== '0') {
+                params.push(['tipo', String(filters.filterAnterior?.tipo)])
             }
-        } catch (err) {
-            setLastItemKey(0);
-            setInmueblesState(null);
-            setHasMore(false);
+            if (filters.filterAnterior?.negocio && filters.filterAnterior?.negocio !== '0') {
+                params.push(['negocio', String(filters.filterAnterior?.negocio)])
+            }
+            if (filters.filterAnterior?.habitaciones && filters.filterAnterior?.habitaciones !== '0') {
+                params.push(['habitaciones', String(filters.filterAnterior?.habitaciones)])
+            }
+            if (filters.filterAnterior?.banos && filters.filterAnterior?.banos !== '0') {
+                params.push(['banos', String(filters.filterAnterior?.banos)])
+            }
+            if (filters.filterAnterior?.estacionamientos && filters.filterAnterior?.estacionamientos !== '0') {
+                params.push(['estacionamientos', String(filters.filterAnterior?.estacionamientos)])
+            }
+            if (filters.filterAnterior?.localidad && filters.filterAnterior?.localidad !== '0') {
+                params.push(['localidad', String(filters.filterAnterior?.localidad)])
+            }
+            if (filters.filterAnterior?.from && filters.filterAnterior?.from !== 0) {
+                params.push(['from', String(filters.filterAnterior?.from)])
+            }
+            if (filters.filterAnterior?.to && filters.filterAnterior?.to !== 0) {
+                params.push(['to', String(filters.filterAnterior?.to)])
+            }
+            if (filters.filterAnterior?.query && filters.filterAnterior?.query !== '0') {
+                params.push(['query', String(filters.filterAnterior?.query)])
+            }
+            const url = new URL(`/api/filter`, window.location.origin);
+            const urlParams = new URLSearchParams(params).toString();
+            url.search = urlParams;
+            try {
+                const respuesta = await fetch(url);
+                switch (respuesta.status) {
+                    case 200:
+                        const data = await respuesta.json();
+
+                        const inm = data.data;
+                        const lastPosition = inm.length - 1;
+                        const newLastItemKey = inm[lastPosition].data.key;
+                        setInmueblesState(inm);
+                        setLastItemKey(newLastItemKey);
+                        setOpen(false);
+                        if (inm.length < 20) {
+                            setHasMore(false);
+                        } else {
+                            setHasMore(true);
+                        }
+                        break;
+                    case 204:
+                        Swal.fire({
+                            title: "Oops!",
+                            text: "No se encontraron resultados",
+                            icon: "error"
+                        })
+                        setLastItemKey(0);
+                        setInmueblesState(null);
+                        setHasMore(false);
+                        break;
+                    default:
+                        Swal.fire({
+                            title: "Oops!",
+                            text: "No se encontraron resultados",
+                            icon: "error"
+                        })
+                        setLastItemKey(0);
+                        setInmueblesState(null);
+                        setHasMore(false);
+                        break;
+                }
+            } catch (err) {
+                setLastItemKey(0);
+                setInmueblesState(null);
+                setHasMore(false);
+            }
         }
     }
 
@@ -264,6 +268,7 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ initialFilter, squared,
      */
     const clearFilters = async () => {
         setFilters({
+            filterAnterior: filters,
             banos: '',
             habitaciones: '',
             estacionamientos: '',
@@ -368,12 +373,16 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ initialFilter, squared,
                     )
                 }
 
-                {/* Boton de vaciar filtros */}
-                <IconButton aria-label="" onClick={resetFilters}>
-                    <Tooltip title="Restablecer filtros originales">
-                        <RestartAllIcon />
-                    </Tooltip>
-                </IconButton>
+                {/* Boton de volver filtro anterior */}
+                {
+                    filters.filterAnterior && (
+                        <IconButton aria-label="" onClick={resetFilters}>
+                            <Tooltip title="Volver al filtro anterior">
+                                <RestartAllIcon />
+                            </Tooltip>
+                        </IconButton>)
+                }
+
                 {/* Boton de filtros */}
                 <IconButton aria-label="" onClick={handleOpen}>
                     <Tooltip title="Filtros">

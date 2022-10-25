@@ -58,6 +58,7 @@ export const InmuebleList: FC<Props> = ({ inmueblesSSR, localidadSSR = '', query
         habitaciones: habitacionesSSR,
         estacionamientos: estacionamientosSSR,
         tipo: tipoSSR,
+        filterAnterior: null,
     })
 
     // Filtros aplicados
@@ -184,7 +185,7 @@ export const InmuebleList: FC<Props> = ({ inmueblesSSR, localidadSSR = '', query
     // Control modal de filtros
     const [open, setOpen] = useState<boolean>(false);
 
-    const propsModal = { open, setOpen, filters, setFilters, setInmueblesState, inmueblesState, setLastItemKey, setHasMore }
+    const propsModal = { open, setOpen, filters, setFilters, setInmueblesState, inmueblesState, setLastItemKey, setHasMore, fetchData }
     const propsSeccion = { filters, setFilters, setInmueblesState, setLastItemKey, setHasMore, toggleSquare, squared, setOpen, initialFilter }
 
     return (

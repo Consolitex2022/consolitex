@@ -9,18 +9,16 @@ interface PropsToggler {
     stateToggler: any;
     optionsToggler: IOption[];
     filterName: string;
+    fetchData: () => Promise<void>;
 }
 
-export const TogglerGroup: FC<PropsToggler> = ({ setStateToggler, stateToggler, optionsToggler, filterName }) => {
-    const handleChange = (event: MouseEvent<HTMLElement>, newAlignment: string, filter: string) => {
+export const TogglerGroup: FC<PropsToggler> = ({ setStateToggler, stateToggler, optionsToggler, filterName, fetchData }) => {
+    const handleChange = async (event: MouseEvent<HTMLElement>, newAlignment: string, filter: string) => {
         setStateToggler({
             ...stateToggler,
+            filterAnterior: stateToggler,
             [filter]: newAlignment
         });
-        console.log({
-            ...stateToggler,
-            [filter]: newAlignment
-        })
     };
     return (
         <Paper elevation={0} sx={{ width: "100%", textAlign: "center", border: "1px solid rgba(0,0,0,0.3)", overflow: "hidden", borderRadius: 10 }}>

@@ -1,56 +1,78 @@
 import { FC, useState, Suspense } from 'react';
+
 import dynamic from "next/dynamic";
+
 import Typography from '@mui/material/Typography';
 import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-import { Inmueble } from '../../pages';
+import InfinityScroll from "react-infinite-scroll-component";
+
+import Swal from 'sweetalert2';
 
 import PlaceholderGrid from "../placeholders/InmuebleCardGridPlaceholder";
 import PlaceholderNoGrid from "../placeholders/InmuebleCardNoGridPlaceholder";
-import InfinityScroll from "react-infinite-scroll-component";
-import { ModalFiltros, SeccionSuperior } from './';
+import { ModalFiltros, SeccionSuperior, EndMessage } from './';
 import { CustomImage } from '../images/CustomImage';
-import search from '../../pages/search';
-import { useRouter } from 'next/router';
-import Swal from 'sweetalert2';
+import { Inmueble } from '../../pages';
+import { IFilter } from '../../interfaces';
 
 interface Props {
-    inmuebles: Inmueble[];
+    inmueblesSSR: Inmueble[] | null;
+    toSSR?: string | number;
+    fromSSR?: string | number;
+    tipoSSR?: string;
+    banosSSR?: string;
+    querySSR?: string;
+    negocioSSR?: string;
+    localidadSSR?: string;
+    habitacionesSSR?: string;
+    estacionamientosSSR?: string;
 }
 
-
-export const InmuebleList: FC<Props> = ({ inmuebles }) => {
-    const [squared, setSquared] = useState<boolean>(true);
+export const InmuebleList: FC<Props> = ({ inmueblesSSR, localidadSSR = '', querySSR = '', negocioSSR = '', habitacionesSSR = '', banosSSR = '', fromSSR = 0, toSSR = 0, tipoSSR = '', estacionamientosSSR = '' }) => {
     const InmuebleCard = dynamic(() => import('./').then((mod) => mod.InmuebleCard));
     const InmuebleCardGrid = dynamic(() => import('./').then((mod) => mod.InmuebleCardGrid));
-    const [inmueblesState, setInmueblesState] = useState<any>(inmuebles);
-    const [lastItemKey, setLastItemKey] = useState<any>(inmuebles[inmuebles.length - 1].data.key);
-    const [hasMore, setHasMore] = useState<any>(inmuebles.length < 20 ? false : true);
 
-    const [filters, setFilters] = useState<any>({
-        banos: '',
-        habitaciones: '',
-        estacionamientos: '',
-        from: 0,
-        to: 0,
-        localidad: '',
-        negocio: '',
+    // Tipo de card de inmueble (squared = true -> Card / squared = false -> CardGrid )
+    const [squared, setSquared] = useState<boolean>(true);
+
+    // Inmuebles a mostrar
+    const [inmueblesState, setInmueblesState] = useState<any>(inmueblesSSR);
+
+    // Key del ultimo inmueble, necesario para seguir la busqueda a partir de ese inmueble
+    const [lastItemKey, setLastItemKey] = useState<any>(inmueblesSSR ? inmueblesSSR[inmueblesSSR.length - 1].data.key : 0);
+
+    // Si está en true, al hacer scroll infinito se buscan más inmuebles
+    const [hasMore, setHasMore] = useState<any>(inmueblesSSR && inmueblesSSR.length < 20 ? false : true);
+
+    // Filtros recibidos por url
+    const [initialFilter] = useState<IFilter>({
+        to: toSSR,
+        from: fromSSR,
+        banos: banosSSR,
+        query: querySSR,
+        negocio: negocioSSR,
+        localidad: localidadSSR,
+        habitaciones: habitacionesSSR,
+        estacionamientos: estacionamientosSSR,
+        tipo: tipoSSR,
     })
 
+    // Filtros aplicados
+    const [filters, setFilters] = useState<IFilter>(initialFilter)
+
+    /**
+     * Funcion para cambiar la vista de inmuebles (cards grandes o pequeñas)
+     */
     const toggleSquare = () => {
         setSquared(prev => !prev)
     }
-    const router = useRouter();
-    const search = (data: string) => {
-        router.push({
-            pathname: `/search`,
-            query: {
-                query: data
-            }
-        })
-    }
+
+    /**
+     * Funcion para buscar inmuebles al hacer scroll al bottom
+     */
     const fetchData = async () => {
         const params = [];
         if (filters.tipo && filters.tipo !== '0') {
@@ -91,9 +113,7 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
             const respuesta = await fetch(url);
             switch (respuesta.status) {
                 case 200:
-
                     const data = await respuesta.json();
-
                     const inm = data.data;
                     const lastPosition = inm.length - 1;
                     const newLastItemKey = inm[lastPosition].data.key;
@@ -139,6 +159,10 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
             setHasMore(false);
         }
     }
+    /**
+     * Funcion para buscar inmuebles al pulsar los botones de busquedas recomendadas
+     * @param query datos a buscar
+     */
     const fetchNewData = async (query: string) => {
         const url = `/api/infiniteScroll?query=${query}`;
 
@@ -159,14 +183,15 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
     }
     // Control modal de filtros
     const [open, setOpen] = useState<boolean>(false);
-    const props = { open, setOpen, filters, setFilters, setInmueblesState, inmueblesState, setLastItemKey, setHasMore }
-    const propsSeccion = { filters, setFilters, setInmueblesState, setLastItemKey, setHasMore, toggleSquare, squared, setOpen }
+
+    const propsModal = { open, setOpen, filters, setFilters, setInmueblesState, inmueblesState, setLastItemKey, setHasMore }
+    const propsSeccion = { filters, setFilters, setInmueblesState, setLastItemKey, setHasMore, toggleSquare, squared, setOpen, initialFilter }
 
     return (
-        <Box sx={{ width: { xs: "100%", md: "90%" }, margin: "20px auto" }}>
+        <Box sx={styles.mainContainer}>
 
             {/* Modal de filtros */}
-            <ModalFiltros {...props} />
+            <ModalFiltros {...propsModal} />
             <SeccionSuperior {...propsSeccion} />
             <InfinityScroll
                 dataLength={inmueblesState && inmueblesState.length > 0 ? inmueblesState.length : 0}
@@ -175,19 +200,7 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
                     <LinearProgress />
                 }
                 endMessage={
-                    <Box sx={{ display: "flex", flexFlow: "row wrap", width: "100%", justifyContent: "center", p: 2, borderRadius: 5 }}>
-                        <CustomImage upperBoxStyles={{ width: 300 }} src="/searching-done.png" alt="No hay mas resultados - Consolitex" />
-                        <Box sx={{ flexGrow: 1, textAlign: "center", }}>
-                            <Typography variant="subtitle1" fontWeight="bold" sx={{ fontFamily: "Oxygen" }}>¡No hay más resultados!</Typography>
-                            <Typography variant="subtitle2" sx={{ fontFamily: "Oxygen" }}>Al parecer se han agotado los resultados para tu búsqueda, te invitamos a ver algunas de las búsquedas más frecuentes</Typography>
-                            <Button sx={{ textTransform: "none", mr: 1, mt: 1, borderRadius: 5 }} size="small" variant="outlined" onClick={() => fetchNewData('Apartamentos en Valencia')}>Apartamentos en Valencia</Button>
-                            <Button sx={{ textTransform: "none", mr: 1, mt: 1, borderRadius: 5 }} size="small" variant="outlined" onClick={() => fetchNewData('Apartamentos en San Diego')}>Apartamentos en San Diego</Button>
-                            <Button sx={{ textTransform: "none", mr: 1, mt: 1, borderRadius: 5 }} size="small" variant="outlined" onClick={() => fetchNewData('Apartamentos en Naguanagua')}>Apartamentos en Naguanagua</Button>
-                            <Button sx={{ textTransform: "none", mr: 1, mt: 1, borderRadius: 5 }} size="small" variant="outlined" onClick={() => fetchNewData('Quintas en Valencia')}>Quintas en Valencia</Button>
-                            <Button sx={{ textTransform: "none", mr: 1, mt: 1, borderRadius: 5 }} size="small" variant="outlined" onClick={() => fetchNewData('Townhouse en San Diego')}>Townhouse en San Diego</Button>
-                            <Button sx={{ textTransform: "none", mr: 1, mt: 1, borderRadius: 5 }} size="small" variant="outlined" onClick={() => fetchNewData('Quintas en Naguanagua')}>Quintas en Naguanagua</Button>
-                        </Box>
-                    </Box>
+                    <EndMessage fetchNewData={fetchNewData} />
                 }
                 next={fetchData}
             >
@@ -203,7 +216,7 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
                                 </Suspense>
                             ))
 
-                            : (<Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", width: "100%" }}>
+                            : (<Box sx={styles.containerCardGrid}>
                                 {
                                     inmueblesState.map((inmueble: Inmueble) => (
                                         <Suspense fallback={<PlaceholderGrid />} key={inmueble.data.key}>
@@ -217,4 +230,21 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
             </InfinityScroll>
         </Box>
     )
+}
+
+const styles = {
+    mainContainer: {
+        width: {
+            xs: "100%",
+            md: "90%"
+        },
+        margin: "20px auto"
+    },
+    containerCardGrid: {
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-evenly",
+        width: "100%"
+    }
+
 }

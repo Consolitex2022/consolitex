@@ -7,19 +7,24 @@ import GridSquared from '@mui/icons-material/WindowRounded';
 import GridRectangle from '@mui/icons-material/ViewStreamRounded';
 import LeftIcon from '@mui/icons-material/ArrowBackRounded';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
+import RestartAllIcon from '@mui/icons-material/RestartAlt';
 import Swal from "sweetalert2";
+import { IFilter } from "../../interfaces";
+
+
 interface PropsMenuSuperior {
     squared: boolean;
     toggleSquare: () => void;
     setOpen: Dispatch<SetStateAction<boolean>>;
-    filters: any;
+    filters: IFilter;
+    initialFilter: IFilter;
     setFilters: Dispatch<SetStateAction<any>>;
     setInmueblesState: Dispatch<SetStateAction<any>>;
     setLastItemKey: Dispatch<SetStateAction<number>>;
     setHasMore: Dispatch<SetStateAction<boolean>>
 }
 
-export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare, setOpen, filters, setFilters, setInmueblesState, setLastItemKey, setHasMore }) => {
+export const SeccionSuperior: FC<PropsMenuSuperior> = ({ initialFilter, squared, toggleSquare, setOpen, filters, setFilters, setInmueblesState, setLastItemKey, setHasMore }) => {
 
 
     // Enrutador
@@ -84,27 +89,60 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare, 
         const urlParams = new URLSearchParams(params).toString();
         url.search = urlParams;
 
-        const respuesta = await fetch(url);
+        try {
+            const respuesta = await fetch(url);
+            switch (respuesta.status) {
+                case 200:
+                    const data = await respuesta.json();
 
-        const data = await respuesta.json();
-
-        const inm = data.data;
-        const lastPosition = inm.length - 1;
-        const newLastItemKey = inm[lastPosition].data.key;
-        setInmueblesState(inm);
-        setLastItemKey(newLastItemKey);
-        setOpen(false);
-        setFilters({
-            ...filters,
-            [filterName]: filterName === "to" || filterName === "from" ? 0 : '',
-        })
-        if (inm.length < 20) {
+                    const inm = data.data;
+                    const lastPosition = inm.length - 1;
+                    const newLastItemKey = inm[lastPosition].data.key;
+                    setInmueblesState(inm);
+                    setLastItemKey(newLastItemKey);
+                    setOpen(false);
+                    setFilters({
+                        ...filters,
+                        [filterName]: filterName === "to" || filterName === "from" ? 0 : '',
+                    })
+                    if (inm.length < 20) {
+                        setHasMore(false);
+                    } else {
+                        setHasMore(true);
+                    }
+                    break;
+                case 204:
+                    Swal.fire({
+                        title: "Oops!",
+                        text: "No se encontraron resultados",
+                        icon: "error"
+                    })
+                    setLastItemKey(0);
+                    setInmueblesState(null);
+                    setHasMore(false);
+                    break;
+                default:
+                    Swal.fire({
+                        title: "Oops!",
+                        text: "No se encontraron resultados",
+                        icon: "error"
+                    })
+                    setLastItemKey(0);
+                    setInmueblesState(null);
+                    setHasMore(false);
+                    break;
+            }
+        } catch (err) {
+            setLastItemKey(0);
+            setInmueblesState(null);
             setHasMore(false);
-        } else {
-            setHasMore(true);
         }
     }
 
+    /**
+     * Funcion para detectar si los filtros tienen datos o no
+     * @returns true si los filtros están vacios, false si no.
+     */
     const areFiltersEmpty = () => {
         if (filters.tipo && filters.tipo !== '0') {
             return false;
@@ -136,6 +174,94 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare, 
         return true;
     }
 
+    /**
+     * Funcion para reestablecer los filtros a los primeros obtenidos al cargar la página
+     */
+    const resetFilters = async () => {
+
+        setFilters(initialFilter);
+
+        const params = [];
+
+        if (initialFilter.tipo && initialFilter.tipo !== '0') {
+            params.push(['tipo', String(initialFilter.tipo)])
+        }
+        if (initialFilter.negocio && initialFilter.negocio !== '0') {
+            params.push(['negocio', String(initialFilter.negocio)])
+        }
+        if (initialFilter.habitaciones && initialFilter.habitaciones !== '0') {
+            params.push(['habitaciones', String(initialFilter.habitaciones)])
+        }
+        if (initialFilter.banos && initialFilter.banos !== '0') {
+            params.push(['banos', String(initialFilter.banos)])
+        }
+        if (initialFilter.estacionamientos && initialFilter.estacionamientos !== '0') {
+            params.push(['estacionamientos', String(initialFilter.estacionamientos)])
+        }
+        if (initialFilter.localidad && initialFilter.localidad !== '0') {
+            params.push(['localidad', String(initialFilter.localidad)])
+        }
+        if (initialFilter.from && initialFilter.from !== 0) {
+            params.push(['from', String(initialFilter.from)])
+        }
+        if (initialFilter.to && initialFilter.to !== 0) {
+            params.push(['to', String(initialFilter.to)])
+        }
+        if (initialFilter.query && initialFilter.query !== '0') {
+            params.push(['query', String(initialFilter.query)])
+        }
+        const url = new URL(`/api/filter`, window.location.origin);
+        const urlParams = new URLSearchParams(params).toString();
+        url.search = urlParams;
+        try {
+            const respuesta = await fetch(url);
+            switch (respuesta.status) {
+                case 200:
+                    const data = await respuesta.json();
+
+                    const inm = data.data;
+                    const lastPosition = inm.length - 1;
+                    const newLastItemKey = inm[lastPosition].data.key;
+                    setInmueblesState(inm);
+                    setLastItemKey(newLastItemKey);
+                    setOpen(false);
+                    if (inm.length < 20) {
+                        setHasMore(false);
+                    } else {
+                        setHasMore(true);
+                    }
+                    break;
+                case 204:
+                    Swal.fire({
+                        title: "Oops!",
+                        text: "No se encontraron resultados",
+                        icon: "error"
+                    })
+                    setLastItemKey(0);
+                    setInmueblesState(null);
+                    setHasMore(false);
+                    break;
+                default:
+                    Swal.fire({
+                        title: "Oops!",
+                        text: "No se encontraron resultados",
+                        icon: "error"
+                    })
+                    setLastItemKey(0);
+                    setInmueblesState(null);
+                    setHasMore(false);
+                    break;
+            }
+        } catch (err) {
+            setLastItemKey(0);
+            setInmueblesState(null);
+            setHasMore(false);
+        }
+    }
+
+    /**
+     * Funcion para limpiar los filtros
+     */
     const clearFilters = async () => {
         setFilters({
             banos: '',
@@ -219,9 +345,10 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare, 
 
                     {/* <TextField size="small" fullWidth color="primary" sx={{ "& fieldset": { borderRadius: " 25px 0 0 25px" } }} /> */}
                     {/* <Button size="small" color="primary" sx={{ textTransform: "none", p: 0, height: 40, borderRadius: "0 25px 25px 0" }} disableElevation variant="contained">Buscar</Button> */}
-                    {filters.banos && (<Chip color="primary" onDelete={() => onDelete("banos")} variant="outlined" sx={styles.chip} label={`${filters.banos} ${filters.banos !== 1 ? "Baños" : "Baño"}`} />)}
+                    {filters.banos && (<Chip color="primary" onDelete={() => onDelete("banos")} variant="outlined" sx={styles.chip} label={`${filters.banos} ${Number(filters.banos) !== 1 ? "Baños" : "Baño"}`} />)}
                     {filters.habitaciones && (<Chip color="primary" onDelete={() => onDelete("habitaciones")} variant="outlined" sx={styles.chip} label={`${filters.habitaciones} Hab.`} />)}
                     {filters.estacionamientos && (<Chip color="primary" onDelete={() => onDelete("estacionamientos")} variant="outlined" sx={styles.chip} label={`${filters.estacionamientos} Est.`} />)}
+                    {filters.query && (<Chip color="primary" onDelete={() => onDelete("query")} variant="outlined" sx={styles.chip} label={`Busqueda: ${filters.query}`} />)}
                     {filters.from > 0 && (<Chip color="primary" onDelete={() => onDelete("from")} variant="outlined" sx={styles.chip} label={`Min. ${filters.from}`} />)}
                     {filters.to > 0 && (<Chip color="primary" onDelete={() => onDelete("to")} variant="outlined" sx={styles.chip} label={`Max. ${filters.to}`} />)}
                     {filters.negocio && (<Chip color="primary" onDelete={() => onDelete("negocio")} variant="outlined" sx={styles.chip} label={`${filters.negocio}`} />)}
@@ -241,6 +368,12 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ squared, toggleSquare, 
                     )
                 }
 
+                {/* Boton de vaciar filtros */}
+                <IconButton aria-label="" onClick={resetFilters}>
+                    <Tooltip title="Restablecer filtros originales">
+                        <RestartAllIcon />
+                    </Tooltip>
+                </IconButton>
                 {/* Boton de filtros */}
                 <IconButton aria-label="" onClick={handleOpen}>
                     <Tooltip title="Filtros">

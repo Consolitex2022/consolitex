@@ -497,7 +497,7 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ filters, setFilters, setLa
                         <Select size="small" fullWidth sx={{ borderRadius: 10 }} onChange={handleChangeSelect} name="tipo" value={filters.tipo ? filters.tipo : "0"} defaultValue={"0"}>
                             <MenuItem value={"0"} disabled>Tipo de inmueble</MenuItem>
                             {
-                                tiposDeInmueble.map((t: string) => (<MenuItem value={t}>{t}</MenuItem>))
+                                tiposDeInmueble.map((t: string) => (<MenuItem key={t} value={t}>{t}</MenuItem>))
                             }
                         </Select>
                     </Grid>

@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         params.push(['key', String(req.query['lastItem'])])
     }
     if (req.query['tipo'] && String(req.query['tipo']) !== '0') {
-        params.push(['tipo', String(req.query['tipo'])])
+        params.push(['tipo_inmueble', String(req.query['tipo'])])
     }
     if (req.query['habitaciones'] && String(req.query['habitaciones']) !== '0') {
         params.push(['habitaciones', String(req.query['habitaciones'])])
@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         params.push(['estacionamientos', String(req.query['estacionamientos'])])
     }
     if (req.query['negocio'] && String(req.query['negocio']) !== '0') {
-        params.push(['negocio', String(req.query['negocio'])])
+        params.push(['tipo_negocio', String(req.query['negocio'])])
     }
     if (req.query['localidad'] && String(req.query['localidad']) !== '0') {
         params.push(['localidad', String(req.query['localidad'])])

@@ -1,4 +1,5 @@
 .slick-slider-container>div>div>div {
     display: grid !important;
     place-items: center !important;
+    padding-block: 40px;
 }

@@ -182,17 +182,12 @@ export const InmuebleList: FC<Props> = ({ inmueblesSSR, localidadSSR = '', query
             setHasMore(true);
         }
     }
-    // Control modal de filtros
-    const [open, setOpen] = useState<boolean>(false);
 
-    const propsModal = { open, setOpen, filters, setFilters, setInmueblesState, inmueblesState, setLastItemKey, setHasMore, fetchData }
-    const propsSeccion = { filters, setFilters, setInmueblesState, setLastItemKey, setHasMore, toggleSquare, squared, setOpen, initialFilter }
+    const propsSeccion = { filters, setFilters, setInmueblesState, setLastItemKey, setHasMore, toggleSquare, squared, fetchData, initialFilter, inmueblesState }
 
     return (
         <Box sx={styles.mainContainer}>
 
-            {/* Modal de filtros */}
-            <ModalFiltros {...propsModal} />
             <SeccionSuperior {...propsSeccion} />
             <InfinityScroll
                 dataLength={inmueblesState && inmueblesState.length > 0 ? inmueblesState.length : 0}

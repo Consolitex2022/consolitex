@@ -7,7 +7,11 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 
+import ClearAllIcon from '@mui/icons-material/ClearAll';
+import RestartAllIcon from '@mui/icons-material/RestartAlt';
+import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import SaveIcon from '@mui/icons-material/ManageSearchRounded';
 import CloseIcon from '@mui/icons-material/CloseRounded';
 
@@ -16,10 +20,9 @@ import { TogglerGroup } from ".";
 import { IOption } from "../../interfaces/toggler-options-type";
 import Swal from "sweetalert2";
 import { IFilter } from "../../interfaces";
+import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 interface ModalFiltrosProps {
-    open: boolean;
-    setOpen: Dispatch<SetStateAction<boolean>>;
     filters: any;
     setFilters: Dispatch<SetStateAction<any>>;
     inmueblesState: any;
@@ -28,7 +31,15 @@ interface ModalFiltrosProps {
     setHasMore: Dispatch<SetStateAction<boolean>>;
     fetchData: () => Promise<void>;
 }
-
+const tiposDeInmueble: string[] = [
+    "Apartamento",
+    "Apartoquinta",
+    "Quinta",
+    "Townhouse",
+    "Local Comercial",
+    "Galpon",
+    "Terreno"
+]
 const options: IOption[] = [
     {
         value: '0',
@@ -80,10 +91,11 @@ const optionsNegocio: IOption[] = [
     },
 ]
 
-export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, setFilters, setLastItemKey, setHasMore, inmueblesState, setInmueblesState, fetchData }) => {
+export const ModalFiltros: FC<ModalFiltrosProps> = ({ filters, setFilters, setLastItemKey, setHasMore, inmueblesState, setInmueblesState, fetchData }) => {
 
     const [from, setFrom] = useState<number>(0);
     const [to, setTo] = useState<number>(0);
+    const [open, setOpen] = useState<boolean>(false);
     const handleClose = () => {
         setOpen(false);
     }
@@ -96,6 +108,25 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, se
         const onlyNums = e.target.value.replace(/[^0-9]/g, '');
         e.target.name === 'from' && setFrom(Number(onlyNums))
         e.target.name === 'to' && setTo(Number(onlyNums));
+    }
+
+    /**
+     * Funcion para asignar el valor de tipo de inmueble a los filtros
+     * @param e Evento de cambio del select
+     */
+    const handleChangeSelect = (e: SelectChangeEvent) => {
+        setFilters({
+            ...filters,
+            filterAnterior: filters,
+            tipo: e.target.value
+        })
+    }
+
+    /**
+     * Funcion para habir el modal de filtros
+     */
+    const handleOpen = () => {
+        setOpen(true)
     }
 
     /**
@@ -204,63 +235,286 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ open, setOpen, filters, se
             setHasMore(false);
         }
     }
+    /**
+   * Funcion para detectar si los filtros tienen datos o no
+   * @returns true si los filtros están vacios, false si no.
+   */
+    const areFiltersEmpty = () => {
+        if (filters.tipo && filters.tipo !== '0') {
+            return false;
+        }
+        if (filters.negocio && filters.negocio !== '0') {
+            return false;
+        }
+        if (filters.habitaciones && filters.habitaciones !== '0') {
+            return false;
+        }
+        if (filters.banos && filters.banos !== '0') {
+            return false;
+        }
+        if (filters.estacionamientos && filters.estacionamientos !== '0') {
+            return false;
+        }
+        if (filters.localidad && filters.localidad !== '0') {
+            return false;
+        }
+        if (filters.from && filters.from !== 0) {
+            return false;
+        }
+        if (filters.to && filters.to !== 0) {
+            return false;
+        }
+        if (filters.query && filters.query !== '0') {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Funcion para reestablecer los filtros a los primeros obtenidos al cargar la página
+     */
+    const resetFilters = async () => {
+        if (!filters.filterAnterior) {
+            return false;
+        } else {
+            setFilters(filters.filterAnterior);
+
+            const params = [];
+
+            if (filters.filterAnterior?.tipo && filters.filterAnterior?.tipo !== '0') {
+                params.push(['tipo', String(filters.filterAnterior?.tipo)])
+            }
+            if (filters.filterAnterior?.negocio && filters.filterAnterior?.negocio !== '0') {
+                params.push(['negocio', String(filters.filterAnterior?.negocio)])
+            }
+            if (filters.filterAnterior?.habitaciones && filters.filterAnterior?.habitaciones !== '0') {
+                params.push(['habitaciones', String(filters.filterAnterior?.habitaciones)])
+            }
+            if (filters.filterAnterior?.banos && filters.filterAnterior?.banos !== '0') {
+                params.push(['banos', String(filters.filterAnterior?.banos)])
+            }
+            if (filters.filterAnterior?.estacionamientos && filters.filterAnterior?.estacionamientos !== '0') {
+                params.push(['estacionamientos', String(filters.filterAnterior?.estacionamientos)])
+            }
+            if (filters.filterAnterior?.localidad && filters.filterAnterior?.localidad !== '0') {
+                params.push(['localidad', String(filters.filterAnterior?.localidad)])
+            }
+            if (filters.filterAnterior?.from && filters.filterAnterior?.from !== 0) {
+                params.push(['from', String(filters.filterAnterior?.from)])
+            }
+            if (filters.filterAnterior?.to && filters.filterAnterior?.to !== 0) {
+                params.push(['to', String(filters.filterAnterior?.to)])
+            }
+            if (filters.filterAnterior?.query && filters.filterAnterior?.query !== '0') {
+                params.push(['query', String(filters.filterAnterior?.query)])
+            }
+            const url = new URL(`/api/filter`, window.location.origin);
+            const urlParams = new URLSearchParams(params).toString();
+            url.search = urlParams;
+            try {
+                const respuesta = await fetch(url);
+                switch (respuesta.status) {
+                    case 200:
+                        const data = await respuesta.json();
+
+                        const inm = data.data;
+                        const lastPosition = inm.length - 1;
+                        const newLastItemKey = inm[lastPosition].data.key;
+                        setInmueblesState(inm);
+                        setLastItemKey(newLastItemKey);
+                        setOpen(false);
+                        if (inm.length < 20) {
+                            setHasMore(false);
+                        } else {
+                            setHasMore(true);
+                        }
+                        break;
+                    case 204:
+                        Swal.fire({
+                            title: "Oops!",
+                            text: "No se encontraron resultados",
+                            icon: "error"
+                        })
+                        setLastItemKey(0);
+                        setInmueblesState(null);
+                        setHasMore(false);
+                        break;
+                    default:
+                        Swal.fire({
+                            title: "Oops!",
+                            text: "No se encontraron resultados",
+                            icon: "error"
+                        })
+                        setLastItemKey(0);
+                        setInmueblesState(null);
+                        setHasMore(false);
+                        break;
+                }
+            } catch (err) {
+                setLastItemKey(0);
+                setInmueblesState(null);
+                setHasMore(false);
+            }
+        }
+    }
+
+    /**
+     * Funcion para limpiar los filtros
+     */
+    const clearFilters = async () => {
+        setFilters({
+            filterAnterior: filters,
+            banos: '',
+            habitaciones: '',
+            estacionamientos: '',
+            negocio: '',
+            localidad: '',
+            from: 0,
+            to: 0,
+            tipo: '',
+            query: '',
+        })
+        const url = new URL(`/api/filter`, window.location.origin);
+
+        try {
+
+            const respuesta = await fetch(url);
+            switch (respuesta.status) {
+                case 200:
+                    const data = await respuesta.json();
+
+                    const inm = data.data;
+                    const lastPosition = inm.length - 1;
+                    const newLastItemKey = inm[lastPosition].data.key;
+                    setInmueblesState(inm);
+                    setLastItemKey(newLastItemKey);
+                    setOpen(false);
+                    if (inm.length < 20) {
+                        setHasMore(false);
+                    } else {
+                        setHasMore(true);
+                    }
+                    break;
+                case 204:
+                    Swal.fire({
+                        title: "Oops!",
+                        text: "No se encontraron resultados",
+                        icon: "error"
+                    })
+                    setLastItemKey(0);
+                    setInmueblesState(null);
+                    setHasMore(false);
+                    break;
+                default:
+                    Swal.fire({
+                        title: "Oops!",
+                        text: "No se encontraron resultados",
+                        icon: "error"
+                    })
+                    setLastItemKey(0);
+                    setInmueblesState(null);
+                    setHasMore(false);
+                    break;
+            }
+        } catch (err) {
+            setLastItemKey(0);
+            setInmueblesState(null);
+            setHasMore(false);
+        }
+    }
     return (
-        <Dialog open={open} onClose={handleClose} maxWidth={"sm"} fullWidth PaperProps={{
-            style: { borderRadius: 16, padding: 8 }
-        }}>
-            <Grid container display="flex" justifyContent="center" alignItems="center" spacing={1} sx={{ p: 2, position: "relative" }}>
-                <IconButton sx={{ position: "absolute", top: 5, right: 0 }} size="small" onClick={() => setOpen(false)}>
-                    <CloseIcon />
-                </IconButton>
-                <Grid item xs={12} sx={{ textAlign: "left" }}>
-                    <Typography variant="overline">Habitaciones</Typography>
+        <>
+            {/* Boton de filtros */}
+            <IconButton aria-label="" onClick={handleOpen}>
+                <Tooltip title="Filtros">
+                    <TuneRoundedIcon />
+                </Tooltip>
+            </IconButton>
+            {
+                !areFiltersEmpty() && (
+                    <IconButton aria-label="" onClick={clearFilters}>
+                        <Tooltip title="Limpiar filtros">
+                            <ClearAllIcon />
+                        </Tooltip>
+                    </IconButton>
+                )
+            }
 
-                    <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
-                        <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"habitaciones"} setStateToggler={setFilters} optionsToggler={options} />
-                    </Box>
-                </Grid>
-                <Grid item xs={12} sx={{ textAlign: "left" }}>
-                    <Typography variant="overline">Baños</Typography>
+            {/* Boton de volver filtro anterior */}
+            {
+                filters.filterAnterior && (
+                    <IconButton aria-label="" onClick={resetFilters}>
+                        <Tooltip title="Volver al filtro anterior">
+                            <RestartAllIcon />
+                        </Tooltip>
+                    </IconButton>)
+            }
 
-                    <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
-                        <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"banos"} setStateToggler={setFilters} optionsToggler={options} />
-                    </Box>
-                </Grid>
-                <Grid item xs={12} sx={{ textAlign: "left" }}>
-                    <Typography variant="overline">Estacionamientos</Typography>
+            <Dialog open={open} onClose={handleClose} maxWidth={"sm"} fullWidth PaperProps={{
+                style: { borderRadius: 16, padding: 8 }
+            }}>
+                <Grid container display="flex" justifyContent="center" alignItems="center" spacing={1} sx={{ p: 2, position: "relative" }}>
+                    <IconButton sx={{ position: "absolute", top: 5, right: 0 }} size="small" onClick={() => setOpen(false)}>
+                        <CloseIcon />
+                    </IconButton>
+                    <Grid item xs={12} sx={{ textAlign: "left" }}>
+                        <Typography variant="overline">Habitaciones</Typography>
 
-                    <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
-                        <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"estacionamientos"} setStateToggler={setFilters} optionsToggler={options} />
-                    </Box>
-                </Grid>
-                <Grid item xs={12} sx={{ textAlign: "left" }}>
-                    <Typography variant="overline">Negocio</Typography>
+                        <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
+                            <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"habitaciones"} setStateToggler={setFilters} optionsToggler={options} />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} sx={{ textAlign: "left" }}>
+                        <Typography variant="overline">Baños</Typography>
 
-                    <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
-                        <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"negocio"} setStateToggler={setFilters} optionsToggler={optionsNegocio} />
-                    </Box>
-                </Grid>
-                <Grid item xs={12} sx={{ textAlign: "left" }}>
-                    <Typography variant="overline">Localidad</Typography>
+                        <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
+                            <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"banos"} setStateToggler={setFilters} optionsToggler={options} />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} sx={{ textAlign: "left" }}>
+                        <Typography variant="overline">Estacionamientos</Typography>
 
-                    <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
-                        <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"localidad"} setStateToggler={setFilters} optionsToggler={optionsLocalidad} />
-                    </Box>
-                </Grid>
-                <Grid item xs={12} sx={{ textAlign: "left" }}>
-                    <Typography variant="overline">Rango de precio</Typography>
+                        <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
+                            <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"estacionamientos"} setStateToggler={setFilters} optionsToggler={options} />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} sx={{ textAlign: "left" }}>
+                        <Typography variant="overline">Negocio</Typography>
 
-                    <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
-                        <TextField fullWidth name="from" value={from} onChange={handleChange} size="small" label="Min" color="primary" variant="outlined" sx={styles.inputRounded} />
-                        <TextField fullWidth name="to" value={to} error={from > to} helperText={from > to ? "El valor de Max. debe ser mayor del Min." : ''} onChange={handleChange} size="small" label="Max" color="primary" variant="outlined" sx={{ ...styles.inputRounded, ml: 1 }} />
-                    </Box>
-                </Grid>
-                <Grid item xs={12} sx={{ textAlign: "left" }}>
-                    <Button fullWidth size="small" onClick={onApply} color="primary" variant="contained" disableElevation sx={{ borderRadius: 8, p: 1.5, mt: 2 }}>Aplicar filtros &nbsp;<SaveIcon sx={{ fontWeight: 100 }} /></Button>
-                </Grid>
+                        <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
+                            <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"negocio"} setStateToggler={setFilters} optionsToggler={optionsNegocio} />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} sx={{ textAlign: "left" }}>
+                        <Typography variant="overline">Localidad</Typography>
 
-            </Grid>
-        </Dialog>
+                        <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
+                            <TogglerGroup fetchData={fetchData} stateToggler={filters} filterName={"localidad"} setStateToggler={setFilters} optionsToggler={optionsLocalidad} />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} sx={{ textAlign: "left" }}>
+                        <Typography variant="overline">Tipo de inmueble</Typography>
+                        <Select size="small" fullWidth sx={{ borderRadius: 10 }} onChange={handleChangeSelect} name="tipo" value={filters.tipo ? filters.tipo : "0"} defaultValue={"0"}>
+                            <MenuItem value={"0"} disabled>Tipo de inmueble</MenuItem>
+                            {
+                                tiposDeInmueble.map((t: string) => (<MenuItem value={t}>{t}</MenuItem>))
+                            }
+                        </Select>
+                    </Grid>
+                    <Grid item xs={12} sx={{ textAlign: "left" }}>
+                        <Typography variant="overline">Rango de precio</Typography>
+                        <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
+                            <TextField fullWidth name="from" value={from} onChange={handleChange} size="small" label="Min" color="primary" variant="outlined" sx={styles.inputRounded} />
+                            <TextField fullWidth name="to" value={to} error={from > to} helperText={from > to ? "El valor de Max. debe ser mayor del Min." : ''} onChange={handleChange} size="small" label="Max" color="primary" variant="outlined" sx={{ ...styles.inputRounded, ml: 1 }} />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} sx={{ textAlign: "left" }}>
+                        <Button fullWidth size="small" onClick={onApply} color="primary" variant="contained" disableElevation sx={{ borderRadius: 8, p: 1.5, mt: 2 }}>Aplicar filtros &nbsp;<SaveIcon sx={{ fontWeight: 100 }} /></Button>
+                    </Grid>
+
+                </Grid>
+            </Dialog>
+        </>
     )
 }
 

@@ -36,13 +36,13 @@ export const Header: React.FC<Props> = ({ url_inmueble, data, imagenes }) => {
                     left: 0,
                     transition: ".2s ease all",
                     zIndex: 90,
-                    background: "rgba(0,0,0,0.6)"
+                    background: "rgba(0,0,0,0.3)"
                 }
             }}>
 
                 <Image id="imagen" quality={50} src={`https://consolitex.org/newImg.php?nowatermark=1&url=${encodeURI(url_inmueble)}`} layout="fill" objectFit='cover' alt={data.nombre} priority style={{
-                    WebkitTransition: "0.3s -webkit-filter ease",
-                    transition: "0.3s filter ease",
+                    WebkitTransition: "0.1s -webkit-filter ease",
+                    transition: "0.1s filter ease",
                 }} />
             </Box>
             <Box component="div" sx={{ transition: ".2s ease all", zIndex: 200, position: "absolute", top: 0, left: 0, display: "flex", flexFlow: "row" }}>
@@ -54,7 +54,7 @@ export const Header: React.FC<Props> = ({ url_inmueble, data, imagenes }) => {
                     <Typography id="secondary-content3" sx={{ transition: ".6s ease all", color: "#FFF", fontSize: { xs: "1em", md: "2em" }, fontFamily: "montserrat", fontStyle: "italic" }}>Bienes raíces #hogarfamiliabienestar</Typography>
                 </Box>
             </Box>
-            <Box id="ver-mas" sx={{ transition: ".2s ease all", position: "absolute", top: "50%", left: "50%", background: "transparent", borderRadius: 5, border: "1px solid #FFF", overflow: "hidden", transform: "translateX(-50%) translateY(-50%) scale(1)", p: 2, zIndex: 91 }}>
+            <Box id="ver-mas" sx={{ transition: ".2s ease all", position: "absolute", top: "50%", left: "50%", borderRadius: 5, overflow: "hidden", transform: "translateX(-50%) translateY(-50%) scale(1)", p: 2, zIndex: 91, background: "rgba(0,0,0,0.5)" }}>
                 <Button sx={{ textTransform: "none", p: 1.8, color: "#FFF" }} color="primary" onClick={handleOpen}>
                     Ver fotos &nbsp;
                     <GalleryIcon />

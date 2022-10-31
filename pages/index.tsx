@@ -66,7 +66,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
       <Box sx={{ width: "100%", position: "absolute", top: 0, left: 0, zIndex: "1" }}>
 
         {/* Wallpaper */}
-        <Box sx={{ minHeight: { xs: "100vh", sm: "500px" }, maxHeight: { xs: "auto", sm: "500px" }, overflow: "hidden", background: "url(./compressed_wallpaper.jpg)", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "scroll" }}></Box>
+        <Box sx={{ minHeight: { xs: "100vh", sm: "500px" }, maxHeight: { xs: "auto", sm: "500px" }, overflow: "hidden", background: "url(./wallpaper.jpg)", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "scroll" }}></Box>
 
         {/* Menu de busqueda en vista de PC */}
         <Suspense fallback="Cargando...">
@@ -100,16 +100,19 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
         </Box>
       </Box>
       {/* Recomendados */}
-      <Box sx={{ width: { xs: "100%", md: "80%" }, m: "auto", overflow: "hidden", paddingBlock: 6 }} component="div">
+      <Box sx={{ width: "100%", background: "white", position: "relative", p: { xs: 0, md: 4 }, paddingBlock: 10, minHeight: "100%" }}>
+        <CustomImage src="/3dshapes.jpg" alt="Shapes" upperBoxStyles={{ position: "absolute", top: 0, left: 0, width: "100%", minHeight: { xs: "100vh", md: "auto" }, objectFit: "cover" }} />
+        <Box sx={{ width: { xs: "100%", md: "90%" }, m: "auto", overflow: "hidden", paddingBlock: 6, background: { xs: "rgba(0,0,0,0)", md: "rgba(255,255,255,0.5)" }, boxShadow: { xs: "none", md: "0 8px 32px 0 rgba(0,0,0,0.3)" }, backdropFilter: "blur(8px)", borderRadius: { xs: 0, md: 5 } }} component="div">
 
-        {/* Inmuebles recomendados */}
-        {
-          inmuebles !== null && (
-            <Suspense fallback="Cargando...">
-              <InmuebleList inmuebles={inmuebles} />
-            </Suspense>
-          )
-        }
+          {/* Inmuebles recomendados */}
+          {
+            inmuebles !== null && (
+              <Suspense fallback="Cargando...">
+                <InmuebleList inmuebles={inmuebles} />
+              </Suspense>
+            )
+          }
+        </Box>
       </Box>
     </Layout>
   )

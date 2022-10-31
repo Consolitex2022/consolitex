@@ -15,7 +15,7 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
         window.open(`/inmueble/${ficha_id}`, '_blank')
     }
     return (<>
-        <Box sx={{ width: "280px", height: "380", borderRadius: 5, border: "1px solid rgba(0,0,0,0.1)", background: "#f7f7f7", overflow: "hidden", cursor: "pointer" }} onClick={() => redirect(data.ficha_id)}>
+        <Box sx={{ width: "280px", height: "380", borderRadius: 5, background: "rgba(255,255,255,0.8)", overflow: "hidden", cursor: "pointer", boxShadow: { xs: "0 0 10px rgba(0,0,0,0.1)", md: "0 8px 32px 0 rgba(0,0,0,0.3)" } }} onClick={() => redirect(data.ficha_id)}>
             {/* Img */}
             <Box sx={{ maxWidth: "100%", minWidth: "280px", minHeight: "250px", maxHeight: "250px" }}>
                 <Box component="img" src={`https://consolitex.org/img.php?i=${encodeURIComponent(url_inmueble)}`} width={"100%"} height={250}></Box>

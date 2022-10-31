@@ -59,6 +59,13 @@ export const MenuBusquedaMobile: FC = () => {
      */
     const handleFilter = (route: string) => {
         setLocalidad(route);
+        router.push({
+            pathname: "/search",
+            query: {
+                localidad: route,
+                query: search,
+            }
+        })
     }
 
     /**
@@ -92,7 +99,7 @@ export const MenuBusquedaMobile: FC = () => {
     }
     return (<>
         <Box sx={styles.mainContainer}>
-            <Typography component="h2" variant="h5" fontWeight="bold" sx={{ color: "white", mb: 4, fontFamily: "Hind" }}>Encuentra tu inmueble</Typography>
+            <Typography component="h2" variant="h5" fontWeight="bold" sx={{ color: "#FFF", textShadow: "0 0 20px rgba(0,0,0,0.9)", mb: 4, fontFamily: "Hind" }}>Encuentra tu inmueble</Typography>
             <Box sx={styles.contenedorBotonera}>
                 {/* <Box sx={{ display: "flex", flexDirection: "row", overflow: "hidden", m: "-2px 0" }}>
                     <Select
@@ -234,9 +241,10 @@ export const MenuBusquedaMobile: FC = () => {
 const styles = {
     mainContainer: {
         alignItems: "center",
-        background: "rgba( 30,30,30, 0.6 )",
+        background: "rgba( 255,255,255, 0.2 )",
         borderRadius: "15px",
-        boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+        backdropFilter: "blur(6px)",
+        boxShadow: "0 8px 32px 0 rgba( 100, 100, 100, 0.4 )",
         display: {
             md: "none",
             xs: "flex",
@@ -265,8 +273,7 @@ const styles = {
         },
     },
     buttonLeft: {
-        background: "white",
-        border: "1px solid rgba(0,0,0,0)",
+        background: "rgba(100,100,100,0.3)",
         display: "none",
         height: "20px",
         left: 0,
@@ -280,8 +287,7 @@ const styles = {
         }
     },
     buttonRight: {
-        background: "white",
-        border: "1px solid rgba(0,0,0,0)",
+        background: "rgba(100,100,100,0.3)",
         display: "none",
         height: "20px",
         position: "absolute",
@@ -296,7 +302,7 @@ const styles = {
     },
     botonera: {
         alignItems: "center",
-        background: "white",
+        background: "rgba(255,255,255,0.5)",
         borderRadius: "1.3em 1.3em 0 0",
         display: "flex",
         flexDirection: "row",
@@ -318,7 +324,7 @@ const styles = {
     inputSearch: {
         input: {
             fontFamily: "Hind",
-            background: "white",
+            background: "rgba(255,255,255,0.5)",
             border: "none",
             borderRadius: "0 0 1.5em 1.5em",
             p: 2

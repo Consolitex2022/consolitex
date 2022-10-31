@@ -40,11 +40,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (ctx.query['query'] && ctx.query['query'] !== '0') {
         params.push(['query', String(ctx.query['query'])])
     }
-    if (ctx.query['min'] && Number(ctx.query['min']) !== 0) {
-        params.push(['from', String(ctx.query['min'])])
+    if (ctx.query['from'] && Number(ctx.query['from']) !== 0) {
+        params.push(['from', String(ctx.query['from'])])
     }
-    if (ctx.query['max'] && Number(ctx.query['max']) !== 0) {
-        params.push(['to', String(ctx.query['max'])])
+    if (ctx.query['to'] && Number(ctx.query['to']) !== 0) {
+        params.push(['to', String(ctx.query['to'])])
     }
     if (ctx.query['habitaciones'] && ctx.query['habitaciones'] !== '0') {
         params.push(['habitaciones', String(ctx.query['habitaciones'])])

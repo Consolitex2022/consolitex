@@ -59,6 +59,13 @@ export const MenuBusquedaPc: FC = () => {
      */
     const handleFilter = (route: string) => {
         setLocalidad(route);
+        router.push({
+            pathname: "/search",
+            query: {
+                localidad: route,
+                query: search,
+            }
+        })
     }
 
     /**
@@ -93,7 +100,7 @@ export const MenuBusquedaPc: FC = () => {
     return (
         <Box sx={styles.mainContainer}>
             <Box sx={{ width: "100%", display: "flex", flexFlow: "row nowrap", justifyContent: "center", alignItems: "center", mb: 3 }}>
-                <Typography component="h5" variant="h5" fontWeight="bold" sx={{ fontFamily: "Hind", color: "white" }}>Encuentra tu inmueble</Typography>
+                <Typography component="h5" variant="h5" fontWeight="bold" sx={{ color: "#FFF", textShadow: "0 0 20px rgba(0,0,0,0.9)", fontFamily: "Hind" }}>Encuentra tu inmueble</Typography>
                 <IconButton color="info" onClick={openInfo}><InfoIcon /></IconButton>
             </Box>
             <Box sx={styles.contenedorBotonera}>
@@ -166,8 +173,9 @@ const styles = {
         },
         alignItems: "center",
         justifyContent: "center",
-        background: "rgba( 30,30,30, 0.6 )",
-        boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+        background: "rgba( 255,255,255, 0.2 )",
+        boxShadow: "0 8px 32px 0 rgba( 100, 100, 100, 0.4 )",
+        backdropFilter: "blur(6px)",
         flexDirection: "column"
     },
     contenedorBotonera: {
@@ -187,7 +195,7 @@ const styles = {
         display: "flex",
         flexDirection: "row",
         overflowX: "scroll",
-        background: "white",
+        background: "rgba(255,255,255,0.8)",
         borderRadius: "1.3em 1.3em 0 0",
         pt: 1,
         pb: 1,
@@ -203,8 +211,7 @@ const styles = {
     },
     botonLeft: {
         display: "none",
-        border: "1px solid rgba(0,0,0,0.3)",
-        background: "white",
+        background: "rgba(0,0,0,0.1)",
         width: "20px",
         height: "20px",
         position: "absolute",
@@ -218,8 +225,7 @@ const styles = {
     },
     botonRight: {
         display: "none",
-        border: "1px solid rgba(0,0,0,0.3)",
-        background: "white",
+        background: "rgba(0,0,0,0.1)",
         width: "20px",
         height: "20px",
         position: "absolute",
@@ -235,6 +241,7 @@ const styles = {
         width: "100%",
         whiteSpace: "nowrap",
         minWidth: 130,
+        color: "rgba(10,10,10,0.8)"
     },
     botonBuscar: {
         width: "45%",
@@ -245,7 +252,7 @@ const styles = {
         fontFamily: "Hind"
     },
     inputBuscar: {
-        input: { fontFamily: "Hind", padding: 2, color: 'black', background: "white", borderRadius: "0 0 0 1.5em" }
+        input: { fontFamily: "Hind", padding: 2, color: 'black', background: "rgba(255,255,255,0.8)", borderRadius: "0 0 0 1.5em" }
     },
     contenedorSend: {
         display: 'flex',

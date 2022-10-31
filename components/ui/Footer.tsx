@@ -126,7 +126,7 @@ export const Footer: FC = () => {
 
     // Render
     return (<>
-        <Box sx={{ fontFamily: 'Hind', background: '#01579b', width: '100%', height: '100%', m: '20px auto auto auto', display: 'flex', flexDirection: 'column', flexWrap: 'wrap', position: 'relative' }}>
+        <Box sx={{ fontFamily: 'Hind', background: '#01579b', width: '100%', height: '100%', m: 'auto', display: 'flex', flexDirection: 'column', flexWrap: 'wrap', position: 'relative' }}>
             <Box sx={{ zIndex: '900', width: '100%', m: 'auto', color: theme.palette.primary.contrastText, p: 2, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: { xs: 'center', md: 'space-between' }, alignItems: 'center' }}>
                 <Redes />
             </Box>

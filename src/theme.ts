@@ -42,6 +42,16 @@ const theme = createTheme({
         },
         htmlFontSize: 16,
     },
+    components: {
+        MuiCssBaseline: {
+            styleOverrides: {
+                body: {
+                    backgroundColor: "#f4f4f4",
+                    backgroundImage: `linear-gradient(90deg, rgba(250,250,250,1) 0%, rgba(245,245,245,1) 100%);`,
+                },
+            },
+        },
+    }
 
 });
 export default theme;

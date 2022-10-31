@@ -146,19 +146,17 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
 
 const styles = {
     mainContainer: {
-        width: "100%",
+        width: "95%",
+        margin: "auto",
+        mt: 3,
         minHeight: 220,
-        border: "1px solid #f9f9f9",
-        mb: 2,
         borderRadius: 3,
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        background: "#f9f9f9",
+        background: "rgba(255,255,255,0.2)",
+        boxShadow: "0 8px 32px rgba(100,100,100,0.1)",
         transition: ".2s ease all",
-        "&:hover": {
-            border: "1px solid rgba(10, 10, 10, 0.1)",
-        }
     },
     imageContainer: {
         width: "100%",

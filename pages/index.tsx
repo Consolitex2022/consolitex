@@ -122,7 +122,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   try {
     // Solicitud HTTP
-    const respuesta = await fetch("https://consolitex.org/api/v1/inmuebles.php");
+    const respuesta = await fetch("https://consolitex.org/api/v1/inmuebles.php?localidad=Norte");
 
     // Resultado
     const data = await respuesta.json();

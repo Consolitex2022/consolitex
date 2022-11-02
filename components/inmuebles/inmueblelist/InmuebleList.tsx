@@ -54,7 +54,7 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
     return (
         <Box sx={{ width: "100%", overflow: "hidden" }}>
 
-            <Typography variant="body1" fontWeight={"bold"} component="h3" fontSize={24} textAlign="center" sx={{ color: "#FFF", textShadow: "0 0 20px rgba(0,0,0,0.4)", mt: 1 }}>Recomendados para ti</Typography>
+            <Typography variant="body1" fontWeight={"bold"} component="h3" fontSize={24} textAlign="center" sx={{ color: "#FFF", textShadow: "0 10px 32px rgba(0,0,0,0.4)", mt: 1 }}>Recomendado para ti</Typography>
 
             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <Box sx={{ width: { xs: "90%", md: "100%" }, marginInline: "auto", mt: 2, position: "relative" }}>

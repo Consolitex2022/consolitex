@@ -134,7 +134,7 @@ export const MenuBusquedaPc: FC = () => {
                         <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Zona Industrial")}>Zona Industrial</Button>
                     </Box>
                     <Box sx={styles.contenedorSend}>
-                        <TextField fullWidth value={search} onChange={handleChange} InputProps={{ disableUnderline: true }} id="input-with-sx" variant="standard" placeholder="Ingresa la ubicación del inmueble" color="warning" focused sx={styles.inputBuscar} />
+                        <TextField fullWidth value={search} onChange={handleChange} InputProps={{ disableUnderline: true }} id="input-with-sx" variant="standard" placeholder="Ingresa lo que buscas" color="warning" focused sx={styles.inputBuscar} />
                         <Button variant="contained" color="primary" sx={styles.botonBuscar} onClick={onSubmit}>Buscar</Button>
                     </Box>
                     <Box sx={{ mt: 1 }}>
@@ -241,7 +241,7 @@ const styles = {
         width: "100%",
         whiteSpace: "nowrap",
         minWidth: 130,
-        color: "rgba(10,10,10,0.8)"
+        fontWeight: "bold"
     },
     botonBuscar: {
         width: "45%",

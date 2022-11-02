@@ -219,7 +219,7 @@ export const MenuBusquedaMobile: FC = () => {
                         <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Zona Industrial")}>Zona Industrial</Button>
                     </Box>
                 </Box>
-                <TextField fullWidth onChange={handleChange} value={search} InputProps={{ disableUnderline: true, }} variant="standard" size="small" placeholder="Ingresa la ubicación del inmueble" color="primary" sx={styles.inputSearch} />
+                <TextField fullWidth onChange={handleChange} value={search} InputProps={{ disableUnderline: true, }} variant="standard" size="small" placeholder="Ingresa lo que buscas" color="primary" sx={styles.inputSearch} />
             </Box>
             <Button sx={styles.buttonSend} variant="contained" onClick={onSubmit}>Buscar</Button>
             <Box sx={{ mt: 1 }}>
@@ -320,6 +320,7 @@ const styles = {
         minWidth: 130,
         whiteSpace: "nowrap",
         width: "100%",
+        fontWeight: "bold"
     },
     inputSearch: {
         input: {

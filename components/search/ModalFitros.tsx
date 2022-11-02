@@ -42,10 +42,6 @@ const tiposDeInmueble: string[] = [
 ]
 const options: IOption[] = [
     {
-        value: '0',
-        name: "0",
-    },
-    {
         value: '1',
         name: "1",
     },
@@ -93,12 +89,20 @@ const optionsNegocio: IOption[] = [
 
 export const ModalFiltros: FC<ModalFiltrosProps> = ({ filters, setFilters, setLastItemKey, setHasMore, inmueblesState, setInmueblesState, fetchData }) => {
 
-    const [from, setFrom] = useState<number>(0);
-    const [to, setTo] = useState<number>(0);
+    const [from, setFrom] = useState<number | string>(0);
+    const [to, setTo] = useState<number | string>(0);
     const [open, setOpen] = useState<boolean>(false);
     const handleClose = () => {
         setOpen(false);
     }
+    const formatoMexico = (number: number) => {
+        const exp = /(\d)(?=(\d{3})+(?!\d))/g;
+        const rep = '$1,';
+        let arr = number.toString().split('.');
+        arr[0] = arr[0].replace(exp, rep);
+        return arr[1] ? arr.join('.') : arr[0];
+    }
+
 
     /**
      * Funcion para cambiar el valor del state de from y to (min / max)
@@ -106,8 +110,8 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ filters, setFilters, setLa
      */
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const onlyNums = e.target.value.replace(/[^0-9]/g, '');
-        e.target.name === 'from' && setFrom(Number(onlyNums))
-        e.target.name === 'to' && setTo(Number(onlyNums));
+        e.target.name === 'from' && setFrom(formatoMexico(Number(onlyNums)))
+        e.target.name === 'to' && setTo(formatoMexico(Number(onlyNums)));
     }
 
     /**
@@ -133,10 +137,11 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ filters, setFilters, setLa
      * Funcion para aplicar los cambios de los filtros y realizar la busqueda de inmuebles
      */
     const onApply = async () => {
-
+        const newFrom = Number(from.toString().replace(/[^0-9]/g, ''));
+        const newTo = Number(to.toString().replace(/[^0-9]/g, ''));
         const newFilter: IFilter = {
-            to,
-            from,
+            to: newTo,
+            from: newFrom,
             tipo: filters.tipo,
             banos: filters.banos,
             query: filters.query,
@@ -165,11 +170,11 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ filters, setFilters, setLa
         if (filters.localidad && filters.localidad !== '0') {
             params.push(['localidad', String(filters.localidad)])
         }
-        if (from && from !== 0) {
-            params.push(['from', String(from)])
+        if (newFrom && newFrom !== 0) {
+            params.push(['from', String(newFrom)])
         }
-        if (to && to !== 0) {
-            params.push(['to', String(to)])
+        if (newTo && newTo !== 0) {
+            params.push(['to', String(newTo)])
         }
         if (filters.query && filters.query !== '0') {
             params.push(['query', String(filters.query)])
@@ -240,6 +245,8 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ filters, setFilters, setLa
    * @returns true si los filtros están vacios, false si no.
    */
     const areFiltersEmpty = () => {
+        const newFrom = Number(filters.from.toString().replace(/[^0-9]/g, ''));
+        const newTo = Number(filters.to.toString().replace(/[^0-9]/g, ''));
         if (filters.tipo && filters.tipo !== '0') {
             return false;
         }
@@ -258,10 +265,10 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ filters, setFilters, setLa
         if (filters.localidad && filters.localidad !== '0') {
             return false;
         }
-        if (filters.from && filters.from !== 0) {
+        if (filters.from && newFrom !== 0) {
             return false;
         }
-        if (filters.to && filters.to !== 0) {
+        if (filters.to && newTo !== 0) {
             return false;
         }
         if (filters.query && filters.query !== '0') {
@@ -277,6 +284,8 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ filters, setFilters, setLa
         if (!filters.filterAnterior) {
             return false;
         } else {
+            const newFrom = Number(filters.filterAnterior?.from.toString().replace(/[^0-9]/g, ''));
+            const newTo = Number(filters.filterAnterior?.to.toString().replace(/[^0-9]/g, ''));
             setFilters(filters.filterAnterior);
 
             const params = [];
@@ -299,11 +308,11 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ filters, setFilters, setLa
             if (filters.filterAnterior?.localidad && filters.filterAnterior?.localidad !== '0') {
                 params.push(['localidad', String(filters.filterAnterior?.localidad)])
             }
-            if (filters.filterAnterior?.from && filters.filterAnterior?.from !== 0) {
-                params.push(['from', String(filters.filterAnterior?.from)])
+            if (filters.filterAnterior?.from && Number(filters.filterAnterior?.from.toString().replace(/[^0-9]/g, '')) !== 0) {
+                params.push(['from', String(newFrom)])
             }
-            if (filters.filterAnterior?.to && filters.filterAnterior?.to !== 0) {
-                params.push(['to', String(filters.filterAnterior?.to)])
+            if (filters.filterAnterior?.to && Number(filters.filterAnterior?.to.toString().replace(/[^0-9]/g, '')) !== 0) {
+                params.push(['to', String(newTo)])
             }
             if (filters.filterAnterior?.query && filters.filterAnterior?.query !== '0') {
                 params.push(['query', String(filters.filterAnterior?.query)])

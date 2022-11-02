@@ -94,11 +94,11 @@ export const InmuebleList: FC<Props> = ({ inmueblesSSR, localidadSSR = '', query
         if (filters.localidad && filters.localidad !== '0') {
             params.push(['localidad', String(filters.localidad)])
         }
-        if (filters.from && filters.from !== 0) {
-            params.push(['from', String(filters.from)])
+        if (filters.from && Number(filters.from.toString().replace(/[^0-9]/g, '')) !== 0) {
+            params.push(['from', String(filters.from.toString().replace(/[^0-9]/g, ''))])
         }
-        if (filters.to && filters.to !== 0) {
-            params.push(['to', String(filters.to)])
+        if (filters.to && Number(filters.to.toString().replace(/[^0-9]/g, '')) !== 0) {
+            params.push(['to', String(filters.to.toString().replace(/[^0-9]/g, ''))])
         }
         if (filters.query && filters.query !== '0') {
             params.push(['query', String(filters.query)])

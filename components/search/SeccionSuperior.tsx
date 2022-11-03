@@ -1,6 +1,6 @@
 import { Box, IconButton, Typography, Tooltip, Button, TextField, Chip } from "@mui/material";
 import { useRouter } from "next/router";
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useState } from "react";
 
 
 import GridSquared from '@mui/icons-material/WindowRounded';
@@ -33,7 +33,7 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ initialFilter, squared,
     // Enrutador
     const router = useRouter();
     const [search, setSearch] = useState<boolean>(false)
-
+    const [newQuery, setNewQuery] = useState<string>('');
     const onDelete = async (filterName: string) => {
 
         const params = [];
@@ -139,7 +139,91 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ initialFilter, squared,
 
 
     const propsModal = { filters, setFilters, setInmueblesState, inmueblesState, setLastItemKey, setHasMore, fetchData }
+    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (newQuery === '') return false;
+        const params = [];
+        const newTo = Number(filters.to.toString().replace(/[^0-9]/g, ''))
+        const newFrom = Number(filters.to.toString().replace(/[^0-9]/g, ''))
+        if (filters.tipo && filters.tipo !== '0') {
+            params.push(['tipo', String(filters.tipo)])
+        }
+        if (filters.negocio && filters.negocio !== '0') {
+            params.push(['negocio', String(filters.negocio)])
+        }
+        if (filters.habitaciones && filters.habitaciones !== '0') {
+            params.push(['habitaciones', String(filters.habitaciones)])
+        }
+        if (filters.banos && filters.banos !== '0') {
+            params.push(['banos', String(filters.banos)])
+        }
+        if (filters.estacionamientos && filters.estacionamientos !== '0') {
+            params.push(['estacionamientos', String(filters.estacionamientos)])
+        }
+        if (filters.localidad && filters.localidad !== '0') {
+            params.push(['localidad', String(filters.localidad)])
+        }
+        if (filters.from && newFrom !== 0) {
+            params.push(['from', String(newFrom)])
+        }
+        if (filters.to && newTo !== 0) {
+            params.push(['to', String(newTo)])
+        }
+        params.push(['query', String(newQuery)])
+        const url = new URL(`/api/filter`, window.location.origin);
+        const urlParams = new URLSearchParams(params).toString();
+        url.search = urlParams;
 
+        try {
+            const respuesta = await fetch(url);
+            switch (respuesta.status) {
+                case 200:
+                    const data = await respuesta.json();
+
+                    const inm = data.data;
+                    const lastPosition = inm.length - 1;
+                    const newLastItemKey = inm[lastPosition].data.key;
+                    setInmueblesState(inm);
+                    setLastItemKey(newLastItemKey);
+                    setFilters({
+                        ...filters,
+                        query: newQuery,
+                        filterAnterior: filters,
+                    })
+                    if (inm.length < 20) {
+                        setHasMore(false);
+                    } else {
+                        setHasMore(true);
+                    }
+                    break;
+                case 204:
+                    Swal.fire({
+                        title: "Oops!",
+                        text: "No se encontraron resultados",
+                        icon: "error"
+                    })
+                    setLastItemKey(0);
+                    setInmueblesState(null);
+                    setHasMore(false);
+                    break;
+                default:
+                    Swal.fire({
+                        title: "Oops!",
+                        text: "No se encontraron resultados",
+                        icon: "error"
+                    })
+                    setLastItemKey(0);
+                    setInmueblesState(null);
+                    setHasMore(false);
+                    break;
+            }
+        } catch (err) {
+            setLastItemKey(0);
+            setInmueblesState(null);
+            setHasMore(false);
+        }
+
+    }
 
     return (
         <>
@@ -180,8 +264,10 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ initialFilter, squared,
                 </Box>
                 {/* Boton de buscar */}
                 <Box sx={{ display: search ? "flex" : "none", flexFlow: "row nowrap", transition: "0.5s ease all", flexGrow: 1, transform: search ? "scale(1)" : "scale(0)", mt: 1 }}>
-                    <TextField placeholder="Realiza una búsqueda" size="small" sx={{ "& input": { borderRadius: 10, borderTopRightRadius: 0, borderBottomRightRadius: 0, background: "#FFF" }, "& fieldset": { border: "none" } }} />
-                    <Button variant="contained" sx={{ p: 1, borderRadius: 0, borderTopRightRadius: 25, borderBottomRightRadius: 25, textTransform: "none" }} disableElevation>Buscar</Button>
+                    <form onSubmit={onSubmit}>
+                        <TextField placeholder="Realiza una búsqueda" size="small" onChange={(e: ChangeEvent<HTMLInputElement>) => setNewQuery(String(e.target.value))} value={newQuery} sx={{ "& input": { borderRadius: 10, borderTopRightRadius: 0, borderBottomRightRadius: 0, background: "#FFF" }, "& fieldset": { border: "none" } }} />
+                        <Button variant="contained" sx={{ p: 1, borderRadius: 0, borderTopRightRadius: 25, borderBottomRightRadius: 25, textTransform: "none" }} disableElevation type="submit">Buscar</Button>
+                    </form>
                 </Box>
                 <Box sx={{ display: "flex", flexFlow: "row nowrap", justifyContent: "end", flexGrow: 1 }}>
 

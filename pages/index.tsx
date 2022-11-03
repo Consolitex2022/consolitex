@@ -85,7 +85,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
       <Box sx={{ width: { xs: "100%", md: "100%" }, m: "auto", overflow: "hidden", background: "#FFF", mt: { xs: -7, md: -4 }, p: 5, display: "flex", flexFlow: "row wrap", justifyContent: "center", alignItems: "center" }} component="div">
 
         {/* Inmuebles recomendados */}
-        <CustomImage src={`/action1.jpg`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 400, md: 600 } }} />
+        <CustomImage src={`/house.webp`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 400, md: 600 } }} />
         <Box sx={{ textAlign: "left", p: 2, margin: "auto", width: 600, display: "flex", flexFlow: "column wrap" }}>
 
           <Typography variant="overline" color="primary" fontWeight="bold" fontSize={{ xs: 12, md: 16 }}>
@@ -101,7 +101,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
       </Box>
       {/* Recomendados */}
       <Box sx={{ width: "100%", background: "white", position: "relative", p: { xs: 0, md: 4 }, paddingBlock: 10, minHeight: "100%" }}>
-        <CustomImage src="/3dshapes.webp" alt="Shapes" upperBoxStyles={{ position: "absolute", top: 0, left: 0, width: "100%", minHeight: { xs: "100vh", md: "auto" }, objectFit: "cover" }} />
+        <CustomImage src="/3dshapes2.webp" alt="Shapes" upperBoxStyles={{ position: "absolute", top: 0, left: 0, width: "100%", minHeight: { xs: "100vh", md: "auto" }, objectFit: "cover" }} />
         <Box sx={{ width: { xs: "100%", md: "90%" }, m: "auto", overflow: "hidden", paddingBlock: 6, background: { xs: "rgba(0,0,0,0)", md: "rgba(255,255,255,0.5)" }, boxShadow: { xs: "none", md: "0 8px 32px 0 rgba(0,0,0,0.3)" }, backdropFilter: "blur(8px)", borderRadius: { xs: 0, md: 5 } }} component="div">
 
           {/* Inmuebles recomendados */}

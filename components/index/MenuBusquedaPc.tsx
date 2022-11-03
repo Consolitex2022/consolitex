@@ -241,7 +241,10 @@ const styles = {
         width: "100%",
         whiteSpace: "nowrap",
         minWidth: 130,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        "&:hover": {
+            color: "gold"
+        }
     },
     botonBuscar: {
         width: "45%",
@@ -249,7 +252,11 @@ const styles = {
         borderRadius: "0 0 1.7em 0",
         textTransform: 'none',
         boxShadow: "none",
-        fontFamily: "Hind"
+        fontFamily: "Hind",
+        "&:hover": {
+            background: "gold",
+            boxShadow: "none"
+        }
     },
     inputBuscar: {
         input: { fontFamily: "Hind", padding: 2, color: 'black', background: "rgba(255,255,255,0.8)", borderRadius: "0 0 0 1.5em" }

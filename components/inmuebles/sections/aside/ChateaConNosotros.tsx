@@ -54,7 +54,7 @@ const styles = {
                 right: "0",
                 bottom: "0",
                 left: "0",
-                background: "linear-gradient(327deg, rgba(255,226,4,0.8) 0%, rgba(254,249,158,0.8) 73%, rgba(0,255,248,0.8) 100%)",
+                background: "linear-gradient(327deg, rgba(100,100,100,0.1) 0%, rgba(150,150,150,0.1) 73%, rgba(50,50,50,0.1) 100%)",
                 transform: "translate3d(0px, 20px, 0) scale(0.95)",
                 filter: "blur(34px)",
                 opacity: "var(0.47)",

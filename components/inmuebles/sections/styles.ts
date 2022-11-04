@@ -18,7 +18,7 @@ export const styles = {
     input: {
         "& fieldset": {
             border: "none",
-            boxShadow: "0 0 5px rgba(0,0,0,0.1)"
+            boxShadow: "0 8px 32px 0 rgba(100,100,100,0.2)"
         },
         borderRadius: 5,
     },

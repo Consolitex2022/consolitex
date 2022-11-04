@@ -5,6 +5,7 @@ import { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useState } from "
 
 import GridSquared from '@mui/icons-material/WindowRounded';
 import GridRectangle from '@mui/icons-material/ViewStreamRounded';
+import CloseIcon from '@mui/icons-material/DeleteRounded';
 import LeftIcon from '@mui/icons-material/ArrowBackRounded';
 import Swal from "sweetalert2";
 import { IFilter } from "../../interfaces";
@@ -251,22 +252,22 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ initialFilter, squared,
 
                         {/* <TextField size="small" fullWidth color="primary" sx={{ "& fieldset": { borderRadius: " 25px 0 0 25px" } }} /> */}
                         {/* <Button size="small" color="primary" sx={{ textTransform: "none", p: 0, height: 40, borderRadius: "0 25px 25px 0" }} disableElevation variant="contained">Buscar</Button> */}
-                        {filters.banos && (<Chip color="primary" onDelete={() => onDelete("banos")} variant="outlined" sx={styles.chip} label={`${filters.banos} ${Number(filters.banos) !== 1 ? "Baños" : "Baño"}`} />)}
-                        {filters.habitaciones && (<Chip color="primary" onDelete={() => onDelete("habitaciones")} variant="outlined" sx={styles.chip} label={`${filters.habitaciones} Hab.`} />)}
-                        {filters.estacionamientos && (<Chip color="primary" onDelete={() => onDelete("estacionamientos")} variant="outlined" sx={styles.chip} label={`${filters.estacionamientos} Est.`} />)}
-                        {filters.query && (<Chip color="primary" onDelete={() => onDelete("query")} variant="outlined" sx={styles.chip} label={`Busqueda: ${filters.query}`} />)}
-                        {filters.from > 0 && (<Chip color="primary" onDelete={() => onDelete("from")} variant="outlined" sx={styles.chip} label={`Min. ${filters.from}`} />)}
-                        {filters.to > 0 && (<Chip color="primary" onDelete={() => onDelete("to")} variant="outlined" sx={styles.chip} label={`Max. ${filters.to}`} />)}
-                        {filters.negocio && (<Chip color="primary" onDelete={() => onDelete("negocio")} variant="outlined" sx={styles.chip} label={`${filters.negocio}`} />)}
-                        {filters.localidad && (<Chip color="primary" onDelete={() => onDelete("localidad")} variant="outlined" sx={styles.chip} label={`${filters.localidad}`} />)}
-                        {filters.tipo && (<Chip color="primary" onDelete={() => onDelete("tipo")} variant="outlined" sx={styles.chip} label={`${filters.tipo}`} />)}
+                        {filters.banos && (<Chip size="small" color="primary" onDelete={() => onDelete("banos")} variant="outlined" sx={styles.chip} label={`${filters.banos} ${Number(filters.banos) !== 1 ? "Baños" : "Baño"}`} />)}
+                        {filters.habitaciones && (<Chip size="small" color="primary" onDelete={() => onDelete("habitaciones")} variant="outlined" sx={styles.chip} label={`${filters.habitaciones} Hab.`} />)}
+                        {filters.estacionamientos && (<Chip size="small" color="primary" onDelete={() => onDelete("estacionamientos")} variant="outlined" sx={styles.chip} label={`${filters.estacionamientos} Est.`} />)}
+                        {filters.query && (<Chip size="small" color="primary" onDelete={() => onDelete("query")} variant="outlined" sx={styles.chip} label={`Busqueda: ${filters.query}`} />)}
+                        {filters.from > 0 && (<Chip size="small" color="primary" onDelete={() => onDelete("from")} variant="outlined" sx={styles.chip} label={`Min. ${filters.from}`} />)}
+                        {filters.to > 0 && (<Chip size="small" color="primary" onDelete={() => onDelete("to")} variant="outlined" sx={styles.chip} label={`Max. ${filters.to}`} />)}
+                        {filters.negocio && (<Chip size="small" color="primary" onDelete={() => onDelete("negocio")} variant="outlined" sx={styles.chip} label={`${filters.negocio}`} />)}
+                        {filters.localidad && (<Chip size="small" color="primary" onDelete={() => onDelete("localidad")} variant="outlined" sx={styles.chip} label={`${filters.localidad}`} />)}
+                        {filters.tipo && (<Chip size="small" color="primary" onDelete={() => onDelete("tipo")} variant="outlined" sx={styles.chip} label={`${filters.tipo}`} />)}
                     </Box>
                 </Box>
                 {/* Boton de buscar */}
-                <Box sx={{ display: search ? "flex" : "none", flexFlow: "row nowrap", transition: "0.5s ease all", flexGrow: 1, transform: search ? "scale(1)" : "scale(0)", mt: 1 }}>
+                <Box sx={{ display: search ? "flex" : "none", flexFlow: "row nowrap", transition: "0.5s ease all", flexGrow: 1, transform: search ? "scale(1)" : "scale(0)", mt: 1, mb: 1 }}>
                     <form onSubmit={onSubmit}>
-                        <TextField placeholder="Realiza una búsqueda" size="small" onChange={(e: ChangeEvent<HTMLInputElement>) => setNewQuery(String(e.target.value))} value={newQuery} sx={{ "& input": { borderRadius: 10, borderTopRightRadius: 0, borderBottomRightRadius: 0, background: "#FFF" }, "& fieldset": { border: "none" } }} />
-                        <Button variant="contained" sx={{ p: 1, borderRadius: 0, borderTopRightRadius: 25, borderBottomRightRadius: 25, textTransform: "none" }} disableElevation type="submit">Buscar</Button>
+                        <TextField placeholder="Realiza una búsqueda" size="small" onChange={(e: ChangeEvent<HTMLInputElement>) => setNewQuery(String(e.target.value))} value={newQuery} sx={{ "& input": { borderRadius: 10, borderTopRightRadius: 0, borderBottomRightRadius: 0, background: "#FFF", boxShadow: "0 8px 32px 0 rgba(0,0,0,0.1)" }, "& fieldset": { border: "none" } }} />
+                        <Button variant="contained" sx={{ p: 1, borderRadius: 0, borderTopRightRadius: 25, borderBottomRightRadius: 25, textTransform: "none", boxShadow: "0 8px 32px 0 rgba(0,0,0,0.1)" }} disableElevation type="submit">Buscar</Button>
                     </form>
                 </Box>
                 <Box sx={{ display: "flex", flexFlow: "row nowrap", justifyContent: "end", flexGrow: 1 }}>
@@ -278,7 +279,6 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ initialFilter, squared,
                     </IconButton>
                     {/* Boton de vaciar filtros */}
                     <ModalFiltros {...propsModal} />
-
 
                     {/* Boton de vista de inmuebles */}
                     <IconButton aria-label="" onClick={toggleSquare}>
@@ -310,5 +310,10 @@ const styles = {
     chip: {
         mr: 1,
         mt: 1,
+        fontSize: 11,
+        "& > button": {
+            width: 5,
+            height: 5
+        }
     }
 }

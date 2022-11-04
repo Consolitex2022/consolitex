@@ -80,7 +80,7 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
                         {/* Contenedor del codigo del inmueble */}
                         <Box sx={styles.codContainer}>
                             <Typography variant="body1" fontWeight="bold">REF {numberWithDots(Number(data.ref))}</Typography>
-                            <Chip variant="outlined" color="primary" size="small" label={`${ucfirst(data.inmueble.toLowerCase())} ${data.ficha_id0}`} sx={{}} />
+                            <Chip variant="outlined" color="primary" size="small" label={`${ucfirst(data.inmueble.toLowerCase())} ${data.ficha_id0}`} sx={{ fontSize: 11 }} />
                         </Box>
                         {/* Contenedor scrolleable de las caracteristicas */}
                         <Box sx={styles.scrollableContainer}>

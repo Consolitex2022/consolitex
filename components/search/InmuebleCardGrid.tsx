@@ -66,7 +66,7 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
                         <Typography variant="subtitle1" fontWeight="bold">
                             REF {numberWithDots(Number(data.ref))}
                         </Typography>
-                        <Chip variant="outlined" color="primary" size="small" label={`${data.ficha_id0}`} sx={{ mr: 1 }} />
+                        <Chip variant="outlined" color="primary" size="small" label={`${data.ficha_id0}`} sx={{ mr: 1, fontSize: 11 }} />
                     </Box>
 
                     {/* Contenedor scrolleable de las caracteristicas */}

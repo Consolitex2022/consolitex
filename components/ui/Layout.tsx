@@ -13,7 +13,7 @@ interface Props {
     description: string;
     transparent?: boolean;
     children: ReactNode;
-
+    footer?: boolean;
 }
 
 const canonical = "https://consolitex.org";
@@ -28,7 +28,7 @@ const og = {
     description: "Gran variedad de inmuebles | Comprar, alquilar y vender apartamentos, casas, townhouses, terrenos y más ¡en Consolitex lo encuentras!"
 }
 
-const Layout: FC<Props> = ({ title, description, children, transparent = false }) => {
+const Layout: FC<Props> = ({ title, description, children, transparent = false, footer = true }) => {
     return (
         <Box sx={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", flexWrap: "nowrap" }}>
 
@@ -66,7 +66,7 @@ const Layout: FC<Props> = ({ title, description, children, transparent = false }
             <Box sx={{ flexGrow: 1, minHeight: "100vh" }}>{children}</Box>
 
             {/* Footer */}
-            <Footer />
+            {footer && (<Footer />)}
         </Box>
     )
 }

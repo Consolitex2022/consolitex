@@ -1,7 +1,11 @@
+import { FC, useContext, useState, MouseEvent } from 'react';
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { FC, useState, MouseEvent } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { AuthContext } from '../../context/authcontext';
+import { getCookieValue } from '../../utils/functions';
+import blue from '@mui/material/colors/blue';
 
 interface Props {
     title: string;
@@ -20,6 +24,7 @@ const pages: Pages[] = [
     { name: 'Buscar inmueble', path: "/search" }
 ];
 const settings: Settings[] = [
+    { name: 'Mi perfil', path: "/profile" },
     { name: 'Cerrar sesión', path: "/end" }
 ];
 /* const adminSettings: Settings[] = [
@@ -52,14 +57,14 @@ interface PropsMobile {
 interface PropsMenuUser {
     anchorElUser: null | HTMLElement;
     handleOpenUserMenu: (event: MouseEvent<HTMLElement>) => void;
-    handleCloseUserMenu: (event: MouseEvent<HTMLElement>) => void;
+    handleCloseUserMenu: (event: MouseEvent<HTMLElement>, path: string) => void;
 }
 
 const MenuPc: FC<PropsMenuPc> = ({ title, handleOpenNavMenu, anchorElNav, handleCloseNavMenu }) => {
     return (
         <>
             <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }} >
-                <Image alt="Logo Consolitex" src="/logo.png" width="80" height="80" loading="lazy" />
+                <Image alt="Logo Consolitex" src="/logo.png" width="100" height="100" loading="lazy" />
             </Box>
             <Typography
                 variant="h6"
@@ -124,9 +129,6 @@ const MenuMobile: FC<PropsMobile> = ({ title = "Consolitex", handleCloseNavMenu,
             </Box>
             <Typography
                 variant="h5"
-                noWrap
-                component="a"
-                href=""
                 sx={{
                     mr: 2,
                     display: { xs: 'flex', md: 'none' },
@@ -157,11 +159,12 @@ const MenuMobile: FC<PropsMobile> = ({ title = "Consolitex", handleCloseNavMenu,
 }
 
 const MenuUsuario: FC<PropsMenuUser> = ({ handleOpenUserMenu, anchorElUser, handleCloseUserMenu }) => {
+    const userData = useContext(AuthContext);
     return (
         <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Opciones de usuario">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Avatar usuario">{"RandomUser".substring(0, 1)}</Avatar>
+                    <Avatar sx={{ background: userData.color ? userData.color : blue[700] }} alt={userData.id !== 0 ? `${userData.nombres.substring(0, 1).toUpperCase()}${userData.apellidos.substring(0, 1).toUpperCase()}` : "C"}>{userData.id !== 0 ? `${userData.nombres.substring(0, 1).toUpperCase()}${userData.apellidos.substring(0, 1).toUpperCase()}` : "C"}</Avatar>
                 </IconButton>
             </Tooltip>
             <Menu
@@ -181,7 +184,7 @@ const MenuUsuario: FC<PropsMenuUser> = ({ handleOpenUserMenu, anchorElUser, hand
                 onClose={handleCloseUserMenu}
             >
                 {settings.map((setting) => (
-                    <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
+                    <MenuItem key={setting.name} onClick={(e: MouseEvent<HTMLElement>) => handleCloseUserMenu(e, setting.path)}>
                         <Typography textAlign="center" sx={{ fontFamily: "Hind" }}>{setting.name}</Typography>
                     </MenuItem>
                 ))}
@@ -192,9 +195,9 @@ const MenuUsuario: FC<PropsMenuUser> = ({ handleOpenUserMenu, anchorElUser, hand
 const ResponsiveAppBar: FC<Props> = ({ title = "Consolitex", transparent = false }) => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
-    // Por ahora el token esta en false, luego se obtendrá desde la cookie y se podrá iniciar sesion y todo eso...
-    const token = false;
+    const userData = useContext(AuthContext)
+    const { token, email, id } = useContext(AuthContext);
+    const router = useRouter()
     const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -206,8 +209,9 @@ const ResponsiveAppBar: FC<Props> = ({ title = "Consolitex", transparent = false
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
+    const handleCloseUserMenu = (e: MouseEvent<HTMLElement>, path: string) => {
         setAnchorElUser(null);
+        router.push(path)
     };
 
     /**
@@ -230,16 +234,17 @@ const ResponsiveAppBar: FC<Props> = ({ title = "Consolitex", transparent = false
                 <Toolbar disableGutters >
                     <MenuPc {...pcMenuProps} />
                     <MenuMobile {...mobileMenuProps} transparent={transparent} />
-                    {/* {
-                        token && (<MenuUsuario {...userMenuProps} />)
+
+                    {
+                        id !== 0 && (<MenuUsuario {...userMenuProps} />)
                     }
                     {
-                        !token && (<>
+                        id === 0 && (<>
                             <Button color="secondary" variant="text" size="small" sx={{ fontWeight: "bold", boxShadow: "0", textTransform: "none", }}>Regístrate</Button>
-                            <Button color="secondary" variant="contained" size="small" sx={{ fontWeight: "bold", boxShadow: "0", textTransform: "none", }}>LogIn</Button>
+                            <Button color="secondary" onClick={() => router.push("/auth/login")} variant="contained" size="small" sx={{ fontWeight: "bold", boxShadow: "0", textTransform: "none", }}>LogIn</Button>
                         </>
                         )
-                    } */}
+                    }
                 </Toolbar>
             </Container>
         </AppBar>

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { UserData } from '../../../interfaces/user-type';
+import { UserData } from '../../../../interfaces/user-type';
 
 type Data = {
     message: string;
@@ -17,11 +17,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         const respuesta = await fetch(url, options)
         switch (respuesta.status) {
             case 200:
-                const { user } = await respuesta.json();
-                res.status(200).json({ message: "Registro encontrado", user })
+                const { message, user } = await respuesta.json();
+                res.status(200).json({ message, user })
                 break;
             case 204:
-                res.status(204).json({ message: "No hay resultados" });
+                res.status(204).end();
                 break;
             case 400:
                 const { errors } = await respuesta.json();

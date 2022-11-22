@@ -514,7 +514,7 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ filters, setFilters, setLa
                         <Typography variant="overline">Rango de precio</Typography>
                         <Box sx={{ display: "flex", flexDirection: "row", width: "100%", margin: "auto" }}>
                             <TextField fullWidth name="from" value={from} onChange={handleChange} size="small" label="Min" color="primary" variant="outlined" sx={styles.inputRounded} />
-                            <TextField fullWidth name="to" value={to} error={from > to} helperText={from > to ? "El valor de Max. debe ser mayor del Min." : ''} onChange={handleChange} size="small" label="Max" color="primary" variant="outlined" sx={{ ...styles.inputRounded, ml: 1 }} />
+                            <TextField fullWidth name="to" value={to} error={Number(from.toString().replace(/[^0-9]/g, '')) > Number(to.toString().replace(/[^0-9]/g, ''))} helperText={Number(from.toString().replace(/[^0-9]/g, '')) > Number(to.toString().replace(/[^0-9]/g, '')) ? "El valor de Max. debe ser mayor del Min." : ''} onChange={handleChange} size="small" label="Max" color="primary" variant="outlined" sx={{ ...styles.inputRounded, ml: 1 }} />
                         </Box>
                     </Grid>
                     <Grid item xs={12} sx={{ textAlign: "left" }}>

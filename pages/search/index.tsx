@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 
 import Layout from '../../components/ui/Layout';
 
-import { Inmueble } from '..';
+import { Inmueble, ValidatedUser } from '..';
+import { validarToken, validateSession } from '../../utils/functions';
+import { AuthContext } from '../../context/authcontext';
 
 interface Props {
     inmueblesSSR: Inmueble[] | null;
@@ -16,11 +18,16 @@ interface Props {
     fromSSR?: string | number;
     toSSR?: string | number;
     tipoSSR?: string;
+    validatedUser: ValidatedUser;
 }
 
-const SearchPage: NextPage<Props> = ({ inmueblesSSR, querySSR = '', localidadSSR = '', negocioSSR = '', habitacionesSSR = '', banosSSR = '', fromSSR = 0, toSSR = 0, tipoSSR = '' }) => {
+const SearchPage: NextPage<Props> = ({ inmueblesSSR, querySSR = '', localidadSSR = '', negocioSSR = '', habitacionesSSR = '', banosSSR = '', fromSSR = 0, toSSR = 0, tipoSSR = '', validatedUser }) => {
     const InmuebleList = dynamic(() => import('../../components/search').then((mod) => mod.InmuebleList));
     const props = { inmueblesSSR, querySSR, localidadSSR, negocioSSR, habitacionesSSR, banosSSR, fromSSR, toSSR, tipoSSR }
+    const user = useContext(AuthContext)
+    useEffect(() => {
+        validateSession(user, validatedUser);
+    }, [])
     return (
         <Layout title="Consolitex" description="1231">
             {
@@ -31,7 +38,7 @@ const SearchPage: NextPage<Props> = ({ inmueblesSSR, querySSR = '', localidadSSR
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-
+    const user = await validarToken(ctx);
     const params = []
 
     if (ctx.query['localidad'] && ctx.query['localidad'] !== '0') {
@@ -88,6 +95,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
                 localidadSSR: ctx.query['localidad'] ? ctx.query['localidad'] : '',
                 habitacionesSSR: ctx.query['habitaciones'] ? ctx.query['habitaciones'] : '',
                 estacionamientosSSR: ctx.query['estacionamientos'] ? ctx.query['estacionamientos'] : '',
+                validatedUser: {
+                    logged: user.id === 0 ? false : true,
+                    user
+                }
             }
         }
     } catch (err) {
@@ -103,6 +114,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
                 localidadSSR: '',
                 habitacionesSSR: '',
                 estacionamientosSSR: '',
+                validatedUser: {
+                    logged: user.id === 0 ? false : true,
+                    user
+                }
             }
         }
     }

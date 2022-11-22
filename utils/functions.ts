@@ -1,6 +1,10 @@
 import Swal from 'sweetalert2';
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { Dispatch, SetStateAction } from 'react';
+import { UserData } from '../interfaces/user-type';
+import { GetServerSidePropsContext, NextApiRequest } from 'next';
+import { ValidatedUser } from '../pages';
 
 export const getFormatDistanceToNow = (date: Date) => {
     const fromNow = formatDistanceToNow(date, { locale: es });
@@ -349,4 +353,69 @@ export const ucfirst = (str: string) => {
     str += '';
     const f = str.charAt(0).toUpperCase();
     return f + str.substr(1);
+}
+export const validateSession = (user: any, validated: ValidatedUser) => {
+    if (user.id === 0) {
+        if (validated.logged) {
+            user.logIn(validated.user);
+        } else {
+            deleteCookie("token");
+            deleteCookie("email");
+        }
+    }
+}
+/**
+ * Funcion para validar el token de un usuario
+ */
+export const validarToken = async (ctx: GetServerSidePropsContext): Promise<UserData> => {
+    const token = ctx.req.cookies['token'] || '';
+    const email = ctx.req.cookies['email'] || '';
+    const emptyUser: UserData = {
+        id: 0,
+        nombres: '',
+        apellidos: '',
+        telefono: '',
+        cedula: '',
+        email: '',
+        color: '',
+        created_at: '',
+        rol: 0,
+        status: 0,
+        token: ''
+    }
+    if (!token || !email) {
+        ctx.req.cookies['token'] = '';
+        ctx.req.cookies['email'] = '';
+        return emptyUser;
+    }
+    const body = JSON.stringify({
+        email,
+        token
+    });
+    const url = `https://consolitex.org/api/v1/auth/token_validation.php`;
+
+    const options = {
+        method: "POST",
+        body
+    }
+    try {
+        const respuesta = await fetch(url, options);
+        console.log({ status: respuesta.status })
+        switch (respuesta.status) {
+            case 200:
+                const { exito, message, user } = await respuesta.json();
+                if (exito === "SI") {
+                    console.log(message)
+                    return user;
+                } else {
+                    return emptyUser;
+                }
+            default:
+                return emptyUser;
+
+        }
+    } catch (error) {
+        console.log(error);
+        return emptyUser;
+    }
 }

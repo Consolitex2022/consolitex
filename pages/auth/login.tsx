@@ -1,3 +1,7 @@
+import { useContext } from 'react'
+import { NextPage } from 'next'
+import { useRouter } from 'next/router'
+
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import TextField from '@mui/material/TextField'
@@ -5,26 +9,39 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 import blue from '@mui/material/colors/blue'
+import green from '@mui/material/colors/green'
+import lightBlue from '@mui/material/colors/lightBlue'
 
-import { NextPage } from 'next'
-import Layout from '../../components/ui/Layout'
 import ArrowBackRounded from '@mui/icons-material/ArrowBackRounded'
 import WhatsApp from '@mui/icons-material/WhatsApp'
 import Instagram from '@mui/icons-material/Instagram'
 import Twitter from '@mui/icons-material/Twitter'
 import Facebook from '@mui/icons-material/Facebook'
-import green from '@mui/material/colors/green'
-import { lightBlue } from '@mui/material/colors'
-import { useRouter } from 'next/router'
+
 import { Form, Formik, FormikState, FormikValues } from 'formik'
+import * as Yup from 'yup';
+
 import Swal from 'sweetalert2'
+
+import { AuthContext } from '../../context/authcontext'
+import Layout from '../../components/ui/Layout'
+import { createCookie } from '../../utils/functions'
 
 const initialValues = {
     email: "",
     password: "",
 }
+const SigninSchema = Yup.object().shape({
+    email: Yup.string()
+        .email("Email inválido")
+        .min(10, 'Muy corta (min. 10)')
+        .required('Campo obligatorio'),
+    password: Yup.string()
+        .required('Campo obligatorio'),
+})
 
 const LoginPage: NextPage = () => {
+    const { logIn, nombres } = useContext(AuthContext)
     const router = useRouter();
     const onSubmit = async (values: FormikValues, resetForm: (nextState?: Partial<FormikState<{ email: string; password: string; }>> | undefined) => void) => {
         const url = "/api/auth/login";
@@ -35,6 +52,9 @@ const LoginPage: NextPage = () => {
         })
         const options = {
             method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
             body
         }
 
@@ -42,8 +62,32 @@ const LoginPage: NextPage = () => {
             const respuesta = await fetch(url, options)
             switch (respuesta.status) {
                 case 200:
-                    const data = await respuesta.json();
-
+                    const { message, user } = await respuesta.json();
+                    logIn(user);
+                    resetForm();
+                    createCookie('token', user.token);
+                    createCookie('email', user.email);
+                    Swal.fire({
+                        title: `Éxito`,
+                        text: `¡Que bueno verte de vuelta ${user.nombres}!`,
+                        icon: "success",
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                    })
+                    setTimeout(() => {
+                        router.push("/");
+                    }, 2000)
+                    break;
+                case 204:
+                    Swal.fire({
+                        title: "Oops...",
+                        text: "No se encontró el usuario",
+                        icon: "warning",
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                    })
                     break;
                 case 400:
                     const { errors } = await respuesta.json();
@@ -71,48 +115,47 @@ const LoginPage: NextPage = () => {
     }
 
     return (
-        <Layout title='Iniciar sesión' description='' footer={false}>
-            <Box sx={styles.mainContainer}>
-                <Box sx={styles.loginContainer}>
-                    <Button onClick={() => router.push("/")} startIcon={<ArrowBackRounded />} sx={{ ...styles.link, mb: 4 }}>Volver al inicio</Button>
-                    <Typography variant="h4" sx={{ fontFamily: "Plus Jakarta Sans", fontWeight: "800" }}>Iniciar sesión</Typography>
-                    <Typography variant="subtitle2" color="text.secondary" sx={{ fontFamily: "Plus Jakarta Sans", mb: 4 }}>Inicia para poder acceder a diferentes caracteristicas dentro de nuestro sitio web!</Typography>
-                    <Formik
-                        initialValues={initialValues}
-                        onSubmit={(values, { resetForm }) => onSubmit(values, resetForm)}
-                    >
-                        {({ values, handleSubmit, handleChange }) => (
-                            <Form onSubmit={handleSubmit}>
+        <Box sx={styles.mainContainer}>
+            <Box sx={styles.loginContainer}>
+                <Button onClick={() => router.push("/")} startIcon={<ArrowBackRounded />} sx={{ ...styles.link, mb: 4 }}>Volver al inicio</Button>
+                <Typography variant="h4" sx={{ fontFamily: "Plus Jakarta Sans", fontWeight: "800" }}>Iniciar sesión</Typography>
+                <Typography variant="subtitle2" color="text.secondary" sx={{ fontFamily: "Plus Jakarta Sans", mb: 4 }}>Inicia para poder acceder a diferentes caracteristicas dentro de nuestro sitio web!</Typography>
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={(values, { resetForm }) => onSubmit(values, resetForm)}
+                    validationSchema={SigninSchema}
+                >
+                    {({ values, handleSubmit, handleChange }) => (
+                        <Form onSubmit={handleSubmit}>
 
-                                <TextField label="Email" name="email" value={values.email} onChange={handleChange} fullWidth sx={styles.input} />
-                                <TextField label="Contraseña" name="password" value={values.password} onChange={handleChange} fullWidth sx={styles.input} />
-                                <Button type="submit" color="primary" variant="contained" sx={styles.button} disableElevation fullWidth>Iniciar</Button>
-                            </Form>
-                        )}
-                    </Formik>
-                    <Box sx={styles.linkContainer}>
-                        <Typography variant="subtitle1" sx={{ p: 1 }}>¿No tienes cuenta? &nbsp;</Typography>
-                        <Button sx={{ ...styles.link }} onClick={() => router.push("/auth/register")}>Registrate aquí</Button>
-                    </Box>
+                            <TextField label="Email" name="email" value={values.email} onChange={handleChange} fullWidth sx={styles.input} />
+                            <TextField label="Contraseña" name="password" value={values.password} onChange={handleChange} fullWidth sx={styles.input} />
+                            <Button type="submit" color="primary" variant="contained" sx={styles.button} disableElevation fullWidth>Iniciar</Button>
+                        </Form>
+                    )}
+                </Formik>
+                <Box sx={styles.linkContainer}>
+                    <Typography variant="subtitle1" sx={{ p: 1 }}>¿No tienes cuenta? &nbsp;</Typography>
+                    <Button sx={{ ...styles.link }} onClick={() => router.push("/auth/register")}>Registrate aquí</Button>
+                </Box>
 
-                    <Box sx={styles.redesContainer}>
-                        <Typography variant="subtitle2" color="text.secondary" sx={{ width: "100%", textAlign: "center", mt: 3 }}>Síguenos en nuestras redes</Typography>
-                        <IconButton component="a" href="https://wa.me/5804144029820" target="_blank" sx={styles.whatsapp}>
-                            <WhatsApp style={{ color: "white" }} />
-                        </IconButton>
-                        <IconButton component="a" href="https://instagram.com/consolitex" target="_blank" sx={styles.instagram}>
-                            <Instagram style={{ color: "white" }} />
-                        </IconButton>
-                        <IconButton component="a" href="https://twitter.com/consolitex" target="_blank" sx={styles.twitter}>
-                            <Twitter style={{ color: "white" }} />
-                        </IconButton>
-                        <IconButton component="a" href="https://facebook.com/consolitex" target="_blank" sx={styles.facebook}>
-                            <Facebook style={{ color: "white" }} />
-                        </IconButton>
-                    </Box>
+                <Box sx={styles.redesContainer}>
+                    <Typography variant="subtitle2" color="text.secondary" sx={{ width: "100%", textAlign: "center", mt: 3 }}>Síguenos en nuestras redes</Typography>
+                    <IconButton component="a" href="https://wa.me/5804144029820" target="_blank" sx={styles.whatsapp}>
+                        <WhatsApp style={{ color: "white" }} />
+                    </IconButton>
+                    <IconButton component="a" href="https://instagram.com/consolitex" target="_blank" sx={styles.instagram}>
+                        <Instagram style={{ color: "white" }} />
+                    </IconButton>
+                    <IconButton component="a" href="https://twitter.com/consolitex" target="_blank" sx={styles.twitter}>
+                        <Twitter style={{ color: "white" }} />
+                    </IconButton>
+                    <IconButton component="a" href="https://facebook.com/consolitex" target="_blank" sx={styles.facebook}>
+                        <Facebook style={{ color: "white" }} />
+                    </IconButton>
                 </Box>
             </Box>
-        </Layout >
+        </Box>
     )
 }
 export default LoginPage;

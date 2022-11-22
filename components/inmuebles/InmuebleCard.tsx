@@ -38,11 +38,8 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
                     }
                 }}></Typography>
 
-                {/* Urbanizacion */}
-                <Typography fontWeight="bold" variant="subtitle2" color="text.primary">{ucfirst(data.urbanizacion)}</Typography>
-
                 {/* Urbanizacion, municipio, estado */}
-                <Typography fontWeight="bold" variant="subtitle2" component="p" color="text.secondary" sx={{
+                <Typography variant="subtitle2" component="p" color="text.secondary" sx={{
                     textOverflow: "ellipsis", "&:before": {
                         content: `'${info.length > 30 ? info.substring(0, 30) + "..." : info}'`
                     }, "&:hover:before": {

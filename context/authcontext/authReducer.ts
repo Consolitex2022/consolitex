@@ -9,11 +9,24 @@ type UserLoggedActionType =
 export const authReducer = (state: UserData, action: UserLoggedActionType): UserData => {
     switch (action.type) {
         case 'User - Log in':
-            return state;
+            return action.payload;
         case 'User - Log out':
-            return state;
+            const emptyUserData: UserData = {
+                nombres: '',
+                id: 0,
+                apellidos: '',
+                telefono: '',
+                cedula: '',
+                email: '',
+                color: '',
+                created_at: '',
+                rol: 0,
+                status: 0,
+                token: ''
+            }
+            return emptyUserData;
         case 'User - Edit':
-            return state;
+            return action.payload;
         case 'User - Change color':
             return { ...state, color: action.payload.color };
         default:

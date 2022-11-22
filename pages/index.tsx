@@ -1,4 +1,4 @@
-import { useState, Suspense } from 'react';
+import { useContext, useState, Suspense, useEffect } from 'react';
 
 import { GetServerSideProps, NextPage } from 'next';
 import dynamic from "next/dynamic";
@@ -8,6 +8,9 @@ import IconButton from '@mui/material/IconButton';
 import { useTheme, Typography } from '@mui/material';
 import { CustomImage } from '../components/images/CustomImage';
 import Layout from '../components/ui/Layout';
+import { AuthContext } from '../context/authcontext';
+import { deleteCookie, validarToken, validateSession } from '../utils/functions';
+import { UserData } from '../interfaces/user-type';
 
 export type InmuebleData = {
   Estado: string;
@@ -46,20 +49,31 @@ export type Inmueble = {
 
 const description: string = "Gran variedad de inmuebles | Comprar, alquilar y vender apartamentos, casas, townhouses, terrenos y más ¡en Consolitex lo encuentras!";
 
-interface Props {
-  inmueblesRecomendados: Inmueble[] | null;
+export interface ValidatedUser {
+  logged: boolean;
+  user: UserData;
 }
 
-const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
+interface Props {
+  inmueblesRecomendados: Inmueble[] | null;
+  validatedUser: ValidatedUser;
+}
+
+const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => {
   const InmuebleList = dynamic(import('../components/inmuebles/inmueblelist/InmuebleList').then((mod) => mod.InmuebleList));
   const MenuBusquedaMobile = dynamic(import('../components/index').then((mod) => mod.MenuBusquedaMobile));
   const MenuBusquedaPc = dynamic(import('../components/index').then((mod) => mod.MenuBusquedaPc));
 
+  const userData = useContext(AuthContext)
   // Inmuebles a mostrar
   const [inmuebles, setInmuebles] = useState<Inmueble[] | null>(inmueblesRecomendados);
 
   // Props de los menus
   const theme = useTheme();
+
+  useEffect(() => {
+    validateSession(userData, validatedUser);
+  }, [])
 
   return (
     <Layout title="Buscar Inmueble" description={description} transparent={true}>
@@ -89,7 +103,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
         <Box sx={{ textAlign: "left", p: 2, margin: "auto", width: 600, display: "flex", flexFlow: "column wrap" }}>
 
           <Typography variant="overline" color="primary" fontWeight="bold" fontSize={{ xs: 12, md: 16 }}>
-            Somos tu mejor opción
+            Somos tu mejor opción{validatedUser.logged && `, ${validatedUser.user.nombres}`}
           </Typography>
           <Typography variant="subtitle1" sx={{ fontFamily: "Oxygen" }} fontWeight="bold" fontSize={{ xs: 20, md: 32 }}>
             Más de 40 años en el mercado inmobiliario
@@ -120,6 +134,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados }) => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
+  const user = await validarToken(ctx);
   try {
     // Solicitud HTTP
     const respuesta = await fetch("https://consolitex.org/api/v1/inmuebles.php?localidad=Norte");
@@ -132,7 +147,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
     // Longitud del resultado 
     const length = Object.keys(data).length;
-
+    console.log(user)
     /**
      * El resultado es un objeto con mas objetos, por lo tanto la idea es meter los resultados en un array para poder hacer un map luego.
      */
@@ -143,6 +158,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return {
       props: {
         inmueblesRecomendados: newInmuebles,
+        validatedUser: {
+          logged: true,
+          user
+        }
       }
     }
 
@@ -150,6 +169,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return {
       props: {
         inmueblesRecomendados: null,
+        validatedUser: {
+          logged: false,
+          user
+        }
       }
     }
   }

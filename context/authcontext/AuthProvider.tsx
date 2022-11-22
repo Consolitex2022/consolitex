@@ -1,6 +1,7 @@
 import { FC, ReactNode, useReducer } from "react"
 import { AuthContext, authReducer } from ".";
 import { UserData } from "../../interfaces/user-type";
+import { createCookie, deleteCookie } from "../../utils/functions";
 
 interface Props {
     children: ReactNode
@@ -26,6 +27,8 @@ export const AuthProvider: FC<Props> = ({ children }) => {
         dispatch({ type: 'User - Log in', payload: user });
     }
     const logOut = () => {
+        deleteCookie('token');
+        deleteCookie('email');
         dispatch({ type: 'User - Log out' })
     }
     const editData = (user: UserData) => {

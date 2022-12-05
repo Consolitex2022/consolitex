@@ -21,6 +21,7 @@ import { Inmueble } from '../../pages';
 
 import { BanosIcon, HabitacionesIcon, MetrajeIcon, TerrenoIcon, EstacionamientosIcon, PlantaIcon, PozoIcon } from '../icons';
 import { numberWithDots, ucfirst } from '../../utils/functions';
+import Swal from 'sweetalert2';
 
 interface Props {
     inmueble: Inmueble;
@@ -39,6 +40,67 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
     const router = useRouter();
     const { url_inmueble, data } = inmueble;
     const info = `${ucfirst(data.urbanizacion)}, ${ucfirst(data.municipio)}, ${ucfirst(data.Estado)}`;
+
+    const like = async (ficha_id: string, id: string | number, action: "like" | "dislike") => {
+
+        const url = `/api/likes/`
+
+        const body = JSON.stringify({
+            id,
+            ficha_id,
+            action
+        })
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body
+        }
+
+        try {
+            const respuesta = await fetch(url, options);
+            switch (respuesta.status) {
+                case 200:
+                    setFavorite(true);
+                    break;
+                case 400:
+                    Swal.fire({
+                        title: "Error",
+                        toast: true,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: "bottom-start"
+                    })
+                    break;
+                case 500:
+                    Swal.fire({
+                        title: "Error del servidor",
+                        toast: true,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: "bottom-start"
+                    })
+                    break;
+            }
+        } catch (error) {
+            console.log(error);
+            Swal.fire({
+                title: "Error de conexion",
+                toast: true,
+                icon: "error",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                position: "bottom-start"
+            })
+        }
+
+    }
 
 
     const redirect = (ficha_id: string) => {
@@ -101,7 +163,7 @@ export const InmuebleCardGrid: FC<Props> = ({ inmueble }) => {
                 <Box sx={{ bgcolor: 'background.paper', display: "flex", flexDirection: "column", ml: 1, p: 1, border: "1px solid rgba(0,0,0,0.1)", borderRadius: 4, width: 50, }}>
                     <Box sx={{ display: "flex", justifyContent: "center" }}>
                         <Button fullWidth onClick={handleFav} color="error" variant="text" sx={{ "&:hover": { background: "none" } }}>
-                            {favorite ? (<FavoriteIcon color="error" />) : (<FavoriteBorderIcon sx={{ color: "darkgrey !important" }} />)}
+                            {favorite ? (<FavoriteIcon color="error" onClick={() => like(data.ficha_id, data.key, "like")} />) : (<FavoriteBorderIcon onClick={() => like(data.ficha_id, data.key, "dislike")} sx={{ color: "darkgrey !important" }} />)}
                         </Button>
                     </Box>
                     <Box sx={{ display: "flex", justifyContent: "center" }}>

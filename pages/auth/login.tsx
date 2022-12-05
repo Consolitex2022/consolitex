@@ -26,6 +26,7 @@ import Swal from 'sweetalert2'
 import { AuthContext } from '../../context/authcontext'
 import Layout from '../../components/ui/Layout'
 import { createCookie } from '../../utils/functions'
+import Head from 'next/head'
 
 const initialValues = {
     email: "",
@@ -115,47 +116,63 @@ const LoginPage: NextPage = () => {
     }
 
     return (
-        <Box sx={styles.mainContainer}>
-            <Box sx={styles.loginContainer}>
-                <Button onClick={() => router.push("/")} startIcon={<ArrowBackRounded />} sx={{ ...styles.link, mb: 4 }}>Volver al inicio</Button>
-                <Typography variant="h4" sx={{ fontFamily: "Plus Jakarta Sans", fontWeight: "800" }}>Iniciar sesión</Typography>
-                <Typography variant="subtitle2" color="text.secondary" sx={{ fontFamily: "Plus Jakarta Sans", mb: 4 }}>Inicia para poder acceder a diferentes caracteristicas dentro de nuestro sitio web!</Typography>
-                <Formik
-                    initialValues={initialValues}
-                    onSubmit={(values, { resetForm }) => onSubmit(values, resetForm)}
-                    validationSchema={SigninSchema}
-                >
-                    {({ values, handleSubmit, handleChange }) => (
-                        <Form onSubmit={handleSubmit}>
+        <>
+            <Head>
+                <meta charSet="UTF-8" />
+                <meta name="author" content="Linz Web Development (Jose Linares)" />
+                <meta name="description" content="Pagina de inicio de sesion de Consolitex" />
+                <meta name="copyright" content="Consolitex®" />
+                {/* Link canónico */}
+                <link rel="canonical" href={'https://consolitex.org'} />
+                {/* Geolocalizacion */}
+                <meta name="geo.region" content="VE" />
+                <meta name="robots" content="follow, index" />
+                <meta name="googlebot" content="follow, index" />
 
-                            <TextField label="Email" name="email" value={values.email} onChange={handleChange} fullWidth sx={styles.input} />
-                            <TextField label="Contraseña" name="password" value={values.password} onChange={handleChange} fullWidth sx={styles.input} />
-                            <Button type="submit" color="primary" variant="contained" sx={styles.button} disableElevation fullWidth>Iniciar</Button>
-                        </Form>
-                    )}
-                </Formik>
-                <Box sx={styles.linkContainer}>
-                    <Typography variant="subtitle1" sx={{ p: 1 }}>¿No tienes cuenta? &nbsp;</Typography>
-                    <Button sx={{ ...styles.link }} onClick={() => router.push("/auth/register")}>Registrate aquí</Button>
-                </Box>
+                <title>{`Iniciar sesión | Consolitex®`}</title>
+            </Head>
+            <Box sx={styles.mainContainer}>
+                <Box sx={styles.loginContainer}>
+                    <Button onClick={() => router.push("/")} startIcon={<ArrowBackRounded />} sx={{ ...styles.link, mb: 4 }}>Volver al inicio</Button>
+                    <Typography variant="h4" sx={{ fontFamily: "Plus Jakarta Sans", fontWeight: "800" }}>Iniciar sesión</Typography>
+                    <Typography variant="subtitle2" color="text.secondary" sx={{ fontFamily: "Plus Jakarta Sans", mb: 4 }}>Inicia para poder acceder a diferentes caracteristicas dentro de nuestro sitio web!</Typography>
+                    <Formik
+                        initialValues={initialValues}
+                        onSubmit={(values, { resetForm }) => onSubmit(values, resetForm)}
+                        validationSchema={SigninSchema}
+                    >
+                        {({ values, handleSubmit, handleChange }) => (
+                            <Form onSubmit={handleSubmit}>
 
-                <Box sx={styles.redesContainer}>
-                    <Typography variant="subtitle2" color="text.secondary" sx={{ width: "100%", textAlign: "center", mt: 3 }}>Síguenos en nuestras redes</Typography>
-                    <IconButton component="a" href="https://wa.me/5804144029820" target="_blank" sx={styles.whatsapp}>
-                        <WhatsApp style={{ color: "white" }} />
-                    </IconButton>
-                    <IconButton component="a" href="https://instagram.com/consolitex" target="_blank" sx={styles.instagram}>
-                        <Instagram style={{ color: "white" }} />
-                    </IconButton>
-                    <IconButton component="a" href="https://twitter.com/consolitex" target="_blank" sx={styles.twitter}>
-                        <Twitter style={{ color: "white" }} />
-                    </IconButton>
-                    <IconButton component="a" href="https://facebook.com/consolitex" target="_blank" sx={styles.facebook}>
-                        <Facebook style={{ color: "white" }} />
-                    </IconButton>
+                                <TextField label="Email" name="email" value={values.email} onChange={handleChange} fullWidth sx={styles.input} />
+                                <TextField label="Contraseña" name="password" value={values.password} onChange={handleChange} fullWidth sx={styles.input} />
+                                <Button type="submit" color="primary" variant="contained" sx={styles.button} disableElevation fullWidth>Iniciar</Button>
+                            </Form>
+                        )}
+                    </Formik>
+                    <Box sx={styles.linkContainer}>
+                        <Typography variant="subtitle1" sx={{ p: 1 }}>¿No tienes cuenta? &nbsp;</Typography>
+                        <Button sx={{ ...styles.link }} onClick={() => router.push("/auth/register")}>Registrate aquí</Button>
+                    </Box>
+
+                    <Box sx={styles.redesContainer}>
+                        <Typography variant="subtitle2" color="text.secondary" sx={{ width: "100%", textAlign: "center", mt: 3 }}>Síguenos en nuestras redes</Typography>
+                        <IconButton component="a" href="https://wa.me/5804144029820" target="_blank" sx={styles.whatsapp}>
+                            <WhatsApp style={{ color: "white" }} />
+                        </IconButton>
+                        <IconButton component="a" href="https://instagram.com/consolitex" target="_blank" sx={styles.instagram}>
+                            <Instagram style={{ color: "white" }} />
+                        </IconButton>
+                        <IconButton component="a" href="https://twitter.com/consolitex" target="_blank" sx={styles.twitter}>
+                            <Twitter style={{ color: "white" }} />
+                        </IconButton>
+                        <IconButton component="a" href="https://facebook.com/consolitex" target="_blank" sx={styles.facebook}>
+                            <Facebook style={{ color: "white" }} />
+                        </IconButton>
+                    </Box>
                 </Box>
             </Box>
-        </Box>
+        </>
     )
 }
 export default LoginPage;

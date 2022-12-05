@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useContext, useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -13,8 +13,11 @@ import { useRouter } from 'next/router';
 import { Inmueble } from '../../pages';
 import { numberWithDots, ucfirst } from '../../utils/functions';
 import { BanosIcon, EstacionamientosIcon, HabitacionesIcon, MetrajeIcon, PlantaIcon, PozoIcon, TerrenoIcon } from '../icons';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorderRounded';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
+import Swal from 'sweetalert2';
+import { AuthContext } from '../../context/authcontext';
 
 interface Props {
     inmueble: Inmueble;
@@ -54,13 +57,124 @@ export const tieneCaracteristica = (caracteristica: string) => {
     }
 }
 export const InmuebleCard: FC<Props> = ({ inmueble }) => {
-
+    const [favorite, setFavorite] = useState<boolean>(false);
     const { url_inmueble, data } = inmueble;
     const info = `${ucfirst(data.urbanizacion)}, ${ucfirst(data.municipio)}, ${ucfirst(data.Estado)}`;
     const router = useRouter();
+    const userData = useContext(AuthContext);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const getLike = async () => {
+        if (userData.id === 0) return false;
+        const url = `/api/likes?ficha_id0=${data.ficha_id0}&user_id=${userData.id}`;
+        const options = {
+            method: 'GET',
+        }
+        try {
+            const respuesta = await fetch(url);
+            switch (respuesta.status) {
+                case 200:
+                    setFavorite(true);
+                    setIsLoading(false);
+                    break;
+                case 204:
+                    setFavorite(false);
+                    setIsLoading(false);
+                    break;
+                default:
+                    console.error("Ocurrio un error al buscar el like del inmueble", respuesta.status, data.ficha_id0);
+                    setIsLoading(false);
+                    break;
+            }
+        } catch (error) {
+            setIsLoading(false);
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getLike();
+    }, [])
+
     const redirect = (ficha_id: string) => {
         window.open(`/inmueble/${ficha_id}`, '_blank')
     }
+    const like = async (ficha_id0: string, id: string | number, action: "like" | "dislike") => {
+
+        const url = `/api/likes/`
+
+        const body = JSON.stringify({
+            id,
+            ficha_id0,
+            action,
+            user_id: userData.id
+        })
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body
+        }
+
+        try {
+            const respuesta = await fetch(url, options);
+            switch (respuesta.status) {
+                case 200:
+                    if (action === 'like') {
+                        setFavorite(true);
+                    } else {
+                        setFavorite(false);
+                    }
+                    break;
+                case 400:
+                    Swal.fire({
+                        title: "Error 1",
+                        toast: true,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: "bottom-start"
+                    })
+                    break;
+                case 204:
+                    Swal.fire({
+                        title: "Error 2",
+                        toast: true,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: "bottom-start"
+                    })
+                default:
+                    Swal.fire({
+                        title: "Error del servidor",
+                        toast: true,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: "bottom-start"
+                    })
+                    break;
+            }
+        } catch (error) {
+            console.log(error);
+            Swal.fire({
+                title: "Error de conexion",
+                toast: true,
+                icon: "error",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                position: "bottom-start"
+            })
+        }
+
+    }
+
+
     return (
         <>
 
@@ -125,9 +239,35 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
                             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
 
                                 <Box sx={{ display: "flex", flexWrap: "nowrap" }}>
-                                    <IconButton sx={{ mr: 2 }}>
-                                        <FavoriteBorderRoundedIcon />
-                                    </IconButton>
+                                    {favorite ? (
+                                        <IconButton disabled={isLoading} sx={{ mr: 2 }} onClick={() => {
+                                            if (userData && userData.id !== 0) {
+                                                like(data.ficha_id0, data.key, "dislike")
+                                            } else {
+                                                Swal.fire({
+                                                    title: "Inicia sesion",
+                                                    text: "Loageate para poder asignar like al inmueble",
+                                                    icon: "warning",
+                                                })
+                                            }
+                                        }}>
+                                            <FavoriteIcon color="error" />
+                                        </IconButton>
+                                    ) : (
+                                        <IconButton disabled={isLoading} sx={{ mr: 2 }} onClick={() => {
+                                            if (userData && userData.id !== 0) {
+                                                like(data.ficha_id0, data.key, "like")
+                                            } else {
+                                                Swal.fire({
+                                                    title: "Inicia sesion",
+                                                    text: "Loageate para poder asignar like al inmueble",
+                                                    icon: "warning",
+                                                })
+                                            }
+                                        }}>
+                                            <FavoriteBorderIcon sx={{ color: "darkgrey !important" }} />
+                                        </IconButton>
+                                    )}
                                     <IconButton sx={{ mr: 2 }}>
                                         <ShareRoundedIcon />
                                     </IconButton>

@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography'
 import blue from '@mui/material/colors/blue'
 
 import { NextPage } from 'next'
+import Head from 'next/head'
 import Layout from '../../components/ui/Layout'
 import ArrowBackRounded from '@mui/icons-material/ArrowBackRounded'
 import WhatsApp from '@mui/icons-material/WhatsApp'
@@ -123,92 +124,108 @@ const RegisterPage: NextPage = () => {
         event.preventDefault();
     };
     return (
-        <Box sx={styles.mainContainer}>
-            <Box sx={styles.loginContainer}>
-                <Button onClick={() => router.push("/")} startIcon={<ArrowBackRounded />} sx={{ ...styles.link, mb: 4 }}>Volver al inicio</Button>
-                <Typography variant="h4" sx={{ fontFamily: "Plus Jakarta Sans", fontWeight: "800" }}>Regístrate</Typography>
-                <Typography variant="subtitle2" color="text.secondary" sx={{ fontFamily: "Plus Jakarta Sans", mb: 4 }}>Obtén diferentes herramientas adicionales en nuestro sitio web!</Typography>
-                <Formik
-                    initialValues={initialValues}
-                    onSubmit={(values, { resetForm }) => onSubmit(values, resetForm)}
-                    validationSchema={SignupSchema}
-                >
-                    {({ values, handleSubmit, handleChange, errors, touched }) => (
-                        <Form onSubmit={handleSubmit}>
-                            <Grid container spacing={2}>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField label="Nombres" name="nombres" value={values.nombres} onChange={handleChange} fullWidth sx={styles.input} error={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.nombres) ? true : errors.nombres && touched.nombres ? true : false} helperText={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.nombres) ? 'Sólo se aceptan letras' : errors.nombres && touched.nombres ? errors.nombres : ''} />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField label="Apellidos" name="apellidos" value={values.apellidos} onChange={handleChange} fullWidth sx={styles.input} error={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.apellidos) ? true : errors.apellidos && touched.apellidos ? true : false} helperText={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.apellidos) ? 'Sólo se aceptan letras' : errors.apellidos && touched.apellidos ? errors.apellidos : ''} />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField label="Email" name="email" value={values.email} onChange={handleChange} fullWidth sx={styles.input} error={errors.email && touched.email ? true : false} helperText={errors.email && touched.email ? errors.email : ''} />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField label="Telefono" name="telefono" value={values.telefono} onChange={handleChange} fullWidth sx={styles.input} error={errors.telefono && touched.telefono ? true : false} helperText={errors.telefono && touched.telefono ? errors.telefono : ''} />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField type={show ? "text" : "password"} InputProps={{
-                                        endAdornment: <InputAdornment position="end" sx={{ mr: 1 }}>
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={handleClickShowPassword}
-                                                onMouseDown={handleMouseDownPassword}
-                                                edge="end"
-                                            >
-                                                {show ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    }} label="Contraseña" name="password" value={values.password} onChange={handleChange} fullWidth sx={styles.input}
-                                        error={errors.password && touched.password ? true : false} helperText={errors.password && touched.password ? errors.password : ''}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField type={show ? "text" : "password"} InputProps={{
-                                        endAdornment: <InputAdornment position="end" sx={{ mr: 1 }}>
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={handleClickShowPassword}
-                                                onMouseDown={handleMouseDownPassword}
-                                                edge="end"
-                                            >
-                                                {show ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    }} label="Confirmar contraseña" name="confirmPassword" value={values.confirmPassword} onChange={handleChange} fullWidth sx={styles.input}
-                                        error={errors.confirmPassword && touched.confirmPassword ? true : (values.password !== values.confirmPassword ? true : false)} helperText={errors.confirmPassword && touched.confirmPassword ? errors.confirmPassword : (values.password !== values.confirmPassword ? 'Las contraseñas no coinciden' : '')}
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Button type="submit" color="primary" variant="contained" sx={styles.button} disableElevation fullWidth>Iniciar</Button>
-                                </Grid>
-                            </Grid>
-                        </Form>
-                    )}
-                </Formik>
-                <Box sx={styles.linkContainer}>
-                    <Typography variant="subtitle1" sx={{ p: 1 }}>¿Ya tienes cuenta? &nbsp;</Typography>
-                    <Button sx={{ ...styles.link }} onClick={() => router.push("/auth/login")}>Inicia sesión</Button>
-                </Box>
+        <>
+            <Head>
+                <meta charSet="UTF-8" />
+                <meta name="author" content="Linz Web Development (Jose Linares)" />
+                <meta name="description" content="Registro de cuenta de Consolitex" />
+                <meta name="copyright" content="Consolitex®" />
+                {/* Link canónico */}
+                <link rel="canonical" href={'https://consolitex.org'} />
+                {/* Geolocalizacion */}
+                <meta name="geo.region" content="VE" />
+                <meta name="robots" content="follow, index" />
+                <meta name="googlebot" content="follow, index" />
 
-                <Box sx={styles.redesContainer}>
-                    <Typography variant="subtitle2" color="text.secondary" sx={{ width: "100%", textAlign: "center", mt: 3 }}>Síguenos en nuestras redes</Typography>
-                    <IconButton component="a" href="https://wa.me/5804144029820" target="_blank" sx={styles.whatsapp}>
-                        <WhatsApp style={{ color: "white" }} />
-                    </IconButton>
-                    <IconButton component="a" href="https://instagram.com/consolitex" target="_blank" sx={styles.instagram}>
-                        <Instagram style={{ color: "white" }} />
-                    </IconButton>
-                    <IconButton component="a" href="https://twitter.com/consolitex" target="_blank" sx={styles.twitter}>
-                        <Twitter style={{ color: "white" }} />
-                    </IconButton>
-                    <IconButton component="a" href="https://facebook.com/consolitex" target="_blank" sx={styles.facebook}>
-                        <Facebook style={{ color: "white" }} />
-                    </IconButton>
+                <title>{`Crear cuenta | Consolitex®`}</title>
+            </Head>
+            <Box sx={styles.mainContainer}>
+                <Box sx={styles.loginContainer}>
+                    <Button onClick={() => router.push("/")} startIcon={<ArrowBackRounded />} sx={{ ...styles.link, mb: 4 }}>Volver al inicio</Button>
+                    <Typography variant="h4" sx={{ fontFamily: "Plus Jakarta Sans", fontWeight: "800" }}>Regístrate</Typography>
+                    <Typography variant="subtitle2" color="text.secondary" sx={{ fontFamily: "Plus Jakarta Sans", mb: 4 }}>Obtén diferentes herramientas adicionales en nuestro sitio web!</Typography>
+                    <Formik
+                        initialValues={initialValues}
+                        onSubmit={(values, { resetForm }) => onSubmit(values, resetForm)}
+                        validationSchema={SignupSchema}
+                    >
+                        {({ values, handleSubmit, handleChange, errors, touched }) => (
+                            <Form onSubmit={handleSubmit}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField label="Nombres" name="nombres" value={values.nombres} onChange={handleChange} fullWidth sx={styles.input} error={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.nombres) ? true : errors.nombres && touched.nombres ? true : false} helperText={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.nombres) ? 'Sólo se aceptan letras' : errors.nombres && touched.nombres ? errors.nombres : ''} />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField label="Apellidos" name="apellidos" value={values.apellidos} onChange={handleChange} fullWidth sx={styles.input} error={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.apellidos) ? true : errors.apellidos && touched.apellidos ? true : false} helperText={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.apellidos) ? 'Sólo se aceptan letras' : errors.apellidos && touched.apellidos ? errors.apellidos : ''} />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField label="Email" name="email" value={values.email} onChange={handleChange} fullWidth sx={styles.input} error={errors.email && touched.email ? true : false} helperText={errors.email && touched.email ? errors.email : ''} />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField label="Telefono" name="telefono" value={values.telefono} onChange={handleChange} fullWidth sx={styles.input} error={errors.telefono && touched.telefono ? true : false} helperText={errors.telefono && touched.telefono ? errors.telefono : ''} />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField type={show ? "text" : "password"} InputProps={{
+                                            endAdornment: <InputAdornment position="end" sx={{ mr: 1 }}>
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                >
+                                                    {show ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        }} label="Contraseña" name="password" value={values.password} onChange={handleChange} fullWidth sx={styles.input}
+                                            error={errors.password && touched.password ? true : false} helperText={errors.password && touched.password ? errors.password : ''}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField type={show ? "text" : "password"} InputProps={{
+                                            endAdornment: <InputAdornment position="end" sx={{ mr: 1 }}>
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                >
+                                                    {show ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        }} label="Confirmar contraseña" name="confirmPassword" value={values.confirmPassword} onChange={handleChange} fullWidth sx={styles.input}
+                                            error={errors.confirmPassword && touched.confirmPassword ? true : (values.password !== values.confirmPassword ? true : false)} helperText={errors.confirmPassword && touched.confirmPassword ? errors.confirmPassword : (values.password !== values.confirmPassword ? 'Las contraseñas no coinciden' : '')}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Button type="submit" color="primary" variant="contained" sx={styles.button} disableElevation fullWidth>Iniciar</Button>
+                                    </Grid>
+                                </Grid>
+                            </Form>
+                        )}
+                    </Formik>
+                    <Box sx={styles.linkContainer}>
+                        <Typography variant="subtitle1" sx={{ p: 1 }}>¿Ya tienes cuenta? &nbsp;</Typography>
+                        <Button sx={{ ...styles.link }} onClick={() => router.push("/auth/login")}>Inicia sesión</Button>
+                    </Box>
+
+                    <Box sx={styles.redesContainer}>
+                        <Typography variant="subtitle2" color="text.secondary" sx={{ width: "100%", textAlign: "center", mt: 3 }}>Síguenos en nuestras redes</Typography>
+                        <IconButton component="a" href="https://wa.me/5804144029820" target="_blank" sx={styles.whatsapp}>
+                            <WhatsApp style={{ color: "white" }} />
+                        </IconButton>
+                        <IconButton component="a" href="https://instagram.com/consolitex" target="_blank" sx={styles.instagram}>
+                            <Instagram style={{ color: "white" }} />
+                        </IconButton>
+                        <IconButton component="a" href="https://twitter.com/consolitex" target="_blank" sx={styles.twitter}>
+                            <Twitter style={{ color: "white" }} />
+                        </IconButton>
+                        <IconButton component="a" href="https://facebook.com/consolitex" target="_blank" sx={styles.facebook}>
+                            <Facebook style={{ color: "white" }} />
+                        </IconButton>
+                    </Box>
                 </Box>
             </Box>
-        </Box>
+        </>
     )
 }
 export default RegisterPage;

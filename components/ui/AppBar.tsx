@@ -25,6 +25,7 @@ const pages: Pages[] = [
 ];
 const settings: Settings[] = [
     { name: 'Mi perfil', path: "/profile" },
+    { name: 'Mis likes', path: "/likes" },
     { name: 'Cerrar sesión', path: "/end" }
 ];
 /* const adminSettings: Settings[] = [

@@ -5,6 +5,8 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
+import Chip from '@mui/material/Chip'
+import Button from '@mui/material/Button'
 
 import LikeIcon from '@mui/icons-material/FavoriteRounded'
 import LikeOutlineIcon from '@mui/icons-material/FavoriteBorderRounded'
@@ -16,10 +18,10 @@ import { AuthContext } from '../../context/authcontext'
 import { Inmueble, ValidatedUser } from '..'
 import { InmuebleCard } from '../../components/inmuebles'
 import { CustomImage } from '../../components/images/CustomImage'
-import Chip from '@mui/material/Chip'
 import { useRouter } from 'next/router'
 import green from '@mui/material/colors/green'
 import Swal from 'sweetalert2'
+import { ArrowBack } from '@mui/icons-material'
 
 interface Props {
     validatedUser: ValidatedUser;
@@ -63,11 +65,156 @@ interface LikeCardProps {
     inmueble: Inmueble;
 }
 const LikeCard: FC<LikeCardProps> = ({ inmueble }) => {
+    const [favorite, setFavorite] = useState<boolean>(true);
 
     const router = useRouter();
 
     const redirect = (path: string) => {
         window.open(window.origin + "/inmueble/" + path, "_blank")
+    }
+    const userData = useContext(AuthContext);
+
+    const dislike = async () => {
+        const url = `/api/likes/`
+
+        const body = JSON.stringify({
+            id: inmueble.data.key,
+            ficha_id0: inmueble.data.ficha_id0,
+            user_id: userData.id,
+            action: 'dislike',
+        })
+
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body
+        }
+
+        try {
+            const respuesta = await fetch(url, options);
+            switch (respuesta.status) {
+                case 200:
+                    setFavorite(false);
+                    break;
+                case 400:
+                    Swal.fire({
+                        title: "Error",
+                        toast: true,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: "bottom-start"
+                    })
+                    break;
+                case 204:
+                    Swal.fire({
+                        title: "Error",
+                        toast: true,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: "bottom-start"
+                    })
+                default:
+                    Swal.fire({
+                        title: "Error del servidor",
+                        toast: true,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: "bottom-start"
+                    })
+                    break;
+            }
+        } catch (error) {
+            console.log(error);
+            Swal.fire({
+                title: "Error de conexion",
+                toast: true,
+                icon: "error",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                position: "bottom-start"
+            })
+        }
+
+    }
+
+    const undo = async () => {
+        const url = `/api/likes/`
+
+        const body = JSON.stringify({
+            id: inmueble.data.key,
+            ficha_id0: inmueble.data.ficha_id0,
+            user_id: userData.id,
+            action: 'like',
+        })
+
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body
+        }
+
+        try {
+            const respuesta = await fetch(url, options);
+            switch (respuesta.status) {
+                case 200:
+                    setFavorite(true);
+                    break;
+                case 400:
+                    Swal.fire({
+                        title: "Error",
+                        toast: true,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: "bottom-start"
+                    })
+                    break;
+                case 204:
+                    Swal.fire({
+                        title: "Error",
+                        toast: true,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: "bottom-start"
+                    })
+                default:
+                    Swal.fire({
+                        title: "Error del servidor",
+                        toast: true,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: "bottom-start"
+                    })
+                    break;
+            }
+        } catch (error) {
+            console.log(error);
+            Swal.fire({
+                title: "Error de conexion",
+                toast: true,
+                icon: "error",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                position: "bottom-start"
+            })
+        }
     }
 
     const localStyles = {
@@ -94,18 +241,30 @@ const LikeCard: FC<LikeCardProps> = ({ inmueble }) => {
     }
     return (
         <Box sx={localStyles.card} >
-            <CustomImage src={`https://consolitex.org/newImg.php?nowatermark=1&url=${inmueble.url_inmueble}`} alt={inmueble.data.nombre} upperBoxStyles={{ width: "100%", minHeight: 200, maxHeight: 200, overflow: "hidden", borderRadius: "20px 20px 0 0 " }} />
-            <Box sx={localStyles.content} >
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexFlow: "row nowrap", mb: 1 }}>
-                    <Chip label={inmueble.data.inmueble} color="primary" size="small" />
-                    <IconButton sx={{ zIndex: 9999 }}>
-                        <LikeIcon color="error" />
-                    </IconButton>
-                </Box>
-                <Typography variant="subtitle1">{ucfirst(inmueble.data.nombre)}</Typography>
-                <Typography variant="subtitle2" color="text.secondary" fontWeight="bold" >{`${inmueble.data.urbanizacion}, ${inmueble.data.municipio}, ${inmueble.data.Estado}`}</Typography>
-                <Typography variant="subtitle2" sx={{ color: green[500] }} fontWeight="bold">REF {inmueble.data.ref}</Typography>
-            </Box>
+            {
+                favorite ? (
+                    <>
+                        <CustomImage src={`https://consolitex.org/newImg.php?nowatermark=1&url=${inmueble.url_inmueble}`} alt={inmueble.data.nombre} upperBoxStyles={{ width: "100%", minHeight: 200, maxHeight: 200, overflow: "hidden", borderRadius: "20px 20px 0 0 " }} />
+                        <Box sx={localStyles.content} >
+                            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexFlow: "row nowrap", mb: 1 }}>
+                                <Chip label={inmueble.data.inmueble} color="primary" size="small" />
+                                <IconButton sx={{ zIndex: 9999 }} onClick={dislike}>
+                                    <LikeIcon color="error" />
+                                </IconButton>
+                            </Box>
+                            <Typography variant="subtitle1">{ucfirst(inmueble.data.nombre)}</Typography>
+                            <Typography variant="subtitle2" color="text.secondary" fontWeight="bold" >{`${inmueble.data.urbanizacion}, ${inmueble.data.municipio}, ${inmueble.data.Estado}`}</Typography>
+                            <Typography variant="subtitle2" sx={{ color: green[500] }} fontWeight="bold">REF {inmueble.data.ref}</Typography>
+                        </Box>
+                    </>
+                ) : (
+                    <>
+                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "inherit" }}>
+                            <Button onClick={undo} variant="outlined" sx={{ color: "grey", borderRadius: 5 }} disableElevation startIcon={<ArrowBack />}>Deshacer</Button>
+                        </Box>
+                    </>
+                )
+            }
         </Box >
     )
 }

@@ -241,7 +241,7 @@ const ResponsiveAppBar: FC<Props> = ({ title = "Consolitex", transparent = false
                     }
                     {
                         id === 0 && (<>
-                            <Button color="secondary" variant="text" size="small" sx={{ fontWeight: "bold", boxShadow: "0", textTransform: "none", }}>Regístrate</Button>
+                            <Button color="secondary" onClick={() => router.push("/auth/register")} variant="text" size="small" sx={{ fontWeight: "bold", boxShadow: "0", textTransform: "none", }}>Regístrate</Button>
                             <Button color="secondary" onClick={() => router.push("/auth/login")} variant="contained" size="small" sx={{ fontWeight: "bold", boxShadow: "0", textTransform: "none", }}>LogIn</Button>
                         </>
                         )

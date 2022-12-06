@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useContext, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { GetServerSideProps, NextPage } from 'next'
 
@@ -6,11 +6,14 @@ import Layout from '../../components/ui/Layout';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import { AuthContext } from '../../context/authcontext';
 
 import { ucfirst } from '../../utils/functions';
 import axios from "axios";
 import { Header, Informacion } from '../../components/inmuebles/sections';
 import { CustomImage } from "../../components/images/CustomImage";
+import { ValidatedUser } from '..';
+import { validarToken, validateSession } from '../../utils/functions';
 
 interface Props {
     data: any;
@@ -19,11 +22,14 @@ interface Props {
     imagenes: any;
     url_inmueble: any;
     related: any;
+    validatedUser: ValidatedUser
 }
-const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, zonas_comunes, caracteristicas }) => {
-
+const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, zonas_comunes, caracteristicas, validatedUser }) => {
+    
+    const userData = useContext(AuthContext)
+    
     const headerProps = { imagenes, url_inmueble, data }
-
+    
     const title = ucfirst(`${data.inmueble.toLowerCase()} en ${ucfirst(data.urbanizacion.toLowerCase())} (${ucfirst(data.negocio.toLowerCase())})`)
     const Detalles = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Detalles), { ssr: true });
     const Caracteristicas = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Caracteristicas), { ssr: true });
@@ -32,7 +38,10 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
     const Compartir = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.Compartir), { ssr: true });
     const EnviarMensaje = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.EnviarMensaje), { ssr: true });
     const Recomendados = dynamic(() => import('../../components/inmuebles/sections/aside/recomendados/Recomendados').then((mod) => mod.Recomendados), { ssr: true });
-
+    
+    useEffect(() => {
+        validateSession(userData, validatedUser);
+    }, [])
     return (
         <Layout title={title} description={data.descripcion_web}>
 
@@ -92,6 +101,7 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { id } = ctx.query;
+    const user = await validarToken(ctx);
 
     try {
         const url = `${process.env.BASE_URL}/inmueble/fulldata`
@@ -118,7 +128,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
                 caracteristicas: data.caracteristicas,
                 url_inmueble: data.url_inmueble,
                 imagenes: newImagenes,
-                related: data.related
+                related: data.related,
+                validatedUser: {
+                    logged: user.id === 0 ? false : true,
+                    user
+                }
             }
         }
     } catch (error) {

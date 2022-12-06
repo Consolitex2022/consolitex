@@ -220,13 +220,13 @@ const LikeCard: FC<LikeCardProps> = ({ inmueble }) => {
     const localStyles = {
 
         card: {
-            cursor: "pointer",
             background: "#FFF",
             minWidth: 250,
             maxWidth: 250,
             minHeight: 380,
-            maxHeight: 380,
-            mb: 1,
+            maxHeight: "100%",
+            overflow: "hidden",
+            mb: 2,
             boxShadow: "0 8px 32px 0 rgba(0,0,0,0.1)",
             transition: "0.5s ease all",
             borderRadius: 5,
@@ -236,7 +236,10 @@ const LikeCard: FC<LikeCardProps> = ({ inmueble }) => {
             zIndex: 9
         },
         content: {
-            p: 2
+            p: 2,
+            minHeight: 180,
+            maxHeight: 180,
+            overflow: "hidden"
         }
     }
     return (
@@ -252,7 +255,7 @@ const LikeCard: FC<LikeCardProps> = ({ inmueble }) => {
                                     <LikeIcon color="error" />
                                 </IconButton>
                             </Box>
-                            <Typography variant="subtitle1">{ucfirst(inmueble.data.nombre)}</Typography>
+                            <Typography variant="subtitle1">{`${inmueble.data.nombre.length > 29 ? ucfirst(inmueble.data.nombre.toLocaleLowerCase()).substring(0, 29) + "..." : ucfirst(inmueble.data.nombre.toLocaleLowerCase())}`}</Typography>
                             <Typography variant="subtitle2" color="text.secondary" fontWeight="bold" >{`${inmueble.data.urbanizacion}, ${inmueble.data.municipio}, ${inmueble.data.Estado}`}</Typography>
                             <Typography variant="subtitle2" sx={{ color: green[500] }} fontWeight="bold">REF {inmueble.data.ref}</Typography>
                         </Box>
@@ -265,6 +268,7 @@ const LikeCard: FC<LikeCardProps> = ({ inmueble }) => {
                     </>
                 )
             }
+            <Button sx={{ borderRadius: "0 0 20px 20px", textTransform: "none" }} variant="contained" disableElevation fullWidth onClick={() => redirect(inmueble.data.ficha_id)} >Ver inmueble</Button>
         </Box >
     )
 }

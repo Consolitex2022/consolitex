@@ -10,6 +10,7 @@ import Button from '@mui/material/Button'
 
 import LikeIcon from '@mui/icons-material/FavoriteRounded'
 import LikeOutlineIcon from '@mui/icons-material/FavoriteBorderRounded'
+import ArrowBack from '@mui/icons-material/ArrowBack'
 
 import Layout from '../../components/ui/Layout'
 
@@ -21,7 +22,6 @@ import { CustomImage } from '../../components/images/CustomImage'
 import { useRouter } from 'next/router'
 import green from '@mui/material/colors/green'
 import Swal from 'sweetalert2'
-import { ArrowBack } from '@mui/icons-material'
 
 interface Props {
     validatedUser: ValidatedUser;

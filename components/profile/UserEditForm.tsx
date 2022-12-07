@@ -1,5 +1,5 @@
 import { FC, useContext, useState } from 'react'
-import { Box,CircularProgress, Grid, Typography, TextField, Button } from '@mui/material';
+import { Box, CircularProgress, Grid, Typography, TextField, Button } from '@mui/material';
 import { FormikValues, FormikState, Formik, Form } from 'formik';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../context/authcontext';
@@ -23,6 +23,27 @@ const userEditSchema = Yup.object().shape({
         .min(10, 'Muy corto')
         .max(15, 'Muy largo'),
 })
+
+const styles = {
+    input: {
+        "& fieldset": { borderRadius: 10 },
+        background: "#FFF",
+        borderRadius: 5,
+    },
+    formContainer: {
+        display: "flex",
+        flexFlow: "row wrap",
+        justifyContent: {
+            xs: "center",
+            sm: "space-evenly",
+            md: "space-between"
+        },
+        background: "#FFF",
+        p: 2,
+        borderRadius: 5,
+        boxShadow: "0 8px 32px 0 rgba(0,0,0,0.1)"
+    }
+}
 export const UserEditForm: FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const { editData, id, nombres, apellidos, telefono, cedula, email, color, created_at, rol, status, token } = useContext(AuthContext);
@@ -102,38 +123,40 @@ export const UserEditForm: FC = () => {
         }
     }
     return (
-        <Box sx={{ display: "flex", flexFlow: "row wrap", justifyContent: { xs: "center", sm: "space-evenly", md: "space-between" }, mt: 2 }}>
+        <>
+            <Typography variant="overline" fontWeight="bold">Editar información de usuario</Typography>
+            <Box sx={styles.formContainer}>
 
-            <Formik
-                initialValues={initialValues}
-                onSubmit={(values, { resetForm }) => onSubmit(values, resetForm)}
-                validationSchema={userEditSchema}
-            >
-                {({ handleChange, handleSubmit, values, errors, touched }) => (
-                    <Form onSubmit={handleSubmit}>
-                        <Grid container spacing={1}>
-                            <Grid item xs={12}>
-                                <Typography variant="overline" fontWeight="bold">Editar información de usuario</Typography>
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={(values, { resetForm }) => onSubmit(values, resetForm)}
+                    validationSchema={userEditSchema}
+                >
+                    {({ handleChange, handleSubmit, values, errors, touched }) => (
+                        <Form onSubmit={handleSubmit}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField name="nombres" color="primary" onChange={handleChange} error={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.nombres) ? true : errors.nombres && touched.nombres ? true : false} variant="outlined" helperText={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.nombres) ? 'Sólo se aceptan letras' : errors.nombres && touched.nombres ? errors.nombres : ''} sx={styles.input} InputProps={{ sx: { borderRadius: 5 } }} label="Nombres" fullWidth value={values.nombres} />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField name="apellidos" color="primary" onChange={handleChange} error={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.apellidos) ? true : errors.apellidos && touched.apellidos ? true : false} variant="outlined" helperText={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.apellidos) ? 'Sólo se aceptan letras' : errors.apellidos && touched.apellidos ? errors.apellidos : ''} sx={styles.input} InputProps={{ sx: { borderRadius: 5 } }} label="Apellidos" fullWidth value={values.apellidos} />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField name="email" color="primary" onChange={handleChange} error={errors.email && touched.email ? true : false} variant="outlined" helperText={errors.email && touched.email ? errors.email : ''} sx={styles.input} InputProps={{ sx: { borderRadius: 5 } }} label="Email" fullWidth value={values.email} />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField name="telefono" color="primary" onChange={handleChange} error={errors.telefono && touched.telefono ? true : false} variant="outlined" helperText={errors.telefono && touched.telefono ? errors.telefono : ''} sx={styles.input} InputProps={{ sx: { borderRadius: 5 } }} label="Teléfono" fullWidth value={values.telefono} />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Button disabled={loading} type="submit" fullWidth disableElevation variant="contained" color="primary" sx={{ p: 2, borderRadius: 10, textTransform: "none" }}>{loading ? <CircularProgress sx={{ width: 20, height: 20 }} /> : 'Editar información'}</Button>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField name="nombres" color="primary" onChange={handleChange} error={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.nombres) ? true : errors.nombres && touched.nombres ? true : false} helperText={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.nombres) ? 'Sólo se aceptan letras' : errors.nombres && touched.nombres ? errors.nombres : ''} sx={{ "& fieldset": { border: "none" }, background: "#FFF", boxShadow: "0 8px 32px 0 rgba(100,100,100,0.2)", borderRadius: 5 }} InputProps={{ sx: { borderRadius: 5 } }} label="Nombres" fullWidth value={values.nombres} />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField name="apellidos" color="primary" onChange={handleChange} error={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.apellidos) ? true : errors.apellidos && touched.apellidos ? true : false} helperText={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.apellidos) ? 'Sólo se aceptan letras' : errors.apellidos && touched.apellidos ? errors.apellidos : ''} sx={{ "& fieldset": { border: "none" }, background: "#FFF", boxShadow: "0 8px 32px 0 rgba(100,100,100,0.2)", borderRadius: 5 }} InputProps={{ sx: { borderRadius: 5 } }} label="Apellidos" fullWidth value={values.apellidos} />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField name="email" color="primary" onChange={handleChange} error={errors.email && touched.email ? true : false} helperText={errors.email && touched.email ? errors.email : ''} sx={{ "& fieldset": { border: "none" }, background: "#FFF", boxShadow: "0 8px 32px 0 rgba(100,100,100,0.2)", borderRadius: 5 }} InputProps={{ sx: { borderRadius: 5 } }} label="Email" fullWidth value={values.email} />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField name="telefono" color="primary" onChange={handleChange} error={errors.telefono && touched.telefono ? true : false} helperText={errors.telefono && touched.telefono ? errors.telefono : ''} sx={{ "& fieldset": { border: "none" }, background: "#FFF", boxShadow: "0 8px 32px 0 rgba(100,100,100,0.2)", borderRadius: 5 }} InputProps={{ sx: { borderRadius: 5 } }} label="Teléfono" fullWidth value={values.telefono} />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Button disabled={loading} type="submit" fullWidth disableElevation variant="contained" color="primary" sx={{ p: 2, borderRadius: 5, textTransform: "none" }}>{loading ? <CircularProgress sx={{width:20, height:20}} /> : 'Editar información'}</Button>
-                            </Grid>
-                        </Grid>
-                    </Form>
-                )}
-            </Formik>
-        </Box>
+                        </Form>
+                    )}
+                </Formik>
+            </Box>
+        </>
     )
 }

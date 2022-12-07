@@ -1,7 +1,7 @@
 import { ReactNode, FC, Suspense } from "react";
 import dynamic from "next/dynamic";
 import { Box } from "@mui/material";
-import ResponsiveAppBar from "./AppBar";
+import { AppBarComponent } from "./AppBarComponent";
 
 import { Footer } from "./Footer";
 
@@ -59,7 +59,7 @@ const Layout: FC<Props> = ({ title, description, children, transparent = false, 
 
             {/* Navbar */}
             <Box sx={{ zIndex: "2" }}>
-                <ResponsiveAppBar title={title} transparent={transparent} />
+                <AppBarComponent title={title} transparent={transparent} />
             </Box>
 
             {/* Main content */}

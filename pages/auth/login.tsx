@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
@@ -27,6 +27,7 @@ import { AuthContext } from '../../context/authcontext'
 import Layout from '../../components/ui/Layout'
 import { createCookie } from '../../utils/functions'
 import Head from 'next/head'
+import LoadingButton from '@mui/lab/LoadingButton'
 
 const initialValues = {
     email: "",
@@ -43,8 +44,10 @@ const SigninSchema = Yup.object().shape({
 
 const LoginPage: NextPage = () => {
     const { logIn, nombres } = useContext(AuthContext)
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const router = useRouter();
     const onSubmit = async (values: FormikValues, resetForm: (nextState?: Partial<FormikState<{ email: string; password: string; }>> | undefined) => void) => {
+        setIsSubmitting(true);
         const url = "/api/auth/login";
 
         const body = JSON.stringify({
@@ -76,6 +79,8 @@ const LoginPage: NextPage = () => {
                         timerProgressBar: true,
                         showConfirmButton: false,
                     })
+                    setIsSubmitting(false);
+
                     setTimeout(() => {
                         router.push("/");
                     }, 2000)
@@ -89,6 +94,7 @@ const LoginPage: NextPage = () => {
                         timerProgressBar: true,
                         showConfirmButton: false,
                     })
+                    setIsSubmitting(false);
                     break;
                 case 400:
                     const { errors } = await respuesta.json();
@@ -99,10 +105,29 @@ const LoginPage: NextPage = () => {
                         html: errorString,
                         icon: "error",
                     })
+                    setIsSubmitting(false);
                     break;
                 case 500:
+                    Swal.fire({
+                        title: "Oops...",
+                        text: "Ocurrio un error al iniciar sesion, intente más tarde",
+                        icon: "error",
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                    })
+                    setIsSubmitting(false);
                     break;
                 default:
+                    Swal.fire({
+                        title: "Oops...",
+                        text: "¡No se encontró el usuario!",
+                        icon: "warning",
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                    })
+                    setIsSubmitting(false);
                     break;
             }
         } catch (error) {
@@ -112,6 +137,7 @@ const LoginPage: NextPage = () => {
                 text: "No se logró conectar al servidor",
                 icon: "error"
             })
+            setIsSubmitting(false);
         }
     }
 
@@ -146,7 +172,7 @@ const LoginPage: NextPage = () => {
 
                                 <TextField label="Email" name="email" value={values.email} onChange={handleChange} fullWidth sx={styles.input} />
                                 <TextField label="Contraseña" name="password" value={values.password} onChange={handleChange} fullWidth sx={styles.input} />
-                                <Button type="submit" color="primary" variant="contained" sx={styles.button} disableElevation fullWidth>Iniciar</Button>
+                                <LoadingButton type="submit" color="primary" variant="contained" sx={styles.button} disableElevation fullWidth disabled={isSubmitting} loading={isSubmitting}>Iniciar</LoadingButton>
                             </Form>
                         )}
                     </Formik>

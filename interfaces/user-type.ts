@@ -11,3 +11,19 @@ export type UserData = {
     status: number;
     token: string;
 }
+
+export interface UserRef {
+    id: number;
+    usuario: string;
+    password: string;
+    email: string;
+    nombre_y_apellido: string;
+    cedula: string;
+    telefono: string;
+    genero: string;
+    role: number;
+    foto: string;
+    ref: string;
+    created_at: string;
+    status: number;
+}

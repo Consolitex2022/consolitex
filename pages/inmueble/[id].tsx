@@ -10,10 +10,11 @@ import { AuthContext } from '../../context/authcontext';
 
 import { ucfirst } from '../../utils/functions';
 import axios from "axios";
-import { Header, Informacion } from '../../components/inmuebles/sections';
+import { Header, Informacion, RecomendadoPor } from '../../components/inmuebles/sections';
 import { CustomImage } from "../../components/images/CustomImage";
 import { ValidatedUser } from '..';
 import { validarToken, validateSession } from '../../utils/functions';
+import { UserRef } from "../../interfaces/user-type";
 
 interface Props {
     data: any;
@@ -22,14 +23,15 @@ interface Props {
     imagenes: any;
     url_inmueble: any;
     related: any;
-    validatedUser: ValidatedUser
+    validatedUser: ValidatedUser;
+    userRef: UserRef;
 }
-const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, zonas_comunes, caracteristicas, validatedUser }) => {
-    
+
+const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, zonas_comunes, caracteristicas, validatedUser, userRef }) => {
     const userData = useContext(AuthContext)
-    
+
     const headerProps = { imagenes, url_inmueble, data }
-    
+
     const title = ucfirst(`${data.inmueble.toLowerCase()} en ${ucfirst(data.urbanizacion.toLowerCase())} (${ucfirst(data.negocio.toLowerCase())})`)
     const Detalles = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Detalles), { ssr: true });
     const Caracteristicas = dynamic(() => import('../../components/inmuebles/sections').then((mod) => mod.Caracteristicas), { ssr: true });
@@ -38,7 +40,7 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
     const Compartir = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.Compartir), { ssr: true });
     const EnviarMensaje = dynamic(() => import('../../components/inmuebles/sections/aside').then((mod) => mod.EnviarMensaje), { ssr: true });
     const Recomendados = dynamic(() => import('../../components/inmuebles/sections/aside/recomendados/Recomendados').then((mod) => mod.Recomendados), { ssr: true });
-    
+
     useEffect(() => {
         validateSession(userData, validatedUser);
     }, [])
@@ -53,6 +55,7 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
 
                 {/* Seccion de Informacion del inmueble */}
                 <Grid item xs={12} sm={12} md={8} >
+                    {userRef.id !== 0 && (<RecomendadoPor userData={userRef} />)}
                     <Informacion data={data} />
                     <Suspense fallback="Cargando detalles...">
                         <Detalles data={data} />
@@ -102,6 +105,55 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { id } = ctx.query;
     const user = await validarToken(ctx);
+    const ref = !!ctx.query.ref ? ctx.query.ref : '';
+    let userRef: UserRef = {
+        id: 0,
+        usuario: '',
+        password: '',
+        email: '',
+        nombre_y_apellido: '',
+        cedula: '',
+        telefono: '',
+        genero: '',
+        role: 0,
+        foto: '',
+        ref: '',
+        created_at: '',
+        status: 0,
+    };
+
+    if (ref) {
+        const url_user_ref = `https://consolitex.org/SISGACI/api/v1/usuarios/index.php?ref=${ref}`;
+        const respuesta_ref = await fetch(url_user_ref);
+        switch (respuesta_ref.status) {
+            case 200:
+                const data_ref = await respuesta_ref.json();
+                console.log("Usuario encontrado");
+                userRef.id = data_ref.data.id;
+                userRef.usuario = data_ref.data.usuario;
+                userRef.password = data_ref.data.password;
+                userRef.email = data_ref.data.email;
+                userRef.nombre_y_apellido = data_ref.data.nombre_y_apellido;
+                userRef.cedula = data_ref.data.cedula;
+                userRef.telefono = data_ref.data.telefono;
+                userRef.genero = data_ref.data.genero;
+                userRef.role = data_ref.data.role;
+                userRef.foto = data_ref.data.foto;
+                userRef.ref = data_ref.data.ref;
+                userRef.created_at = data_ref.data.created_at;
+                userRef.status = data_ref.data.status;
+                break;
+            case 204:
+                console.log("No se encontro el ref en la BD");
+                break;
+            case 400:
+                console.log("Sin ref");
+                break;
+            default:
+                console.log("Error interno del servidor al consultar el ref");
+                break;
+        }
+    }
 
     try {
         const url = `${process.env.BASE_URL}/inmueble/fulldata`
@@ -132,7 +184,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
                 validatedUser: {
                     logged: user.id === 0 ? false : true,
                     user
-                }
+                },
+                userRef,
+
             }
         }
     } catch (error) {

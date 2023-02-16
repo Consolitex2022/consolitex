@@ -55,7 +55,6 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
 
                 {/* Seccion de Informacion del inmueble */}
                 <Grid item xs={12} sm={12} md={8} >
-                    {userRef.id !== 0 && (<RecomendadoPor userData={userRef} />)}
                     <Informacion data={data} />
                     <Suspense fallback="Cargando detalles...">
                         <Detalles data={data} />
@@ -70,19 +69,28 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
                         <CustomImage src={"/banner4.webp"} alt="Banner de publicidad - Consolitex" />
                     </Box>
                     <Suspense fallback="Cargando...">
-                        <ChateaConNosotros data={data} userLogged={''} />
+                        <ChateaConNosotros data={data} userLogged={userRef} />
                     </Suspense>
                 </Grid>
 
                 {/* Seccion lateral/inferior */}
                 <Grid item xs={12} md={4}>
                     <Grid container display="flex" sx={{ width: "100%" }} spacing={1} >
-                        <Grid item xs={12} sm={6} md={12}>
-                            <Suspense fallback="Cargando...">
-                                <Compartir data={data} />
-                            </Suspense>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={12}>
+                        {userRef.id !== 0 && (
+                            <Grid item xs={12}>
+                                <Suspense fallback="Cargando...">
+                                    <RecomendadoPor data={data} userData={userRef} />
+                                </Suspense>
+                            </Grid>
+                        )}
+                        {userRef.id === 0 && (
+                            <Grid item xs={12} md={12}>
+                                <Suspense fallback="Cargando...">
+                                    <Compartir data={data} />
+                                </Suspense>
+                            </Grid>
+                        )}
+                        <Grid item xs={12} md={12}>
                             <Suspense fallback="Cargando...">
                                 <Recomendados related={related} />
                             </Suspense>
@@ -121,7 +129,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         created_at: '',
         status: 0,
     };
-
     if (ref) {
         const url_user_ref = `https://consolitex.org/SISGACI/api/v1/usuarios/index.php?ref=${ref}`;
         const respuesta_ref = await fetch(url_user_ref);

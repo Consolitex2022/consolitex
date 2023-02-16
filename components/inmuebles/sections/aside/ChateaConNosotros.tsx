@@ -24,7 +24,7 @@ export const ChateaConNosotros: FC<Props> = ({ userLogged, data }) => {
             }}>
                 <Typography variant="subtitle2" fontWeight="bold" fontSize={{ xs: 16, md: 24 }}>¡Escríbenos al Whatsapp!</Typography>
                 <Typography variant="subtitle2"> Te atenderemos inmediatamente...</Typography>
-                <Button component="a" target="_blank" sx={{ content: `"Enviar "`, borderRadius: "100%", width: { xs: 50, sm: 100 }, height: { xs: 60, sm: 100 } }} color="success" href={`https://wa.me/5804144029820?text=${encodeURI(`Buen día, estoy interesado en el siguiente inmueble: *Código* ${data.ficha_id0}, *Nombre del inmueble* ${ucfirst(data.nombre.toLowerCase())}, *REF* ${data.ref}, *Hab.* ${data.habitaciones}, *Baños* ${data.banos} ¡Gracias!`)}`}>
+                <Button component="a" target="_blank" sx={{ content: `"Enviar "`, borderRadius: "100%", width: { xs: 50, sm: 100 }, height: { xs: 60, sm: 100 } }} color="success" href={`https://wa.me/${userLogged.id !== 0 ? userLogged.telefono : 5804144029820}?text=${encodeURI(`Buen día, estoy interesado en el siguiente inmueble: *Código* ${data.ficha_id0}, *Nombre del inmueble* ${ucfirst(data.nombre.toLowerCase())}, *REF* ${data.ref}, *Hab.* ${data.habitaciones}, *Baños* ${data.banos} ¡Gracias!`)}`}>
                     <WhatsApp sx={{ width: { xs: 40, sm: 80 }, height: { xs: 40, sm: 80 } }} />
                 </Button>
             </Box>

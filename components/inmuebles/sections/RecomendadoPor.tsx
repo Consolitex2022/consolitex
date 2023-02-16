@@ -1,20 +1,28 @@
 import { FC } from 'react'
 import { Box, Typography, Avatar } from '@mui/material'
+import WhatsApp from '@mui/icons-material/WhatsApp';
+import Facebook from '@mui/icons-material/Facebook';
+import Twitter from '@mui/icons-material/Twitter';
+import Mail from '@mui/icons-material/Mail';
+import Button from '@mui/material/Button';
 
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import { UserRef } from '../../../interfaces/user-type';
+import { ucfirst, utf8_encode } from '../../../utils/functions';
 
 interface Props {
     userData: UserRef;
+    data: any;
 }
-export const RecomendadoPor: FC<Props> = ({ userData }) => {
+export const RecomendadoPor: FC<Props> = ({ userData, data }) => {
     return (
         <>
             <Box sx={styles.pcContainer}>
                 <Box sx={styles.pcSubContainer}>
+                    <Avatar src={`https://consolitex.org/SISGACI/assets/img/${userData.foto}`} sx={{ width: 100, height: 100, margin: "auto" }} />
                     <Box>
-                        <Typography variant="overline" fontWeight="bold" color="common.white" sx={{ fontFamily: "Plus Jakarta Sans" }}>Este inmueble ha sido recomendado por</Typography>
+                        <Typography variant="overline" fontWeight="bold" color="common.white" sx={{ fontFamily: "Plus Jakarta Sans" }} fontSize={11}>Este inmueble ha sido recomendado por</Typography>
                         <Typography variant="subtitle2" color="common.white" sx={{ fontFamily: "Plus Jakarta Sans" }}>{`${userData.nombre_y_apellido}`}</Typography>
                         <Box sx={{ display: 'flex', alingItems: "center" }}>
                             <LocalPhoneIcon sx={{ color: "#FFF", width: 18, height: 18 }} />
@@ -25,7 +33,23 @@ export const RecomendadoPor: FC<Props> = ({ userData }) => {
                             <Typography variant="subtitle2" color="common.white" sx={{ fontFamily: "Plus Jakarta Sans" }}>&nbsp;{`${userData.email}`}</Typography>
                         </Box>
                     </Box>
-                    <Avatar src={`https://consolitex.org/SISGACI/assets/img/${userData.foto}`} sx={{ width: 100, height: 100 }} />
+                    <Box>
+                        <Typography fontWeight="bold" variant="subtitle2" sx={{ mt: 2, fontFamily: "Plus Jakarta Sans", textAlign: "center", color: "#FFF" }}>¡Comparte este inmueble en redes sociales!</Typography>
+                        <Box sx={{ display: "flex", flexFlow: "row nowrap", justifyContent: "center", alignItems: "center", width: "100%", mt: 1 }}>
+                            <Button component="a" target="_blank" href={`https://api.whatsapp.com/send?text=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%20https://consolitex.org/inmueble?id=${data.ficha_id}`} color="success" sx={{ minWidth: 40, maxWidth: 40, height: 40, fontSize: 12, borderRadius: "50%", background: "#FFF", marginInline: 1 }}>
+                                <WhatsApp />
+                            </Button>
+                            <Button component="a" target="_blank" href={`https://www.facebook.com/share.php?u=https://consolitex.org/inmueble?id=${data.ficha_id}&quote=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%0Ahttps://consolitex.org/inmueble?id=${data.ficha_id}`} color="primary" sx={{ minWidth: 40, maxWidth: 40, height: 40, fontSize: 12, borderRadius: "50%", background: "#FFF", marginInline: 1 }}>
+                                <Facebook />
+                            </Button>
+                            <Button component="a" target="_blank" href={`https://twitter.com/intent/tweet?text=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%20https://consolitex.org/inmueble?id=${data.ficha_id}&hashtags=Consolitex`} color="info" sx={{ minWidth: 40, maxWidth: 40, height: 40, fontSize: 12, borderRadius: "50%", background: "#FFF", marginInline: 1 }}>
+                                <Twitter />
+                            </Button>
+                            <Button component="a" target="_blank" href={`mailto:?&subject=%20CONSOLITEX%20%7C%20INMUEBLE&body=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%0Ahttps://consolitex.org/inmueble?id=${data.ficha_id}`} color="primary" sx={{ minWidth: 40, maxWidth: 40, height: 40, fontSize: 12, borderRadius: "50%", background: "#FFF", marginInline: 1 }}>
+                                <Mail sx={{ color: "black" }} />
+                            </Button>
+                        </Box>
+                    </Box>
                 </Box>
             </Box>
             <Box sx={styles.mobileContainer}>
@@ -33,15 +57,32 @@ export const RecomendadoPor: FC<Props> = ({ userData }) => {
                 <Box sx={styles.mobileSubContainer}>
                     <Box>
                         <Typography variant="overline" fontWeight="bold" color="common.white" sx={{ fontFamily: "Plus Jakarta Sans" }}>Recomendado por</Typography>
-                        <Typography variant="subtitle2" color="common.white" sx={{ fontFamily: "Plus Jakarta Sans" }}>{`${userData.nombre_y_apellido}`}</Typography>
+                        <Typography variant="subtitle2" color="common.white" fontSize={12} sx={{ fontFamily: "Plus Jakarta Sans" }}>{`${userData.nombre_y_apellido}`}</Typography>
                         <Box sx={{ display: 'flex', alingItems: "center" }}>
                             <LocalPhoneIcon sx={{ color: "#FFF", width: 18, height: 18 }} />
-                            <Typography variant="subtitle2" color="common.white" sx={{ fontFamily: "Plus Jakarta Sans" }}>&nbsp;{`${userData.telefono}`}</Typography>
+                            <Typography variant="subtitle2" color="common.white" fontSize={10} sx={{ fontFamily: "Plus Jakarta Sans" }}>&nbsp;{`${userData.telefono}`}</Typography>
                         </Box>
                         <Box sx={{ display: 'flex', alingItems: "center" }}>
                             <EmailRoundedIcon sx={{ color: "#FFF", width: 18, height: 18 }} />
-                            <Typography variant="subtitle2" color="common.white" sx={{ fontFamily: "Plus Jakarta Sans" }}>&nbsp;{`${userData.email}`}</Typography>
+                            <Typography variant="subtitle2" color="common.white" fontSize={10} sx={{ fontFamily: "Plus Jakarta Sans" }}>&nbsp;{`${userData.email}`}</Typography>
                         </Box>
+                    </Box>
+                </Box>
+                <Box>
+                    <Typography fontWeight="bold" variant="subtitle2" sx={{ fontFamily: "Plus Jakarta Sans", textAlign: "center", color: "#FFF" }}>¡Comparte este inmueble en redes sociales!</Typography>
+                    <Box sx={{ display: "flex", flexFlow: "row nowrap", justifyContent: "center", alignItems: "center", width: "100%" }}>
+                        <Button component="a" target="_blank" href={`https://api.whatsapp.com/send?text=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%20https://consolitex.org/inmueble?id=${data.ficha_id}`} color="success" sx={{ minWidth: 40, maxWidth: 40, height: 40, fontSize: 12, borderRadius: "50%", background: "#FFF", marginInline: 1 }}>
+                            <WhatsApp />
+                        </Button>
+                        <Button component="a" target="_blank" href={`https://www.facebook.com/share.php?u=https://consolitex.org/inmueble?id=${data.ficha_id}&quote=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%0Ahttps://consolitex.org/inmueble?id=${data.ficha_id}`} color="primary" sx={{ minWidth: 40, maxWidth: 40, height: 40, fontSize: 12, borderRadius: "50%", background: "#FFF", marginInline: 1 }}>
+                            <Facebook />
+                        </Button>
+                        <Button component="a" target="_blank" href={`https://twitter.com/intent/tweet?text=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%20https://consolitex.org/inmueble?id=${data.ficha_id}&hashtags=Consolitex`} color="info" sx={{ minWidth: 40, maxWidth: 40, height: 40, fontSize: 12, borderRadius: "50%", background: "#FFF", marginInline: 1 }}>
+                            <Twitter />
+                        </Button>
+                        <Button component="a" target="_blank" href={`mailto:?&subject=%20CONSOLITEX%20%7C%20INMUEBLE&body=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%0Ahttps://consolitex.org/inmueble?id=${data.ficha_id}`} color="primary" sx={{ minWidth: 40, maxWidth: 40, height: 40, fontSize: 12, borderRadius: "50%", background: "#FFF", marginInline: 1 }}>
+                            <Mail sx={{ color: "black" }} />
+                        </Button>
                     </Box>
                 </Box>
             </Box>
@@ -54,13 +95,13 @@ const styles = {
             xs: "flex",
             sm: "none"
         },
-        flexFlow: "row nowrap",
-        justifyContent: "space-evenly",
-        alignItems: "center", p: 1,
+        flexFlow: "row wrap",
+        justifyContent: "center",
+        alignItems: "center",
         borderRadius: 5,
         background: "linear-gradient(327deg, rgba(4,156,255,1) 0%, rgba(0,35,116,1) 100%)",
         width: "100%",
-        height: 150,
+        height: 250,
         mb: 1,
         mt: {
             xs: 1,
@@ -78,7 +119,7 @@ const styles = {
         borderRadius: 5,
         background: "linear-gradient(327deg, rgba(4,156,255,1) 0%, rgba(0,35,116,1) 100%)",
         width: "100%",
-        height: 150,
+        height: 400,
         mb: 1,
         mt: {
             xs: 1,
@@ -93,12 +134,13 @@ const styles = {
         flexFlow: "row wrap",
         alignItems: "center",
         justifyContent: "space-between",
-        paddingInline: 10,
+        paddingInline: 2,
         paddingBlock: 3
     },
     mobileSubContainer: {
         display: "flex",
         flexFlow: "row wrap",
-        alignItems: "center"
+        alignItems: "center",
+
     }
 }

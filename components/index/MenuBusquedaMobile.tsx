@@ -207,13 +207,14 @@ export const MenuBusquedaMobile: FC = () => {
                 <Box sx={{ position: "relative", overflowY: "hidden", }}>
 
                     <Box id="button-banner" ref={refBotonera} sx={styles.botonera}>
-                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Norte")}>Norte</Button>
+                        {/* <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Norte")}>Norte</Button>
                         <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Noreste")}>Noreste</Button>
                         <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Noroeste")}>Noroeste</Button>
-                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Sur")}>Sur</Button>
+                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Sur")}>Sur</Button> */}
                         <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("San Diego")}>San Diego</Button>
                         <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Naguanagua")}>Naguanagua</Button>
                         <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Guacara")}>Guacara</Button>
+                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Safari")}>Safari</Button>
                         <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("San Joaquin")}>San Joaquin</Button>
                         <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Tocuyito")}>Tocuyito</Button>
                         <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Zona Industrial")}>Zona Industrial</Button>

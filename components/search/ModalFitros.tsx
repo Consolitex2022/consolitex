@@ -434,11 +434,14 @@ export const ModalFiltros: FC<ModalFiltrosProps> = ({ filters, setFilters, setLa
     return (
         <>
             {/* Boton de filtros */}
-            <IconButton aria-label="" onClick={handleOpen}>
-                <Tooltip title="Filtros">
+            {/* <IconButton aria-label="" onClick={handleOpen}>
+                <Tooltip title="Filtros avanzados">
                     <TuneRoundedIcon />
-                </Tooltip>
-            </IconButton>
+                    </Tooltip>
+                </IconButton> */}
+            <Button onClick={handleOpen} endIcon={<TuneRoundedIcon />} sx={{ borderRadius: 5, color: "text.secondary", textTransform: "none" }}>
+                Filtros Avanzados
+            </Button>
             {
                 !areFiltersEmpty() && (
                     <IconButton aria-label="" onClick={clearFilters}>

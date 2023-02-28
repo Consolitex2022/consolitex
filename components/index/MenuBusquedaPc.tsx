@@ -126,6 +126,7 @@ export const MenuBusquedaPc: FC = () => {
                         <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Noreste")}>Noreste</Button>
                         <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Noroeste")}>Noroeste</Button>
                         <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Sur")}>Sur</Button> */}
+                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Valencia")}>Valencia</Button>
                         <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("San Diego")}>San Diego</Button>
                         <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Naguanagua")}>Naguanagua</Button>
                         <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Guacara")}>Guacara</Button>

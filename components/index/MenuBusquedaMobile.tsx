@@ -101,93 +101,6 @@ export const MenuBusquedaMobile: FC = () => {
         <Box sx={styles.mainContainer}>
             <Typography component="h2" variant="h5" fontWeight="bold" sx={{ color: "#FFF", textShadow: "0 0 20px rgba(0,0,0,0.9)", mb: 4, fontFamily: "Hind" }}>Encuentra tu inmueble</Typography>
             <Box sx={styles.contenedorBotonera}>
-                {/* <Box sx={{ display: "flex", flexDirection: "row", overflow: "hidden", m: "-2px 0" }}>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        value={String(negocio)}
-                        onChange={(e: SelectChangeEvent) => handleChangeSelect(e, "Negocio")}
-                        disableUnderline
-                        defaultValue="0"
-                        MenuProps={{ disableScrollLock: true }}
-                        sx={{
-                            pb: 1.2, pt: 1.2, color: 'black', background: negocio !== "0" ? "white" : "#F3F7F8", transition: ".3s ease all", border: "none", boxShadow: "none", borderRadius: "1.5em 0 0 0", width: "48%", textAlign: "center", fontFamily: "Hind",
-                            "&:hover": {
-                                background: "white"
-                            },
-                            "&:hover ~ #espacio ": {
-                                background: "white"
-                            }
-                        }}
-                        variant="standard"
-                    >
-                        <MenuItem value={"0"} disabled selected>Negocio</MenuItem>
-                        <MenuItem value={"Venta"}>Venta</MenuItem>
-                        <MenuItem value={"Alquiler"}>Alquiler</MenuItem>
-                    </Select>
-                    <Box component="div" id="espacio" sx={{ width: "4%", background: (negocio !== "0" && tipo !== "0") ? "white" : "#F3F7F8", transition: ".3s ease all", height: "55px", padding: "10px 0px 10px 10px", display: "flex", alignItems: "center", justifyContent: "end", m: "0 -1px" }}>
-                        <Box sx={{ width: "2px", background: "rgba(72,69,64,0.9)", height: "100%", p: "0.6px" }}>
-                        </Box>
-                    </Box>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        value={String(tipo)}
-                        defaultValue="0"
-                        MenuProps={{ disableScrollLock: true }}
-                        onChange={(e: SelectChangeEvent) => handleChangeSelect(e, "Tipo")}
-                        disableUnderline
-                        sx={{
-                            pb: 1.2, pt: 1.2, color: 'black', background: negocio !== "0" ? "white" : "#F3F7F8", transition: ".3s ease all", border: "none", boxShadow: "none", width: "48%", textAlign: "center", fontFamily: "Hind",
-                            "&:hover": {
-                                background: "white"
-                            },
-                            "&:hover ~ #espacio ": {
-                                background: "white"
-                            }
-                        }}
-                        variant="standard"
-                    >
-                        <MenuItem value={"0"} disabled selected>Tipo de inmueble</MenuItem>
-                        <MenuItem value={"Apartamento"}>Apartamento</MenuItem>
-                        <MenuItem value={"Quinta"}>Quinta</MenuItem>
-                        <MenuItem value={"Townhouse"}>Townhouse</MenuItem>
-                        <MenuItem value={"Apartoquinta"}>Apartoquinta</MenuItem>
-                        <MenuItem value={"Local Comercial"}>Local Comercial</MenuItem>
-                        <MenuItem value={"Galpon"}>Galpon</MenuItem>
-                        <MenuItem value={"Terreno"}>Terreno</MenuItem>
-                    </Select>
-                    <Box component="div" id="espacio" sx={{ width: "4%", background: (localidad !== "0" && tipo !== "0") ? "white" : "#F3F7F8", transition: ".3s ease all", height: "55px", padding: "10px 0px 10px 10px", display: "flex", alignItems: "center", justifyContent: "end", m: "0 -1px" }}>
-                        <Box sx={{ width: "2px", background: "rgba(72,69,64,0.9)", height: "100%", p: "0.6px" }}>
-                        </Box>
-                    </Box>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        value={String(localidad)}
-                        defaultValue="0"
-                        MenuProps={{ disableScrollLock: true }}
-                        onChange={(e: SelectChangeEvent) => handleChangeSelect(e, "Localidad")}
-                        disableUnderline
-                        sx={{
-                            pb: 1.2, pt: 1.2, color: 'black', background: localidad !== "0" ? "white" : "#F3F7F8", transition: ".3s ease all", borderRadius: "0 1.5em 0 0", border: "none", boxShadow: "none", width: "48.5%", textAlign: "center", fontFamily: "Hind",
-                            "&:hover": {
-                                background: "white"
-                            }
-
-                        }}
-                        variant="standard"
-                    >
-                        <MenuItem value={"0"} disabled selected>Localidad</MenuItem>
-                        <MenuItem value={"Norte"}>Norte</MenuItem>
-                        <MenuItem value={"Noreste"}>Noreste</MenuItem>
-                        <MenuItem value={"Noroeste"}>Noroeste</MenuItem>
-                        <MenuItem value={"Sur"}>Sur</MenuItem>
-                        <MenuItem value={"San Diego"}>San Diego</MenuItem>
-                        <MenuItem value={"Naguanagua"}>Naguanagua</MenuItem>
-                        <MenuItem value={"Guacara"}>Guacara</MenuItem>
-                        <MenuItem value={"San Joaquin"}>San Joaquin</MenuItem>
-                        <MenuItem value={"Tocuyito"}>Tocuyito</MenuItem>
-                        <MenuItem value={"Zona Industrial"}>Zona Industrial</MenuItem>
-                    </Select>
-                </Box> */}
                 <IconButton
                     size="small"
                     onClick={() => handleScrollLeft(refBotonera as unknown as MutableRefObject<HTMLElement>)}
@@ -207,10 +120,6 @@ export const MenuBusquedaMobile: FC = () => {
                 <Box sx={{ position: "relative", overflowY: "hidden", }}>
 
                     <Box id="button-banner" ref={refBotonera} sx={styles.botonera}>
-                        {/* <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Norte")}>Norte</Button>
-                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Noreste")}>Noreste</Button>
-                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Noroeste")}>Noroeste</Button>
-                        <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Sur")}>Sur</Button> */}
                         <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Valencia")}>Valencia</Button>
                         <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("San Diego")}>San Diego</Button>
                         <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Naguanagua")}>Naguanagua</Button>

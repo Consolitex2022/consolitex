@@ -53,9 +53,7 @@ export const InmuebleList: FC<Props> = ({ inmuebles }) => {
     const sliderRef = useRef<any>(null);
     return (
         <Box sx={{ width: "100%", overflow: "hidden" }}>
-
             <Typography variant="body1" fontWeight={"bold"} component="h3" fontSize={24} textAlign="center" sx={{ color: "#FFF", textShadow: "0 10px 32px rgba(0,0,0,0.4)", mt: 1 }}>Recomendado para ti</Typography>
-
             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <Box sx={{ width: { xs: "90%", md: "100%" }, marginInline: "auto", mt: 2, position: "relative" }}>
                     <IconButton sx={{ position: "absolute", top: "50%", left: 0, zIndex: 900, background: "rgba(255,255,255,1)", transform: "translateY(-50%)", "&:hover": { background: "#e1e1e1" } }} onClick={() => sliderRef.current !== null ? sliderRef?.current.slickPrev() : false}><LeftIcon /></IconButton>

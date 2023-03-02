@@ -80,7 +80,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
       <Box sx={{ width: "100%", position: "absolute", top: 0, left: 0, zIndex: "1" }}>
 
         {/* Wallpaper */}
-        <Box sx={{ minHeight: { xs: "100vh", sm: "500px" }, maxHeight: { xs: "auto", sm: "500px" }, overflow: "hidden", background: "url(./wallpaper.webp)", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "scroll" }}></Box>
+        <Box sx={{ minHeight: { xs: "100vh", sm: "600px" }, maxHeight: { xs: "auto", sm: "500px" }, overflow: "hidden", background: "url(./wallpaper.jpg)", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "scroll" }}></Box>
 
         {/* Menu de busqueda en vista de PC */}
         <Suspense fallback="Cargando...">
@@ -93,13 +93,64 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
       </Box>
 
       {/* Espacio en blanco de la imagen */}
-      <Box sx={{ minHeight: { xs: "100vh", sm: "450px", zIndex: "-10" } }}></Box>
+      <Box sx={{ minHeight: { xs: "100vh", sm: "500px", md: "450px", zIndex: "-10" } }}></Box>
 
 
       <Box sx={{ width: { xs: "100%", md: "100%" }, m: "auto", overflow: "hidden", background: "#FFF", mt: { xs: -7, md: -4 }, p: 5, display: "flex", flexFlow: "row wrap", justifyContent: "center", alignItems: "center" }} component="div">
 
         {/* Inmuebles recomendados */}
-        <CustomImage src={`/house.webp`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 400, md: 600 } }} />
+        <CustomImage src={`/house.jpg`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 250, md: 400 } }} />
+        <Box sx={{ textAlign: "left", p: 2, margin: "auto", width: 600, display: "flex", flexFlow: "column wrap" }}>
+
+          <Typography variant="overline" color="primary" fontWeight="bold" fontSize={{ xs: 12, md: 16 }}>
+            Somos tu mejor opción{validatedUser.logged && `, ${validatedUser.user.nombres}`}
+          </Typography>
+          <Typography variant="subtitle1" sx={{ fontFamily: "Oxygen" }} fontWeight="bold" fontSize={{ xs: 20, md: 32 }}>
+            42 años en el mercado inmobiliario
+          </Typography>
+          <Typography variant="subtitle2" sx={{ fontFamily: "Oxygen", textAlign: "justify" }} fontSize={{ xs: 12, md: 16 }}>
+            Consolitex te da la mejor asesoría en el estado Carabobo ¡Encontraremos el inmueble perfecto para ti!
+          </Typography>
+        </Box>
+      </Box>
+      <Box sx={{ display: { xs: 'none', lg: 'flex' }, width: { xs: "100%", md: "100%" }, m: "auto", overflow: "hidden", background: "#FFF", mt: { xs: -7, md: -4 }, p: 5, flexFlow: "row wrap", justifyContent: "center", alignItems: "center" }} component="div">
+
+        <Box sx={{ textAlign: "left", p: 2, margin: "auto", width: 600, display: "flex", flexFlow: "column wrap" }}>
+
+          <Typography variant="overline" color="primary" fontWeight="bold" fontSize={{ xs: 12, md: 16 }}>
+            Somos tu mejor opción{validatedUser.logged && `, ${validatedUser.user.nombres}`}
+          </Typography>
+          <Typography variant="subtitle1" sx={{ fontFamily: "Oxygen" }} fontWeight="bold" fontSize={{ xs: 20, md: 32 }}>
+            Más de 40 años en el mercado inmobiliario
+          </Typography>
+          <Typography variant="subtitle2" sx={{ fontFamily: "Oxygen", textAlign: "justify" }} fontSize={{ xs: 12, md: 16 }}>
+            Consolitex te da la mejor asesoría en el estado Carabobo ¡Encontraremos el inmueble perfecto para ti!
+          </Typography>
+        </Box>
+        {/* Inmuebles recomendados */}
+        <CustomImage src={`/house2.jpg`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 250, md: 400 } }} />
+      </Box>
+      <Box sx={{ display: { xs: 'flex', lg: 'none' }, width: { xs: "100%", md: "100%" }, m: "auto", overflow: "hidden", background: "#FFF", mt: { xs: -7, md: -4 }, p: 5, flexFlow: "row wrap", justifyContent: "center", alignItems: "center" }} component="div">
+
+        {/* Inmuebles recomendados */}
+        <CustomImage src={`/house2.jpg`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 250, md: 400 } }} />
+        <Box sx={{ textAlign: "left", p: 2, margin: "auto", width: 600, display: "flex", flexFlow: "column wrap" }}>
+
+          <Typography variant="overline" color="primary" fontWeight="bold" fontSize={{ xs: 12, md: 16 }}>
+            Somos tu mejor opción{validatedUser.logged && `, ${validatedUser.user.nombres}`}
+          </Typography>
+          <Typography variant="subtitle1" sx={{ fontFamily: "Oxygen" }} fontWeight="bold" fontSize={{ xs: 20, md: 32 }}>
+            Más de 40 años en el mercado inmobiliario
+          </Typography>
+          <Typography variant="subtitle2" sx={{ fontFamily: "Oxygen", textAlign: "justify" }} fontSize={{ xs: 12, md: 16 }}>
+            Consolitex te da la mejor asesoría en el estado Carabobo ¡Encontraremos el inmueble perfecto para ti!
+          </Typography>
+        </Box>
+      </Box>
+      <Box sx={{ width: { xs: "100%", md: "100%" }, m: "auto", overflow: "hidden", background: "#FFF", mt: { xs: -7, md: -4 }, p: 5, display: "flex", flexFlow: "row wrap", justifyContent: "center", alignItems: "center" }} component="div">
+
+        {/* Inmuebles recomendados */}
+        <CustomImage src={`/house3.jpg`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 250, md: 400 } }} />
         <Box sx={{ textAlign: "left", p: 2, margin: "auto", width: 600, display: "flex", flexFlow: "column wrap" }}>
 
           <Typography variant="overline" color="primary" fontWeight="bold" fontSize={{ xs: 12, md: 16 }}>
@@ -114,10 +165,9 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
         </Box>
       </Box>
       {/* Recomendados */}
-      <Box sx={{ width: "100%", background: "white", position: "relative", p: { xs: 0, md: 4 }, paddingBlock: 10, minHeight: "100%" }}>
-        <CustomImage src="/3dshapes2.webp" alt="Shapes" upperBoxStyles={{ position: "absolute", top: 0, left: 0, width: "100%", minHeight: { xs: "100vh", md: "auto" }, objectFit: "cover" }} />
-        <Box sx={{ width: { xs: "100%", md: "90%" }, m: "auto", overflow: "hidden", paddingBlock: 6, background: { xs: "rgba(0,0,0,0)", md: "rgba(255,255,255,0.5)" }, boxShadow: { xs: "none", md: "0 8px 32px 0 rgba(0,0,0,0.3)" }, backdropFilter: "blur(8px)", borderRadius: { xs: 0, md: 5 } }} component="div">
-
+      <Box sx={{ width: "100%", background: "white", position: "relative", p: { xs: 0, md: 4 }, paddingBlock: 10, minHeight: "100%", maxHeight: "100%" }}>
+        <CustomImage src="/wallpaper_recommended.jpg" alt="Shapes" upperBoxStyles={{ position: "absolute", top: 0, left: 0, width: "100%", minHeight: "100vh", objectFit: "cover" }} />
+        <Box sx={{ width: { xs: "100%", md: "90%" }, m: "auto", overflow: "hidden", paddingBlock: 6, background: { xs: "rgba(0,0,0,0)", md: "rgba(255,255,255,0.1)" }, boxShadow: { xs: "none", md: "0 8px 32px 0 rgba(0,0,0,0.3)" }, backdropFilter: { xs: "blur(2px)", md: "blur(8px)" }, borderRadius: { xs: 0, md: 5 } }} component="div">
           {/* Inmuebles recomendados */}
           {
             inmuebles !== null && (

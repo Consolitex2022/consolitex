@@ -122,10 +122,6 @@ export const MenuBusquedaPc: FC = () => {
                 </IconButton>
                 <Box sx={{ position: "relative", overflowY: "hidden", }}>
                     <Box id="button-banner" ref={refBotonera} sx={styles.botonera}>
-                        {/* <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Norte")}>Norte</Button>
-                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Noreste")}>Noreste</Button>
-                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Noroeste")}>Noroeste</Button>
-                        <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Sur")}>Sur</Button> */}
                         <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Valencia")}>Valencia</Button>
                         <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("San Diego")}>San Diego</Button>
                         <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Naguanagua")}>Naguanagua</Button>
@@ -255,9 +251,11 @@ const styles = {
         textTransform: 'none',
         boxShadow: "none",
         fontFamily: "Hind",
+        color: "white",
         "&:hover": {
             background: "gold",
-            boxShadow: "none"
+            boxShadow: "none",
+            color: "black"
         }
     },
     inputBuscar: {

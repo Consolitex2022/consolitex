@@ -11,6 +11,7 @@ import { Pages } from "../../interfaces/pages-type";
 import { AuthContext } from '../../context/authcontext';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { CustomImage } from '../images/CustomImage';
 
 const notLoggedPages: Pages[] = [
     {
@@ -50,7 +51,7 @@ export const AppBarComponent: FC<Props> = ({ title, transparent = false }) => {
                     )}
                     {user.id === 0 && (<>
                         <Box sx={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                            <Image src='/logo.png' width='100' height='100' alt='Logo alternos' />
+                            <CustomImage src='/logo.png' upperBoxStyles={{ width: { xs: 110, sm: 125, md: 150, xl: 200 }, height: { xs: 110, sm: 125, md: 150, lg: 200 }, }} alt='Logo Consolitex' />
                             <Button onClick={() => router.push("/auth/login")} color="primary" disableElevation sx={{ borderRadius: 10, textTransform: "none" }} variant="contained">
                                 Iniciar sesion
                             </Button>

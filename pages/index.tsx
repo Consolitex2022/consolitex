@@ -11,6 +11,8 @@ import Layout from '../components/ui/Layout';
 import { AuthContext } from '../context/authcontext';
 import { deleteCookie, validarToken, validateSession } from '../utils/functions';
 import { UserData } from '../interfaces/user-type';
+import { ShapeDividerBottomComponent } from '../components/ui/shapes/bottom';
+import { ShapeDividerTopComponent } from '../components/ui/shapes/top';
 
 export type InmuebleData = {
   Estado: string;
@@ -90,6 +92,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
         <Suspense fallback="Cargando...">
           <MenuBusquedaMobile />
         </Suspense>
+        <ShapeDividerBottomComponent />
       </Box>
 
       {/* Espacio en blanco de la imagen */}
@@ -131,7 +134,6 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
         <CustomImage src={`/house2.jpg`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 250, md: 400 } }} />
       </Box>
       <Box sx={{ display: { xs: 'flex', lg: 'none' }, width: { xs: "100%", md: "100%" }, m: "auto", overflow: "hidden", background: "#FFF", mt: { xs: -7, md: -4 }, p: 5, flexFlow: "row wrap", justifyContent: "center", alignItems: "center" }} component="div">
-
         {/* Inmuebles recomendados */}
         <CustomImage src={`/house2.jpg`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 250, md: 400 } }} />
         <Box sx={{ textAlign: "left", p: 2, margin: "auto", width: 600, display: "flex", flexFlow: "column wrap" }}>
@@ -165,9 +167,9 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
         </Box>
       </Box>
       {/* Recomendados */}
-      <Box sx={{ width: "100%", background: "white", position: "relative", p: { xs: 0, md: 4 }, paddingBlock: 10, minHeight: "100%", maxHeight: "100%" }}>
-        <CustomImage src="/wallpaper_recommended.jpg" alt="Shapes" upperBoxStyles={{ position: "absolute", top: 0, left: 0, width: "100%", minHeight: "100vh", objectFit: "cover" }} />
-        <Box sx={{ width: { xs: "100%", md: "90%" }, m: "auto", overflow: "hidden", paddingBlock: 6, background: { xs: "rgba(0,0,0,0)", md: "rgba(255,255,255,0.1)" }, boxShadow: { xs: "none", md: "0 8px 32px 0 rgba(0,0,0,0.3)" }, backdropFilter: { xs: "blur(2px)", md: "blur(8px)" }, borderRadius: { xs: 0, md: 5 } }} component="div">
+      <Box sx={{ width: "100%", background: "white", position: "relative", p: { xs: 0, md: 4 }, paddingBlock: 10, minHeight: { xs: "100%", xl: "800px" }, maxHeight: { xs: "100%", xl: "800px" }, overflow: "hidden" }}>
+        <CustomImage src="/wallpaper_recommended.jpg" alt="Shapes" upperBoxStyles={{ position: "absolute", top: 0, left: 0, width: "100%", objectFit: "cover" }} />
+        <Box sx={{ width: { xs: "100%", md: "90%" }, m: "auto", overflow: "hidden", paddingBlock: 6, background: { xs: "rgba(0,0,0,0)", md: "rgba(255,255,255,0.1)" }, boxShadow: { xs: "none", md: "0 8px 32px 0 rgba(0,0,0,0.3)" }, backdropFilter: { xs: "blur(1px)", md: "blur(3px)" }, borderRadius: { xs: 0, md: 5 } }} component="div">
           {/* Inmuebles recomendados */}
           {
             inmuebles !== null && (

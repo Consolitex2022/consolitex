@@ -55,7 +55,9 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
 
                 {/* Seccion de Informacion del inmueble */}
                 <Grid item xs={12} sm={12} md={8} >
-                    <RecomendadoPor data={data} userData={userRef} />
+                    {userRef.id !== 0 && (
+                        <RecomendadoPor data={data} userData={userRef} />
+                    )}
                     <Informacion data={data} />
                     <Suspense fallback="Cargando detalles...">
                         <Detalles data={data} />

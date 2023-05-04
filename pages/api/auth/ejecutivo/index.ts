@@ -18,6 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         switch (respuesta.status) {
             case 200:
                 const { message, user } = await respuesta.json();
+                console.log({ user })
                 res.status(200).json({ message, user })
                 break;
             case 204:
@@ -28,9 +29,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 res.status(400).json({ message: 'No se logró iniciar sesion', errors });
                 break;
             default:
+                console.log(respuesta.status)
                 res.status(500).json({ message: "Error al conectar con la api" })
         }
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: 'No se logró conectar con el servidor' });
     }
 }

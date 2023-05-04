@@ -8,24 +8,23 @@ type Data = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-    const { email, password } = req.body;
-    const url = `${process.env.BASE_URL}/auth/login.php?email=${email}&password=${password}`;
+    const { nombres, apellidos, email, telefono, password } = req.body;
+    const color = "#4caf50";
+    const body = JSON.stringify({ nombres, apellidos, email, telefono, password, color })
+    const url = `${process.env.BASE_URL}/auth/register.php`;
     const options = {
-        method: "GET",
+        method: "POST",
+        body
     }
     try {
         const respuesta = await fetch(url, options)
         switch (respuesta.status) {
             case 200:
-                const { user } = await respuesta.json();
-                res.status(200).json({ message: "Registro encontrado", user })
-                break;
-            case 204:
-                res.status(204).json({ message: "No hay resultados" });
+                res.status(200).json({ message: "Registro exitoso" })
                 break;
             case 400:
                 const { errors } = await respuesta.json();
-                res.status(400).json({ message: 'No se logró iniciar sesion', errors });
+                res.status(400).json({ message: 'No se logró registrar', errors });
                 break;
             default:
                 res.status(500).json({ message: "Error al conectar con la api" })

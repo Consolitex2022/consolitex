@@ -77,7 +77,7 @@ const Menu = () => {
                 </ListItemIcon>
                 <ListItemText sx={{ fontFamily: 'Hind', }} primary='Inicio' />
             </ListItemButton>
-            <ListItemButton onClick={() => router.push('/access')}>
+            <ListItemButton onClick={() => router.push('/auth/ejecutivo')}>
                 <ListItemIcon>
                     <AdjustIcon color='secondary' />
                 </ListItemIcon>

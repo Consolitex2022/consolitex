@@ -29,6 +29,7 @@ import * as Yup from 'yup';
 type NewUser = {
     nombres: string;
     apellidos: string;
+    cedula: string;
     email: string;
     telefono: string;
     password: string;
@@ -38,6 +39,7 @@ type NewUser = {
 const initialValues: NewUser = {
     nombres: "",
     apellidos: "",
+    cedula: "",
     email: "",
     telefono: "",
     password: "",
@@ -54,6 +56,11 @@ const SignupSchema = Yup.object().shape({
         .matches(/(?<primerapellido>[a-zA-ZáéíóúÁÉÍÓÚ])+ (?<segundoapellido>[a-zA-ZáéíóúÁÉÍÓÚ])+$/g, "Escriba ambos apellidos")
         .min(3, 'Muy corto')
         .max(24, 'Muy largo')
+        .required('Campo obligatorio'),
+    cedula: Yup.string()
+        .matches(/^[0-9]/g, "Sólo se aceptan números")
+        .min(6, 'Muy corto')
+        .max(9, 'Muy largo')
         .required('Campo obligatorio'),
     email: Yup.string()
         .email('Email inválido')
@@ -73,8 +80,8 @@ const SignupSchema = Yup.object().shape({
 const RegisterPage: NextPage = () => {
     const [show, setShow] = useState<boolean>(false)
     const router = useRouter();
-    const onSubmit = async (values: FormikValues, resetForm: (nextState?: Partial<FormikState<{ nombres: string; apellidos: string; email: string; password: string; confirmPassword: string; telefono: string; }>> | undefined) => void) => {
-        const url = "/api/auth/login";
+    const onSubmit = async (values: FormikValues, resetForm: (nextState?: Partial<FormikState<{ nombres: string; apellidos: string; email: string; cedula: string; password: string; confirmPassword: string; telefono: string; }>> | undefined) => void) => {
+        const url = "/api/auth/register";
 
         const body = JSON.stringify({
             email: values.email,
@@ -90,7 +97,11 @@ const RegisterPage: NextPage = () => {
             switch (respuesta.status) {
                 case 200:
                     const data = await respuesta.json();
-
+                    Swal.fire({
+                        title: "Exito",
+                        text: data.message,
+                        icon: "success"
+                    })
                     break;
                 case 400:
                     const { errors } = await respuesta.json();
@@ -103,8 +114,18 @@ const RegisterPage: NextPage = () => {
                     })
                     break;
                 case 500:
+                    Swal.fire({
+                        title: "Error",
+                        text: "No se logró registrar el usuario",
+                        icon: "error",
+                    })
                     break;
                 default:
+                    Swal.fire({
+                        title: "Error",
+                        text: "No se logró registrar el usuario",
+                        icon: "error",
+                    })
                     break;
             }
         } catch (error) {
@@ -157,6 +178,9 @@ const RegisterPage: NextPage = () => {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField label="Apellidos" name="apellidos" value={values.apellidos} onChange={handleChange} fullWidth sx={styles.input} error={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.apellidos) ? true : errors.apellidos && touched.apellidos ? true : false} helperText={/[^ a-zA-ZáéíóúÁÉÍÓÚ]/g.test(values.apellidos) ? 'Sólo se aceptan letras' : errors.apellidos && touched.apellidos ? errors.apellidos : ''} />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField label="Cedula" name="cedula" value={values.cedula} onChange={handleChange} fullWidth sx={styles.input} error={errors.cedula && touched.cedula ? true : false} helperText={errors.cedula && touched.cedula ? errors.cedula : ''} />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField label="Email" name="email" value={values.email} onChange={handleChange} fullWidth sx={styles.input} error={errors.email && touched.email ? true : false} helperText={errors.email && touched.email ? errors.email : ''} />

@@ -8,6 +8,7 @@ export type UserData = {
     color: string;
     created_at: string;
     rol: number;
+    ref: string;
     status: number;
     token: string;
 }

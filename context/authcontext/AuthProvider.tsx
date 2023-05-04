@@ -16,6 +16,7 @@ export const USER_INITIAL_STATE: UserData = {
     color: "",
     created_at: "",
     rol: 0,
+    ref: '',
     status: 0,
     token: '',
 }

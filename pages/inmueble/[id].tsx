@@ -55,6 +55,7 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
 
                 {/* Seccion de Informacion del inmueble */}
                 <Grid item xs={12} sm={12} md={8} >
+                    <RecomendadoPor data={data} userData={userRef} />
                     <Informacion data={data} />
                     <Suspense fallback="Cargando detalles...">
                         <Detalles data={data} />
@@ -76,13 +77,13 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
                 {/* Seccion lateral/inferior */}
                 <Grid item xs={12} md={4}>
                     <Grid container display="flex" sx={{ width: "100%" }} spacing={1} >
-                        {userRef.id !== 0 && (
+                        {/* {userRef.id !== 0 && (
                             <Grid item xs={12}>
                                 <Suspense fallback="Cargando...">
                                     <RecomendadoPor data={data} userData={userRef} />
                                 </Suspense>
                             </Grid>
-                        )}
+                        )} */}
                         {userRef.id === 0 && (
                             <Grid item xs={12} md={12}>
                                 <Suspense fallback="Cargando...">

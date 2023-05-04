@@ -10,6 +10,7 @@ interface ContextProps {
     email: string;
     color: string;
     created_at: string;
+    ref: string;
     rol: number;
     status: number;
     token: string;

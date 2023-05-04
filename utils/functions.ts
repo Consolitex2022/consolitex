@@ -379,6 +379,7 @@ export const validarToken = async (ctx: GetServerSidePropsContext): Promise<User
         email: '',
         color: '',
         created_at: '',
+        ref: '',
         rol: 0,
         status: 0,
         token: ''
@@ -405,7 +406,7 @@ export const validarToken = async (ctx: GetServerSidePropsContext): Promise<User
             case 200:
                 const { exito, message, user } = await respuesta.json();
                 if (exito === "SI") {
-                    console.log(message)
+                    console.log({ userTokenValidation: user })
                     return user;
                 } else {
                     return emptyUser;

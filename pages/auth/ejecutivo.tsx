@@ -67,6 +67,7 @@ const EjecutivoPage: NextPage = () => {
             switch (respuesta.status) {
                 case 200:
                     const { message, user } = await respuesta.json();
+                    console.log({ user })
                     logIn(user);
                     resetForm();
                     createCookie('token', user.token);

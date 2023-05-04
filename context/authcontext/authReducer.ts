@@ -21,6 +21,7 @@ export const authReducer = (state: UserData, action: UserLoggedActionType): User
                 color: '',
                 created_at: '',
                 rol: 0,
+                ref: '',
                 status: 0,
                 token: ''
             }

@@ -46,9 +46,9 @@ const styles = {
 }
 export const UserEditForm: FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
-    const { editData, id, nombres, apellidos, telefono, cedula, email, color, created_at, rol, status, token } = useContext(AuthContext);
+    const { editData, id, nombres, apellidos, telefono, cedula, email, color, created_at, ref, rol, status, token } = useContext(AuthContext);
 
-    const userInfo = { id, nombres, apellidos, telefono, cedula, email, color, created_at, rol, status, token };
+    const userInfo = { id, nombres, apellidos, telefono, cedula, email, color, created_at, ref, rol, status, token };
     const initialValues = { nombres, apellidos, email, telefono }
     /**
         * Funcion para enviar los datos a la API para editar informacion de usuario

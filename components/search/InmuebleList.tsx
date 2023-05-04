@@ -36,7 +36,7 @@ export const InmuebleList: FC<Props> = ({ inmueblesSSR, localidadSSR = '', query
     const InmuebleCardGrid = dynamic(() => import('./').then((mod) => mod.InmuebleCardGrid));
 
     // Tipo de card de inmueble (squared = true -> Card / squared = false -> CardGrid )
-    const [squared, setSquared] = useState<boolean>(true);
+    const [squared, setSquared] = useState<boolean>(false);
 
     // Inmuebles a mostrar
     const [inmueblesState, setInmueblesState] = useState<any>(inmueblesSSR);

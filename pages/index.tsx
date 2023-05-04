@@ -98,8 +98,18 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
       {/* Espacio en blanco de la imagen */}
       <Box sx={{ minHeight: { xs: "100vh", sm: "500px", md: "450px", zIndex: "-10" } }}></Box>
 
-
-      <Box sx={{ width: { xs: "100%", md: "100%" }, m: "auto", overflow: "hidden", background: "#FFF", mt: { xs: -7, md: -4 }, p: 5, display: "flex", flexFlow: "row wrap", justifyContent: "center", alignItems: "center" }} component="div">
+      {/* Recomendados */}
+      <Box sx={{ width: "100%", m: "auto", overflow: "hidden", paddingBlock: { xs: 0, md: 6, lg: 6, xl: 6 }, background: "rgba(255,255,255,1)" }} component="div">
+        {/* Inmuebles recomendados */}
+        {
+          inmuebles !== null && (
+            <Suspense fallback="Cargando...">
+              <InmuebleList inmuebles={inmuebles} />
+            </Suspense>
+          )
+        }
+      </Box>
+      <Box sx={{ width: { xs: "100%", md: "100%" }, position: 'relative', m: "auto", overflow: "hidden", background: "#FFF", mt: { xs: -7, md: -4 }, p: 5, display: "flex", flexFlow: "row wrap", justifyContent: "center", alignItems: "center" }} component="div">
 
         {/* Inmuebles recomendados */}
         <CustomImage src={`/house.jpg`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 250, md: 400 } }} />
@@ -166,20 +176,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
           </Typography>
         </Box>
       </Box>
-      {/* Recomendados */}
-      <Box sx={{ width: "100%", background: "white", position: "relative", p: { xs: 0, md: 4 }, paddingBlock: 10, minHeight: { xs: "100%", xl: "800px" }, maxHeight: { xs: "100%", xl: "800px" }, overflow: "hidden" }}>
-        <CustomImage src="/wallpaper_recommended.jpg" alt="Shapes" upperBoxStyles={{ position: "absolute", top: 0, left: 0, width: "100%", objectFit: "cover" }} />
-        <Box sx={{ width: { xs: "100%", md: "90%" }, m: "auto", overflow: "hidden", paddingBlock: 6, background: { xs: "rgba(0,0,0,0)", md: "rgba(255,255,255,0.1)" }, boxShadow: { xs: "none", md: "0 8px 32px 0 rgba(0,0,0,0.3)" }, backdropFilter: { xs: "blur(1px)", md: "blur(3px)" }, borderRadius: { xs: 0, md: 5 } }} component="div">
-          {/* Inmuebles recomendados */}
-          {
-            inmuebles !== null && (
-              <Suspense fallback="Cargando...">
-                <InmuebleList inmuebles={inmuebles} />
-              </Suspense>
-            )
-          }
-        </Box>
-      </Box>
+
     </Layout>
   )
 }

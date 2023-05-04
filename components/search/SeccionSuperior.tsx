@@ -256,8 +256,8 @@ export const SeccionSuperior: FC<PropsMenuSuperior> = ({ initialFilter, squared,
                         {filters.habitaciones && (<Chip size="small" color="primary" onDelete={() => onDelete("habitaciones")} variant="outlined" sx={styles.chip} label={`${filters.habitaciones} Hab.`} />)}
                         {filters.estacionamientos && (<Chip size="small" color="primary" onDelete={() => onDelete("estacionamientos")} variant="outlined" sx={styles.chip} label={`${filters.estacionamientos} Est.`} />)}
                         {filters.query && (<Chip size="small" color="primary" onDelete={() => onDelete("query")} variant="outlined" sx={styles.chip} label={`Busqueda: ${filters.query}`} />)}
-                        {filters.from > 0 && (<Chip size="small" color="primary" onDelete={() => onDelete("from")} variant="outlined" sx={styles.chip} label={`Min. ${filters.from}`} />)}
-                        {filters.to > 0 && (<Chip size="small" color="primary" onDelete={() => onDelete("to")} variant="outlined" sx={styles.chip} label={`Max. ${filters.to}`} />)}
+                        {Number(filters.from) > 0 && (<Chip size="small" color="primary" onDelete={() => onDelete("from")} variant="outlined" sx={styles.chip} label={`Min. ${filters.from}`} />)}
+                        {Number(filters.to) > 0 && (<Chip size="small" color="primary" onDelete={() => onDelete("to")} variant="outlined" sx={styles.chip} label={`Max. ${filters.to}`} />)}
                         {filters.negocio && (<Chip size="small" color="primary" onDelete={() => onDelete("negocio")} variant="outlined" sx={styles.chip} label={`${filters.negocio}`} />)}
                         {filters.localidad && (<Chip size="small" color="primary" onDelete={() => onDelete("localidad")} variant="outlined" sx={styles.chip} label={`${filters.localidad}`} />)}
                         {filters.tipo && (<Chip size="small" color="primary" onDelete={() => onDelete("tipo")} variant="outlined" sx={styles.chip} label={`${filters.tipo}`} />)}

@@ -8,7 +8,7 @@ export type UserData = {
     color: string;
     created_at: string;
     rol: number;
-    ref: string;
+    ref?: string;
     status: number;
     token: string;
 }
@@ -24,7 +24,7 @@ export interface UserRef {
     genero: string;
     role: number;
     foto: string;
-    ref: string;
+    ref?: string;
     created_at: string;
     status: number;
 }

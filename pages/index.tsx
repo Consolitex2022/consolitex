@@ -110,11 +110,8 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
         }
       </Box>
       <Box sx={{ width: { xs: "100%", md: "100%" }, position: 'relative', m: "auto", overflow: "hidden", background: "#FFF", mt: { xs: -7, md: -4 }, p: 5, display: "flex", flexFlow: "row wrap", justifyContent: "center", alignItems: "center" }} component="div">
-
-        {/* Inmuebles recomendados */}
         <CustomImage src={`/house.jpg`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 250, md: 400 } }} />
         <Box sx={{ textAlign: "left", p: 2, margin: "auto", width: 600, display: "flex", flexFlow: "column wrap" }}>
-
           <Typography variant="overline" color="primary" fontWeight="bold" fontSize={{ xs: 12, md: 16 }}>
             Somos tu mejor opción{validatedUser.logged && `, ${validatedUser.user.nombres}`}
           </Typography>
@@ -131,37 +128,33 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
         <Box sx={{ textAlign: "left", p: 2, margin: "auto", width: 600, display: "flex", flexFlow: "column wrap" }}>
 
           <Typography variant="overline" color="primary" fontWeight="bold" fontSize={{ xs: 12, md: 16 }}>
-            Somos tu mejor opción{validatedUser.logged && `, ${validatedUser.user.nombres}`}
+            Confía en nosotros {validatedUser.logged && `, ${validatedUser.user.nombres}`}
           </Typography>
           <Typography variant="subtitle1" sx={{ fontFamily: "Oxygen" }} fontWeight="bold" fontSize={{ xs: 20, md: 32 }}>
-            Más de 40 años en el mercado inmobiliario
+            Vende o renta tu propiedad facil y seguro
           </Typography>
           <Typography variant="subtitle2" sx={{ fontFamily: "Oxygen", textAlign: "justify" }} fontSize={{ xs: 12, md: 16 }}>
-            Consolitex te da la mejor asesoría en el estado Carabobo ¡Encontraremos el inmueble perfecto para ti!
+            Consolitex te da el mejor equipo de profesionales que te ayudará en todo momento con lo que necesites
           </Typography>
         </Box>
-        {/* Inmuebles recomendados */}
         <CustomImage src={`/house2.jpg`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 250, md: 400 } }} />
       </Box>
       <Box sx={{ display: { xs: 'flex', lg: 'none' }, width: { xs: "100%", md: "100%" }, m: "auto", overflow: "hidden", background: "#FFF", mt: { xs: -7, md: -4 }, p: 5, flexFlow: "row wrap", justifyContent: "center", alignItems: "center" }} component="div">
-        {/* Inmuebles recomendados */}
         <CustomImage src={`/house2.jpg`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 250, md: 400 } }} />
         <Box sx={{ textAlign: "left", p: 2, margin: "auto", width: 600, display: "flex", flexFlow: "column wrap" }}>
 
           <Typography variant="overline" color="primary" fontWeight="bold" fontSize={{ xs: 12, md: 16 }}>
-            Somos tu mejor opción{validatedUser.logged && `, ${validatedUser.user.nombres}`}
+            Anunciate con nosotros{validatedUser.logged && `, ${validatedUser.user.nombres}`}
           </Typography>
           <Typography variant="subtitle1" sx={{ fontFamily: "Oxygen" }} fontWeight="bold" fontSize={{ xs: 20, md: 32 }}>
-            Más de 40 años en el mercado inmobiliario
+            ¡Con nosotros tienes mas!
           </Typography>
           <Typography variant="subtitle2" sx={{ fontFamily: "Oxygen", textAlign: "justify" }} fontSize={{ xs: 12, md: 16 }}>
-            Consolitex te da la mejor asesoría en el estado Carabobo ¡Encontraremos el inmueble perfecto para ti!
+            Disfruta de la experiencia de nuestra organizacion con mas de 42 años
           </Typography>
         </Box>
       </Box>
       <Box sx={{ width: { xs: "100%", md: "100%" }, m: "auto", overflow: "hidden", background: "#FFF", mt: { xs: -7, md: -4 }, p: 5, display: "flex", flexFlow: "row wrap", justifyContent: "center", alignItems: "center" }} component="div">
-
-        {/* Inmuebles recomendados */}
         <CustomImage src={`/house3.jpg`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 250, md: 400 } }} />
         <Box sx={{ textAlign: "left", p: 2, margin: "auto", width: 600, display: "flex", flexFlow: "column wrap" }}>
 
@@ -169,7 +162,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
             Somos tu mejor opción{validatedUser.logged && `, ${validatedUser.user.nombres}`}
           </Typography>
           <Typography variant="subtitle1" sx={{ fontFamily: "Oxygen" }} fontWeight="bold" fontSize={{ xs: 20, md: 32 }}>
-            Más de 40 años en el mercado inmobiliario
+            42 años en el mercado inmobiliario
           </Typography>
           <Typography variant="subtitle2" sx={{ fontFamily: "Oxygen", textAlign: "justify" }} fontSize={{ xs: 12, md: 16 }}>
             Consolitex te da la mejor asesoría en el estado Carabobo ¡Encontraremos el inmueble perfecto para ti!

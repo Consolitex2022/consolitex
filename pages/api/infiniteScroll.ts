@@ -28,6 +28,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (req.query['negocio'] && String(req.query['negocio']) !== '0') {
         params.push(['tipo_negocio', String(req.query['negocio'])])
     }
+    if (req.query['from'] && String(req.query['from']) !== '0') {
+        params.push(['from', String(req.query['from'])])
+    }
+    if (req.query['to'] && String(req.query['to']) !== '0') {
+        params.push(['to', String(req.query['to'])])
+    }
     if (req.query['localidad'] && String(req.query['localidad']) !== '0') {
         params.push(['localidad', String(req.query['localidad'])])
     }

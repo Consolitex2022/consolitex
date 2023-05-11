@@ -241,7 +241,8 @@ const styles = {
         minWidth: 130,
         fontWeight: "bold",
         "&:hover": {
-            color: "gold"
+            color: "black",
+            background: "gold"
         }
     },
     botonBuscar: {
@@ -252,10 +253,11 @@ const styles = {
         boxShadow: "none",
         fontFamily: "Hind",
         color: "white",
+        fontWeight: "bold",
         "&:hover": {
             background: "gold",
             boxShadow: "none",
-            color: "black"
+            color: "black",
         }
     },
     inputBuscar: {

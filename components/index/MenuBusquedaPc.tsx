@@ -1,4 +1,4 @@
-import { FC, MutableRefObject, useState, useRef, ChangeEvent } from "react"
+import { FC, MutableRefObject, useState, useRef, ChangeEvent, FormEvent } from "react"
 import { Box, Typography, Select, SelectChangeEvent, MenuItem, TextField, Button, IconButton, Chip } from "@mui/material"
 import { MenuProps } from "../../interfaces/menu-types"
 import InfoIcon from "@mui/icons-material/HelpOutlineRounded"
@@ -79,7 +79,8 @@ export const MenuBusquedaPc: FC = () => {
     /**
      * Funcion para aplicar los filtros
      */
-    const onSubmit = () => {
+    const onSubmit = (e: FormEvent) => {
+        e.preventDefault();
         router.push({
             pathname: "/search",
             query: {
@@ -132,8 +133,10 @@ export const MenuBusquedaPc: FC = () => {
                         <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Zona Industrial")}>Zona Industrial</Button>
                     </Box>
                     <Box sx={styles.contenedorSend}>
-                        <TextField fullWidth value={search} onChange={handleChange} InputProps={{ disableUnderline: true }} id="input-with-sx" variant="standard" placeholder="Ingresa lo que buscas" color="warning" focused sx={styles.inputBuscar} />
-                        <Button variant="contained" color="primary" sx={styles.botonBuscar} onClick={onSubmit}>Buscar</Button>
+                        <form onSubmit={onSubmit}>
+                            <TextField fullWidth value={search} onChange={handleChange} InputProps={{ disableUnderline: true }} id="input-with-sx" variant="standard" placeholder="Ingresa lo que buscas" color="warning" focused sx={styles.inputBuscar} />
+                            <Button variant="contained" color="primary" sx={styles.botonBuscar} type='submit'>Buscar</Button>
+                        </form>
                     </Box>
                     <Box sx={{ mt: 1 }}>
                         {

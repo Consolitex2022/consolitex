@@ -1,7 +1,7 @@
 import { Box, Typography, Select, SelectChangeEvent, MenuItem, TextField, Button, IconButton, Chip } from "@mui/material"
 import LeftIcon from "@mui/icons-material/ChevronLeft"
 import RightIcon from "@mui/icons-material/ChevronRight"
-import { ChangeEvent, FC, MutableRefObject, useEffect, useRef, useState } from "react"
+import { ChangeEvent, FC, FormEvent, MutableRefObject, useEffect, useRef, useState } from "react"
 import { MenuProps } from "../../interfaces/menu-types"
 import { useRouter } from "next/router"
 
@@ -79,7 +79,8 @@ export const MenuBusquedaMobile: FC = () => {
     /**
      * Funcion para aplicar los filtros
      */
-    const onSubmit = () => {
+    const onSubmit = (e: FormEvent) => {
+        e.preventDefault();
         router.push({
             pathname: "/search",
             query: {
@@ -130,7 +131,9 @@ export const MenuBusquedaMobile: FC = () => {
                         <Button sx={styles.buttonLocalidad} variant="text" onClick={() => handleFilter("Zona Industrial")}>Zona Industrial</Button>
                     </Box>
                 </Box>
-                <TextField fullWidth onChange={handleChange} value={search} InputProps={{ disableUnderline: true, }} variant="standard" size="small" placeholder="Ingresa lo que buscas" color="primary" sx={styles.inputSearch} />
+                <form onSubmit={onSubmit}>
+                    <TextField fullWidth onChange={handleChange} value={search} InputProps={{ disableUnderline: true, }} variant="standard" size="small" placeholder="Ingresa lo que buscas" color="primary" sx={styles.inputSearch} />
+                </form>
             </Box>
             <Button sx={styles.buttonSend} variant="contained" onClick={onSubmit}>Buscar</Button>
             <Box sx={{ mt: 1 }}>

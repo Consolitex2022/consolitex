@@ -133,7 +133,7 @@ export const MenuBusquedaPc: FC = () => {
                         <Button sx={styles.botonLocalidad} variant="text" onClick={() => handleFilter("Zona Industrial")}>Zona Industrial</Button>
                     </Box>
                     <Box sx={styles.contenedorSend}>
-                        <form onSubmit={onSubmit} style={{ margin: 0, padding: 0, display: "flex", flexFlow: "row nowrap" }}>
+                        <form onSubmit={onSubmit} style={{ margin: 0, padding: 0, display: "flex", flexFlow: "row nowrap", width: "" }}>
                             <TextField fullWidth value={search} onChange={handleChange} InputProps={{ disableUnderline: true }} id="input-with-sx" variant="standard" placeholder="Ingresa lo que buscas" color="warning" focused sx={styles.inputBuscar} />
                             <Button variant="contained" color="primary" sx={styles.botonBuscar} type='submit'>Buscar</Button>
                         </form>

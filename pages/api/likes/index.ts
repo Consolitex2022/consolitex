@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             const data = req.query;
 
             const urlGetLike = `${process.env.BASE_URL}/likes?ficha_id0=${data.ficha_id0}&user_id=${data.user_id}`;
-            console.log(req.query, urlGetLike)
+            // console.log(req.query, urlGetLike)
             try {
                 const respuesta = await fetch(urlGetLike);
                 switch (respuesta.status) {

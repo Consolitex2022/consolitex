@@ -15,6 +15,8 @@ import { CustomImage } from "../../components/images/CustomImage";
 import { ValidatedUser } from '..';
 import { validarToken, validateSession } from '../../utils/functions';
 import { UserRef } from "../../interfaces/user-type";
+import { Button, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 
 interface Props {
     data: any;
@@ -29,7 +31,7 @@ interface Props {
 
 const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, zonas_comunes, caracteristicas, validatedUser, userRef }) => {
     const userData = useContext(AuthContext)
-
+    const navigate = useRouter();
     const headerProps = { imagenes, url_inmueble, data }
 
     const title = ucfirst(`${data.inmueble.toLowerCase()} en ${ucfirst(data.urbanizacion.toLowerCase())} (${ucfirst(data.negocio.toLowerCase())})`)
@@ -57,6 +59,9 @@ const InmueblePage: NextPage<Props> = ({ data, imagenes, url_inmueble, related, 
                 <Grid item xs={12} sm={12} md={8} >
                     {userRef.id !== 0 && (
                         <RecomendadoPor data={data} userData={userRef} />
+                    )}
+                    {userData && Number(userData.rol) === 1 && (
+                        <Button disableElevation color="primary" onClick={() => navigate.push(`/photos/edit/${data.ficha_id}`)} fullWidth variant="contained" sx={{ textTransform: 'none', padding: 1.8, borderRadius: 3, mb: 1 }}>Editar fotos</Button>
                     )}
                     <Informacion data={data} />
                     <Suspense fallback="Cargando detalles...">

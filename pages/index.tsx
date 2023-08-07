@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import { useTheme, Typography } from '@mui/material';
+import { useTheme, Typography, Grid, Chip } from '@mui/material';
 import { CustomImage } from '../components/images/CustomImage';
 import Layout from '../components/ui/Layout';
 import { AuthContext } from '../context/authcontext';
@@ -82,7 +82,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
       <Box sx={{ width: "100%", position: "absolute", top: 0, left: 0, zIndex: "1" }}>
 
         {/* Wallpaper */}
-        <Box sx={{ minHeight: { xs: "100vh", sm: "600px" }, maxHeight: { xs: "auto", sm: "500px" }, overflow: "hidden", background: "url(./wallpaper.jpg)", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "scroll" }}></Box>
+        <Box sx={{ minHeight: { xs: "400px", sm: "450px" }, maxHeight: { xs: "400px", sm: "450px" }, overflow: "hidden", background: "url(./wallpaper.jpg)", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "scroll" }}></Box>
 
         {/* Menu de busqueda en vista de PC */}
         <Suspense fallback="Cargando...">
@@ -96,8 +96,73 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
       </Box>
 
       {/* Espacio en blanco de la imagen */}
-      <Box sx={{ minHeight: { xs: "100vh", sm: "500px", md: "450px", zIndex: "-10" } }}></Box>
-
+      <Box sx={{ minHeight: { xs: "290px", sm: "335px", md: "335px", zIndex: "-10" } }}></Box>
+      <Grid container sx={{ width: '100%', mb: 2, }} spacing={1}>
+        <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/QRV0097', '_blank')} sx={{ cursor: 'pointer' }}>
+          <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.1)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Box >
+              <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
+                <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
+                <Chip color='primary' label={'A2323'} />
+              </Box>
+              <Typography variant='subtitle2'>Apartamento en la trigaleña</Typography>
+              <Box sx={{ display: 'flex' }}>
+                <Typography variant='h6' fontWeight='bold' color='text.secondary' sx={{ textDecorationLine: 'line-through', mr: 1 }}>18,000</Typography>
+                <Typography variant='h5' fontWeight='bold' >15,500</Typography>
+              </Box>
+            </Box>
+            <Box sx={{ p: 7, border: '1px solid black' }}></Box>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/QRV0097', '_blank')} sx={{ cursor: 'pointer' }}>
+          <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.1)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Box >
+              <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
+                <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
+                <Chip color='primary' label={'A2323'} />
+              </Box>
+              <Typography variant='subtitle2'>Apartamento en la trigaleña</Typography>
+              <Box sx={{ display: 'flex' }}>
+                <Typography variant='h6' fontWeight='bold' color='text.secondary' sx={{ textDecorationLine: 'line-through', mr: 1 }}>18,000</Typography>
+                <Typography variant='h5' fontWeight='bold' >15,500</Typography>
+              </Box>
+            </Box>
+            <Box sx={{ p: 7, border: '1px solid black' }}></Box>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/QRV0097', '_blank')} sx={{ cursor: 'pointer' }}>
+          <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.1)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Box >
+              <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
+                <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
+                <Chip color='primary' label={'A2323'} />
+              </Box>
+              <Typography variant='subtitle2'>Apartamento en la trigaleña</Typography>
+              <Box sx={{ display: 'flex' }}>
+                <Typography variant='h6' fontWeight='bold' color='text.secondary' sx={{ textDecorationLine: 'line-through', mr: 1 }}>18,000</Typography>
+                <Typography variant='h5' fontWeight='bold' >15,500</Typography>
+              </Box>
+            </Box>
+            <Box sx={{ p: 7, border: '1px solid black' }}></Box>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/QRV0097', '_blank')} sx={{ cursor: 'pointer' }}>
+          <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.1)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Box >
+              <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
+                <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
+                <Chip color='primary' label={'A2323'} />
+              </Box>
+              <Typography variant='subtitle2'>Apartamento en la trigaleña</Typography>
+              <Box sx={{ display: 'flex' }}>
+                <Typography variant='h6' fontWeight='bold' color='text.secondary' sx={{ textDecorationLine: 'line-through', mr: 1 }}>18,000</Typography>
+                <Typography variant='h5' fontWeight='bold' >15,500</Typography>
+              </Box>
+            </Box>
+            <Box sx={{ p: 7, border: '1px solid black' }}></Box>
+          </Box>
+        </Grid>
+      </Grid>
       {/* Recomendados */}
       <Box sx={{ width: "100%", m: "auto", overflow: "hidden", paddingBlock: { xs: 0, md: 6, lg: 6, xl: 6 }, background: "rgba(255,255,255,1)" }} component="div">
         {/* Inmuebles recomendados */}
@@ -158,7 +223,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
         <CustomImage src={`/house3.jpg`} alt="que hacemos - consolitex" upperBoxStyles={{ width: { xs: 250, md: 400 } }} />
         <Box sx={{ textAlign: "left", p: 2, margin: "auto", width: 600, display: "flex", flexFlow: "column wrap" }}>
 
-        <Typography variant="overline" color="primary" fontWeight="bold" fontSize={{ xs: 12, md: 16 }}>
+          <Typography variant="overline" color="primary" fontWeight="bold" fontSize={{ xs: 12, md: 16 }}>
             Anunciate con nosotros{validatedUser.logged && `, ${validatedUser.user.nombres}`}
           </Typography>
           <Typography variant="subtitle1" sx={{ fontFamily: "Oxygen" }} fontWeight="bold" fontSize={{ xs: 20, md: 32 }}>

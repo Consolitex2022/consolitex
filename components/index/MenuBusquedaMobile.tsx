@@ -170,9 +170,10 @@ const styles = {
         minHeight: "150px",
         padding: 2,
         position: "absolute",
-        top: "40%",
+        top: "60%",
         transform: "translateX(-50%) translateY(-50%)",
         width: "90%",
+        zIndex: '9'
     },
     contenedorBotonera: {
         display: "flex",

@@ -163,10 +163,8 @@ const styles = {
         left: "50%",
         transform: "translateX(-50%) translateY(-50%)",
         borderRadius: "25px",
-        pt: 6,
-        pb: 6,
-        pr: 4,
-        pl: 4,
+        paddingBlock: 4,
+        paddingInline: 3,
         width: "80%",
         display: {
             xs: "none",

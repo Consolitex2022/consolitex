@@ -17,6 +17,7 @@ import { ModalFiltros, SeccionSuperior, EndMessage } from './';
 import { CustomImage } from '../images/CustomImage';
 import { Inmueble } from '../../pages';
 import { IFilter } from '../../interfaces';
+import { Chip, Grid } from '@mui/material';
 
 interface Props {
     inmueblesSSR: Inmueble[] | null;
@@ -189,6 +190,72 @@ export const InmuebleList: FC<Props> = ({ inmueblesSSR, localidadSSR = '', query
         <Box sx={styles.mainContainer}>
 
             <SeccionSuperior {...propsSeccion} />
+            <Grid container sx={{ width: '100%', mb: 2, }} spacing={1}>
+                <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/QRV0097', '_blank')} sx={{ cursor: 'pointer' }}>
+                    <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.1)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Box >
+                            <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
+                                <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
+                                <Chip color='primary' label={'A2323'} />
+                            </Box>
+                            <Typography variant='subtitle2'>Apartamento en la trigaleña</Typography>
+                            <Box sx={{ display: 'flex' }}>
+                                <Typography variant='h6' fontWeight='bold' color='text.secondary' sx={{ textDecorationLine: 'line-through', mr: 1 }}>18,000</Typography>
+                                <Typography variant='h5' fontWeight='bold' >15,500</Typography>
+                            </Box>
+                        </Box>
+                        <Box sx={{ p: 7, border: '1px solid black' }}></Box>
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/QRV0097', '_blank')} sx={{ cursor: 'pointer' }}>
+                    <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.1)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Box >
+                            <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
+                                <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
+                                <Chip color='primary' label={'A2323'} />
+                            </Box>
+                            <Typography variant='subtitle2'>Apartamento en la trigaleña</Typography>
+                            <Box sx={{ display: 'flex' }}>
+                                <Typography variant='h6' fontWeight='bold' color='text.secondary' sx={{ textDecorationLine: 'line-through', mr: 1 }}>18,000</Typography>
+                                <Typography variant='h5' fontWeight='bold' >15,500</Typography>
+                            </Box>
+                        </Box>
+                        <Box sx={{ p: 7, border: '1px solid black' }}></Box>
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/QRV0097', '_blank')} sx={{ cursor: 'pointer' }}>
+                    <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.1)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Box >
+                            <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
+                                <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
+                                <Chip color='primary' label={'A2323'} />
+                            </Box>
+                            <Typography variant='subtitle2'>Apartamento en la trigaleña</Typography>
+                            <Box sx={{ display: 'flex' }}>
+                                <Typography variant='h6' fontWeight='bold' color='text.secondary' sx={{ textDecorationLine: 'line-through', mr: 1 }}>18,000</Typography>
+                                <Typography variant='h5' fontWeight='bold' >15,500</Typography>
+                            </Box>
+                        </Box>
+                        <Box sx={{ p: 7, border: '1px solid black' }}></Box>
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/QRV0097', '_blank')} sx={{ cursor: 'pointer' }}>
+                    <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.1)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Box >
+                            <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
+                                <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
+                                <Chip color='primary' label={'A2323'} />
+                            </Box>
+                            <Typography variant='subtitle2'>Apartamento en la trigaleña</Typography>
+                            <Box sx={{ display: 'flex' }}>
+                                <Typography variant='h6' fontWeight='bold' color='text.secondary' sx={{ textDecorationLine: 'line-through', mr: 1 }}>18,000</Typography>
+                                <Typography variant='h5' fontWeight='bold' >15,500</Typography>
+                            </Box>
+                        </Box>
+                        <Box sx={{ p: 7, border: '1px solid black' }}></Box>
+                    </Box>
+                </Grid>
+            </Grid>
             <InfinityScroll
                 dataLength={inmueblesState && inmueblesState.length > 0 ? inmueblesState.length : 0}
                 hasMore={hasMore}

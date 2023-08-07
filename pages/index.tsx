@@ -13,6 +13,7 @@ import { deleteCookie, validarToken, validateSession } from '../utils/functions'
 import { UserData } from '../interfaces/user-type';
 import { ShapeDividerBottomComponent } from '../components/ui/shapes/bottom';
 import { ShapeDividerTopComponent } from '../components/ui/shapes/top';
+import { OfertasList } from '../components/search/OfertasList';
 
 export type InmuebleData = {
   Estado: string;
@@ -97,72 +98,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
 
       {/* Espacio en blanco de la imagen */}
       <Box sx={{ minHeight: { xs: "290px", sm: "335px", md: "335px", zIndex: "-10" } }}></Box>
-      <Grid container sx={{ width: '100%', mb: 2, }} spacing={1}>
-        <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/QRV0097', '_blank')} sx={{ cursor: 'pointer' }}>
-          <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.1)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Box >
-              <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
-                <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
-                <Chip color='primary' label={'A2323'} />
-              </Box>
-              <Typography variant='subtitle2'>Apartamento en la trigaleña</Typography>
-              <Box sx={{ display: 'flex' }}>
-                <Typography variant='h6' fontWeight='bold' color='text.secondary' sx={{ textDecorationLine: 'line-through', mr: 1 }}>18,000</Typography>
-                <Typography variant='h5' fontWeight='bold' >15,500</Typography>
-              </Box>
-            </Box>
-            <Box sx={{ p: 7, border: '1px solid black' }}></Box>
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/QRV0097', '_blank')} sx={{ cursor: 'pointer' }}>
-          <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.1)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Box >
-              <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
-                <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
-                <Chip color='primary' label={'A2323'} />
-              </Box>
-              <Typography variant='subtitle2'>Apartamento en la trigaleña</Typography>
-              <Box sx={{ display: 'flex' }}>
-                <Typography variant='h6' fontWeight='bold' color='text.secondary' sx={{ textDecorationLine: 'line-through', mr: 1 }}>18,000</Typography>
-                <Typography variant='h5' fontWeight='bold' >15,500</Typography>
-              </Box>
-            </Box>
-            <Box sx={{ p: 7, border: '1px solid black' }}></Box>
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/QRV0097', '_blank')} sx={{ cursor: 'pointer' }}>
-          <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.1)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Box >
-              <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
-                <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
-                <Chip color='primary' label={'A2323'} />
-              </Box>
-              <Typography variant='subtitle2'>Apartamento en la trigaleña</Typography>
-              <Box sx={{ display: 'flex' }}>
-                <Typography variant='h6' fontWeight='bold' color='text.secondary' sx={{ textDecorationLine: 'line-through', mr: 1 }}>18,000</Typography>
-                <Typography variant='h5' fontWeight='bold' >15,500</Typography>
-              </Box>
-            </Box>
-            <Box sx={{ p: 7, border: '1px solid black' }}></Box>
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/QRV0097', '_blank')} sx={{ cursor: 'pointer' }}>
-          <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.1)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Box >
-              <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
-                <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
-                <Chip color='primary' label={'A2323'} />
-              </Box>
-              <Typography variant='subtitle2'>Apartamento en la trigaleña</Typography>
-              <Box sx={{ display: 'flex' }}>
-                <Typography variant='h6' fontWeight='bold' color='text.secondary' sx={{ textDecorationLine: 'line-through', mr: 1 }}>18,000</Typography>
-                <Typography variant='h5' fontWeight='bold' >15,500</Typography>
-              </Box>
-            </Box>
-            <Box sx={{ p: 7, border: '1px solid black' }}></Box>
-          </Box>
-        </Grid>
-      </Grid>
+      <OfertasList />
       {/* Recomendados */}
       <Box sx={{ width: "100%", m: "auto", overflow: "hidden", paddingBlock: { xs: 0, md: 6, lg: 6, xl: 6 }, background: "rgba(255,255,255,1)" }} component="div">
         {/* Inmuebles recomendados */}

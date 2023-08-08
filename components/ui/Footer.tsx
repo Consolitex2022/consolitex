@@ -26,7 +26,7 @@ const Empresa = () => {
                     </Box>
                 </Box>
             </Box>
-            <Typography component='p' sx={{ textAlign: 'justify', fontFamily: 'Hind', }}>Somos tu mejor opción a la hora de buscar un inmueble en el estado Carabobo. Siempre estamos para servirte, ¡Consolitex te da más! RIF: J-29820228-9</Typography>
+            <Typography component='p' sx={{ textAlign: 'justify', fontFamily: 'Hind', }}>Somos tu mejor opción a la hora de buscar un inmueble en el estado Carabobo. Siempre estamos para servirte, ¡Consolitex te da más! RIF: J-40325830-9</Typography>
         </>
     )
 }

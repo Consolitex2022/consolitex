@@ -52,7 +52,7 @@ export const Recomendados: FC<Props> = ({ related }) => {
                                 related.map((rel: any) => (
                                     <Box component="div" key={rel.data.key}>
                                         <Box component="div" sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                            <CustomImage upperBoxStyles={{ width: 80, height: 80, borderRadius: 3, overflow: "hidden" }} src={`https://images.consolitex.org/newImg.php?i=${encodeURI(rel.url_inmueble)}`} alt={`Inmueble recomendado - ${rel.data.nombre}`} />
+                                            <CustomImage upperBoxStyles={{ width: 80, height: 80, borderRadius: 3, overflow: "hidden" }} src={`https://images.consolitex.org/newImg.php?url=${encodeURI(rel.url_inmueble)}`} alt={`Inmueble recomendado - ${rel.data.nombre}`} />
                                         </Box>
                                         <Typography variant="subtitle1" fontWeight="bold">{`Código de inmueble ${ucfirst(rel.data.ficha_id0)}`}</Typography>
                                         <Typography variant="subtitle2" fontWeight="bold">{`${ucfirst(rel.data.inmueble.toLowerCase())} en ${ucfirst(rel.data.urbanizacion.toLowerCase())} (${ucfirst(rel.data.negocio.toLowerCase())})`}</Typography>

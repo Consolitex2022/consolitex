@@ -52,7 +52,7 @@ const Layout: FC<Props> = ({ title, description, children, transparent = false, 
                 <meta property="og:image" content={og.image} />
                 <meta property="og:type" content={og.type} />
                 <meta property="og:description" content={og.description}></meta>
-
+                <meta httpEquiv="Cache-Control" content="no-cache"></meta>
                 <title>{`${title} | Consolitex®`}</title>
             </Head>
 

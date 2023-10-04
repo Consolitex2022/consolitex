@@ -393,7 +393,7 @@ export const validarToken = async (ctx: GetServerSidePropsContext): Promise<User
         email,
         token
     });
-    const url = `https://consolitex.org/api/v1/auth/token_validation.php`;
+    const url = `https://api.consolitex.org/v2/auth/token_validation.php`;
 
     const options = {
         method: "POST",

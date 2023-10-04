@@ -40,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         params.push(['query', String(req.query['query'])])
     }
     const urlParams = new URLSearchParams(params).toString();
-    const url = new URL(`${process.env.BASE_URL}/inmuebles_rango.php`);
+    const url = new URL(`${process.env.BASE_URL}/inmuebles_rango2.php`);
     if (params.length > 0) {
         url.search = urlParams;
     }

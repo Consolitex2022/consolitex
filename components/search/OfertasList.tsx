@@ -26,7 +26,7 @@ export const OfertasList = () => {
                             <Typography variant='h5' fontWeight='bold' >15,500</Typography>
                         </Box>
                     </Box>
-                    <CustomImage src={'https://consolitex.org/fotos/ARV0235/2/1.jpeg'} alt={''} upperBoxStyles={{ width: '150px', height: '150px', borderRadius: 3, overflow: 'hidden' }} />
+                    <CustomImage src={'https://images.consolitex.org/ARV0235/2/1.jpeg'} alt={''} upperBoxStyles={{ width: '150px', height: '150px', borderRadius: 3, overflow: 'hidden' }} />
                 </Box>
             </Grid>
             <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/A002345', '_blank')} sx={{ cursor: 'pointer' }}>
@@ -42,7 +42,7 @@ export const OfertasList = () => {
                             <Typography variant='h5' fontWeight='bold' >15,750</Typography>
                         </Box>
                     </Box>
-                    <CustomImage src={'https://consolitex.org/fotos/A002345/2/11.jpg'} alt={''} upperBoxStyles={{ width: '150px', height: '150px', borderRadius: 3, overflow: 'hidden' }} />
+                    <CustomImage src={'https://images.consolitex.org/A002345/2/11.jpg'} alt={''} upperBoxStyles={{ width: '150px', height: '150px', borderRadius: 3, overflow: 'hidden' }} />
                 </Box>
             </Grid>
             <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/A002254', '_blank')} sx={{ cursor: 'pointer' }}>
@@ -58,7 +58,7 @@ export const OfertasList = () => {
                             <Typography variant='h5' fontWeight='bold' >21,500</Typography>
                         </Box>
                     </Box>
-                    <CustomImage src={'https://consolitex.org/fotos/A002254/2/1.jpg'} alt={''} upperBoxStyles={{ width: '150px', height: '150px', borderRadius: 3, overflow: 'hidden' }} />
+                    <CustomImage src={'https://images.consolitex.org/A002254/2/1.jpg'} alt={''} upperBoxStyles={{ width: '150px', height: '150px', borderRadius: 3, overflow: 'hidden' }} />
                 </Box>
             </Grid>
             <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/A002298', '_blank')} sx={{ cursor: 'pointer' }}>
@@ -74,7 +74,7 @@ export const OfertasList = () => {
                             <Typography variant='h5' fontWeight='bold' >38,000</Typography>
                         </Box>
                     </Box>
-                    <CustomImage src={'https://consolitex.org/fotos/A002298/2/2.jpg'} alt={''} upperBoxStyles={{ width: '150px', height: '150px', borderRadius: 3, overflow: 'hidden' }} />
+                    <CustomImage src={'https://images.consolitex.org/A002298/2/2.jpg'} alt={''} upperBoxStyles={{ width: '150px', height: '150px', borderRadius: 3, overflow: 'hidden' }} />
                 </Box>
             </Grid>
         </Grid>

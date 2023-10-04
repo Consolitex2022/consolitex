@@ -34,12 +34,12 @@ const PhotoEditPage: NextPage<Props> = ({ id, photos, validatedUser }) => {
     }, [])
 
     const urls = {
-        uno: `https://consolitex.org/newImg.php?nowatermark=1&url=fotos/${id}/2/`,
-        dos: `https://consolitex.org/newImg.php?nowatermark=1&url=fotos/${id}/3/`,
-        tres: `https://consolitex.org/newImg.php?nowatermark=1&url=fotos/${id}/4/`,
-        cuatro: `https://consolitex.org/newImg.php?nowatermark=1&url=fotos/${id}/5/`,
-        cinco: `https://consolitex.org/newImg.php?nowatermark=1&url=fotos/${id}/6/`,
-        seis: `https://consolitex.org/newImg.php?nowatermark=1&url=fotos/${id}/7/`,
+        uno: `https://images.consolitex.org/newImg.php?nowatermark=1&url=${id}/2/`,
+        dos: `https://images.consolitex.org/newImg.php?nowatermark=1&url=${id}/3/`,
+        tres: `https://images.consolitex.org/newImg.php?nowatermark=1&url=${id}/4/`,
+        cuatro: `https://images.consolitex.org/newImg.php?nowatermark=1&url=${id}/5/`,
+        cinco: `https://images.consolitex.org/newImg.php?nowatermark=1&url=${id}/6/`,
+        seis: `https://images.consolitex.org/newImg.php?nowatermark=1&url=${id}/7/`,
     }
     return (
         <Layout title={'Editar fotos | Consolitex'} description={'Edicion de fotos del inmueble'}>
@@ -80,7 +80,7 @@ const PhotoEditPage: NextPage<Props> = ({ id, photos, validatedUser }) => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { id } = ctx.query;
-    const url = `https://consolitex.org/api/v1/fotos/index.php?codigo=${id}`;
+    const url = `https://api.consolitex.org/v2/fotos/index.php?codigo=${id}`;
     const user = await validarToken(ctx);
     const respuesta = await fetch(url);
     const photos = await respuesta.json();

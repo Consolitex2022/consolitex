@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         params.push(['estacionamientos', String(ctx.query['estacionamientos'])])
     }
     const urlParams = new URLSearchParams(params).toString();
-    const url = new URL(`https://consolitex.org/api/v1/inmuebles_rango.php`);
+    const url = new URL(`https://api.consolitex.org/v2/inmuebles_rango2.php`);
     url.search = urlParams;
     try {
 

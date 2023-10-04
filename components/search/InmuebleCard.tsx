@@ -185,7 +185,7 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
                     <Grid item xs={12} sm={4}>
                         <Box sx={styles.imageContainer} onClick={() => redirect(data.ficha_id)}>
                             {/* <CustomImage */}
-                            <Image alt={data.nombre} src={`https://consolitex.org/newImg.php?nowatermark=1&url=${encodeURI(url_inmueble)}`} layout='fill' loading="lazy" objectFit='cover' />
+                            <Image alt={data.nombre} src={`https://images.consolitex.org/newImg.php?nowatermark=1&url=${encodeURI(url_inmueble)}`} layout='fill' loading="lazy" objectFit='cover' />
                         </Box>
                     </Grid>
 

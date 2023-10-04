@@ -33,7 +33,7 @@ export const SingleImage: FC<SingleImageProps> = ({ baseUrl, imagen, carpeta, id
         if (alerta.isConfirmed) {
             const imagePath = `${location}/${imagen}`;
 
-            const url = `https://consolitex.org/api/v1/fotos/move.php?imagePath=${imagePath}&codigo=${id}`
+            const url = `https://api.consolitex.org/v2/fotos/move.php?imagePath=${imagePath}&codigo=${id}`
             try {
                 const respuesta = await axios.get(url);
                 console.log({ respuesta })
@@ -104,7 +104,7 @@ export const SingleImage: FC<SingleImageProps> = ({ baseUrl, imagen, carpeta, id
         const alerta = await Swal.fire({ title: "¿Deseas reemplazar esta imagen?", showCancelButton: true, showConfirmButton: true, cancelButtonColor: red[500], confirmButtonColor: blue[500] })
 
         if (alerta.isConfirmed) {
-            const url = `https://consolitex.org/api/v1/fotos/index.php`
+            const url = `https://api.consolitex.org/v2/fotos/index.php`
             const body = new FormData();
             body.append('imagen', imageSelected ? imageSelected : '')
             body.append('previous_name', imagen)
@@ -183,7 +183,7 @@ export const SingleImage: FC<SingleImageProps> = ({ baseUrl, imagen, carpeta, id
     const borrarImagen = async () => {
         const alerta = await Swal.fire({ title: "¿Deseas borrar esta imagen?", showCancelButton: true, showConfirmButton: true, cancelButtonColor: red[500], confirmButtonColor: blue[500] })
         if (alerta.isConfirmed) {
-            const url = `https://consolitex.org/api/v1/fotos/index.php?name=${imagen}&location=${location}`
+            const url = `https://api.consolitex.org/v2/fotos/index.php?name=${imagen}&location=${location}`
             const options = {
                 method: 'DELETE',
                 headers: {

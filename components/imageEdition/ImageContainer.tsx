@@ -31,7 +31,7 @@ export const ImagesContainer: FC<PropsImages> = ({ baseUrl, images, carpeta, id 
         if (alerta.isConfirmed) {
             try {
                 // URL del endpoint donde se enviarán las imágenes
-                const url = `https://consolitex.org/api/v1/fotos/multiple.php`;
+                const url = `https://api.consolitex.org/v2/fotos/multiple.php`;
 
                 // Crea una instancia de FormData para almacenar las imágenes y otros datos
                 const formData = new FormData();

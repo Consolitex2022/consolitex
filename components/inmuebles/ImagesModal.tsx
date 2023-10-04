@@ -39,7 +39,7 @@ export const ImagesModal: React.FC<Props> = ({ open, handleClose, imagenes, data
                         {
                             imagenes && imagenes.map((img: any) => (
                                 img && img.map((i: any) => (
-                                    <CustomImage key={i} upperBoxStyles={{ borderRadius: 5, overflow: "hidden" }} src={`https://consolitex.org/newImg.php?url=${encodeURI(i)}`} alt={data.nombre} />
+                                    <CustomImage key={i} upperBoxStyles={{ borderRadius: 5, overflow: "hidden" }} src={`https://images.consolitex.org/newImg.php?url=${encodeURI(i)}`} alt={data.nombre} />
                                 )
                                 ))
                             )

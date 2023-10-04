@@ -40,7 +40,7 @@ export const Header: React.FC<Props> = ({ url_inmueble, data, imagenes }) => {
                 }
             }}>
 
-                <Image id="imagen" quality={50} src={`https://consolitex.org/newImg.php?nowatermark=1&url=${encodeURI(url_inmueble)}`} layout="fill" objectFit='cover' alt={data.nombre} priority style={{
+                <Image id="imagen" quality={50} src={`https://images.consolitex.org/newImg.php?nowatermark=1&url=${encodeURI(url_inmueble)}`} layout="fill" objectFit='cover' alt={data.nombre} priority style={{
                     WebkitTransition: "0.1s -webkit-filter ease",
                     transition: "0.1s filter ease",
                 }} />

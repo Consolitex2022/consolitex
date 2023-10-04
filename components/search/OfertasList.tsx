@@ -14,7 +14,7 @@ export const OfertasList = () => {
     return (
         <Grid container sx={{ width: '100%', mb: 2, }} spacing={1} >
             <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/ARV0235', '_blank')} sx={{ cursor: 'pointer' }}>
-                <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.2)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-around', alignItems: 'center' }}>
+                <Box sx={{ p: 2, background: '#ffffdf', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.3)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <Box >
                         <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
                             <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
@@ -30,7 +30,7 @@ export const OfertasList = () => {
                 </Box>
             </Grid>
             <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/A002345', '_blank')} sx={{ cursor: 'pointer' }}>
-                <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.2)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-around', alignItems: 'center' }}>
+                <Box sx={{ p: 2, background: '#ffffdf', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.3)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <Box >
                         <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
                             <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
@@ -46,7 +46,7 @@ export const OfertasList = () => {
                 </Box>
             </Grid>
             <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/A002254', '_blank')} sx={{ cursor: 'pointer' }}>
-                <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.2)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-around', alignItems: 'center' }}>
+                <Box sx={{ p: 2, background: '#ffffdf', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.3)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <Box >
                         <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
                             <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>
@@ -62,7 +62,7 @@ export const OfertasList = () => {
                 </Box>
             </Grid>
             <Grid item xs={12} sm={6} onClick={() => window.open('/inmueble/A002298', '_blank')} sx={{ cursor: 'pointer' }}>
-                <Box sx={{ p: 2, background: '#FFF', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.2)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-around', alignItems: 'center' }}>
+                <Box sx={{ p: 2, background: '#ffffdf', borderRadius: 3, boxShadow: '0 2px 8px rgba(100,100,100,0.3)', display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <Box >
                         <Box sx={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center' }}>
                             <Typography variant='overline' fontSize={20} fontWeight='bold' sx={{ mr: 1, color: (theme) => theme.palette.primary.main }}>Oferta</Typography>

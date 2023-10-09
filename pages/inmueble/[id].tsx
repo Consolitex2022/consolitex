@@ -138,7 +138,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         status: 0,
     };
     if (ref) {
-        const url_user_ref = `https://consolitex.org/SISGACI/api/v1/usuarios/index.php?ref=${ref}`;
+        const url_user_ref = `https://api.consolitex.org/SISGACI/api/v1/usuarios/index.php?ref=${ref}`;
         const respuesta_ref = await fetch(url_user_ref);
         switch (respuesta_ref.status) {
             case 200:

@@ -78,7 +78,7 @@ const PcView: FC<PcProps> = ({ userData, data }) => {
         <Box sx={styles.pcContainer}>
             <Box sx={styles.pcSubContainer}>
                 <Box sx={styles.pcAvatar}>
-                    <Avatar src={`https://consolitex.org/SISGACI/assets/img/${userData.foto}`} sx={{ width: { xs: 100, md: 100, lg: 150, }, height: { xs: 100, md: 100, lg: 150, } }} />
+                    <Avatar src={`https://api.consolitex.org/SISGACI/assets/img/${userData.foto}`} sx={{ width: { xs: 100, md: 100, lg: 150, }, height: { xs: 100, md: 100, lg: 150, } }} />
                 </Box>
                 <Box sx={styles.pcDataContainer}>
                     <Typography variant="overline" fontWeight="bold" color="common.white" sx={{ fontFamily: "Plus Jakarta Sans" }} fontSize={{ xs: 9, md: 10, lg: 12 }}>Recomendado por</Typography>

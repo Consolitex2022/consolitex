@@ -5,6 +5,11 @@ const nextConfig = {
   images: {
     domains: [
       'https://consolitex.org/SISGACI',
+      'https://cnsltx.co/',
+      'https://cnsltx.co/fotos',
+      'https://cnsltx.co/fotos/newImg.php',
+      'https://cnsltx.co',
+      'cnsltx.co',
       'images.consolitex.org',
       'http://images.consolitex.org',
       'https://images.consolitex.org',

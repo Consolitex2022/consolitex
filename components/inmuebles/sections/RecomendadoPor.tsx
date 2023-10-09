@@ -33,7 +33,7 @@ const MobileView: FC<MobileProps> = ({ userData, data }) => {
             <Box sx={styles.mobileContainer}>
                 <Box sx={styles.mobileSubContainer}>
                     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%", margin: 'auto' }}>
-                        <Avatar src={`https://consolitex.org/SISGACI/assets/img/${userData.foto}`} sx={{ width: 100, height: 100 }} />
+                        <Avatar src={`https://api.consolitex.org/SISGACI/assets/img/${userData.foto}`} sx={{ width: 100, height: 100 }} />
                     </Box>
                     <Box sx={styles.mobileDataContainer}>
                         <Typography variant="overline" fontWeight="bold" fontSize={8} color="common.white" sx={{ fontFamily: "Plus Jakarta Sans" }}>Recomendado por</Typography>
@@ -51,16 +51,16 @@ const MobileView: FC<MobileProps> = ({ userData, data }) => {
                 <Box sx={styles.mobileTextContainer}>
                     <Typography fontWeight="bold" variant="subtitle2" sx={{ fontFamily: "Plus Jakarta Sans", textAlign: "center", color: "#FFF", }}>¡Comparte este inmueble en redes sociales!</Typography>
                     <Box sx={styles.mobileButtonContainer}>
-                        <Button component="a" target="_blank" href={`https://api.whatsapp.com/send?text=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%20https://consolitex.vercel.app/inmueble/${data.ficha_id}${userData.ref ? '?ref=' + userData.ref : ''}`} color="success" sx={styles.mobileButton}>
+                        <Button component="a" target="_blank" href={`https://api.whatsapp.com/send?text=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%20https://consolitex.org/inmueble/${data.ficha_id}${userData.ref ? '?ref=' + userData.ref : ''}`} color="success" sx={styles.mobileButton}>
                             <WhatsApp />
                         </Button>
-                        <Button component="a" target="_blank" href={`https://www.facebook.com/share.php?u=https://consolitex.vercel.app/inmueble/${data.ficha_id}${userData.ref ? '?ref=' + userData.ref : ''}&quote=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%0Ahttps://consolitex.vercel.app/inmueble/${data.ficha_id}`} color="primary" sx={styles.mobileButton}>
+                        <Button component="a" target="_blank" href={`https://www.facebook.com/share.php?u=https://consolitex.org/inmueble/${data.ficha_id}${userData.ref ? '?ref=' + userData.ref : ''}&quote=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%0Ahttps://consolitex.org/inmueble/${data.ficha_id}`} color="primary" sx={styles.mobileButton}>
                             <Facebook />
                         </Button>
-                        <Button component="a" target="_blank" href={`https://twitter.com/intent/tweet?text=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%20https://consolitex.vercel.app/inmueble/${data.ficha_id}${userData.ref ? '?ref=' + userData.ref : ''}&hashtags=Consolitex`} color="info" sx={styles.mobileButton}>
+                        <Button component="a" target="_blank" href={`https://twitter.com/intent/tweet?text=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%20https://consolitex.org/inmueble/${data.ficha_id}${userData.ref ? '?ref=' + userData.ref : ''}&hashtags=Consolitex`} color="info" sx={styles.mobileButton}>
                             <Twitter />
                         </Button>
-                        <Button component="a" target="_blank" href={`mailto:?&subject=%20CONSOLITEX%20%7C%20INMUEBLE&body=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%0Ahttps://consolitex.vercel.app/inmueble/${data.ficha_id}${userData.ref ? '?ref=' + userData.ref : ''}`} color="primary" sx={styles.mobileButton}>
+                        <Button component="a" target="_blank" href={`mailto:?&subject=%20CONSOLITEX%20%7C%20INMUEBLE&body=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%0Ahttps://consolitex.org/inmueble/${data.ficha_id}${userData.ref ? '?ref=' + userData.ref : ''}`} color="primary" sx={styles.mobileButton}>
                             <Mail sx={{ color: "black" }} />
                         </Button>
                     </Box>
@@ -109,16 +109,16 @@ const PcView: FC<PcProps> = ({ userData, data }) => {
                         <Mail sx={{ color: "black" }} />
                     </Button> */}
 
-                    <Button component="a" target="_blank" href={`https://api.whatsapp.com/send?text=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%20https://consolitex.vercel.app/inmueble/${data.ficha_id}${userData.ref !== '' ? '?ref=' + userData.ref : ''}`} color="success" sx={styles.pcButton}>
+                    <Button component="a" target="_blank" href={`https://api.whatsapp.com/send?text=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%20https://consolitex.org/inmueble/${data.ficha_id}${userData.ref !== '' ? '?ref=' + userData.ref : ''}`} color="success" sx={styles.pcButton}>
                         <WhatsApp />
                     </Button>
-                    <Button component="a" target="_blank" href={`https://www.facebook.com/share.php?u=https://consolitex.vercel.app/inmueble/${data.ficha_id}${userData.ref ? '?ref=' + userData.ref : ''}&quote=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%0Ahttps://consolitex.vercel.app/inmueble/${data.ficha_id}${userData.ref !== '' ? '?ref=' + userData.ref : ''}`} color="primary" sx={styles.pcButton}>
+                    <Button component="a" target="_blank" href={`https://www.facebook.com/share.php?u=https://consolitex.org/inmueble/${data.ficha_id}${userData.ref ? '?ref=' + userData.ref : ''}&quote=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%0Ahttps://consolitex.org/inmueble/${data.ficha_id}${userData.ref !== '' ? '?ref=' + userData.ref : ''}`} color="primary" sx={styles.pcButton}>
                         <Facebook />
                     </Button>
-                    <Button component="a" target="_blank" href={`https://twitter.com/intent/tweet?text=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%20https://consolitex.vercel.app/inmueble/${data.ficha_id}${userData.ref !== '' ? '?ref=' + userData.ref : ''}&hashtags=Consolitex`} color="info" sx={styles.pcButton}>
+                    <Button component="a" target="_blank" href={`https://twitter.com/intent/tweet?text=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%20https://consolitex.org/inmueble/${data.ficha_id}${userData.ref !== '' ? '?ref=' + userData.ref : ''}&hashtags=Consolitex`} color="info" sx={styles.pcButton}>
                         <Twitter />
                     </Button>
-                    <Button component="a" target="_blank" href={`mailto:?&subject=%20CONSOLITEX%20%7C%20INMUEBLE&body=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%0Ahttps://consolitex.vercel.app/inmueble/${data.ficha_id}${userData.ref !== '' ? '?ref=' + userData.ref : ''}`} color="primary" sx={styles.pcButton}>
+                    <Button component="a" target="_blank" href={`mailto:?&subject=%20CONSOLITEX%20%7C%20INMUEBLE&body=${utf8_encode(ucfirst(data.descripcion_web.toLowerCase()))}...%0AConsolitex%20%7C%20Bienes%20Raices%0Ahttps://consolitex.org/inmueble/${data.ficha_id}${userData.ref !== '' ? '?ref=' + userData.ref : ''}`} color="primary" sx={styles.pcButton}>
                         <Mail sx={{ color: "black" }} />
                     </Button>
                 </Box>

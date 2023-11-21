@@ -98,7 +98,7 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
 
       {/* Espacio en blanco de la imagen */}
       <Box sx={{ minHeight: { xs: "290px", sm: "335px", md: "335px", zIndex: "-10" } }}></Box>
-      <OfertasList />
+      {/* <OfertasList /> */}
       {/* Recomendados */}
       <Box sx={{ width: "100%", m: "auto", overflow: "hidden", paddingBlock: { xs: 0, md: 6, lg: 6, xl: 6 }, background: "rgba(255,255,255,1)" }} component="div">
         {/* Inmuebles recomendados */}

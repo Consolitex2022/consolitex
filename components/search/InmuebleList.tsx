@@ -191,7 +191,7 @@ export const InmuebleList: FC<Props> = ({ inmueblesSSR, localidadSSR = '', query
         <Box sx={styles.mainContainer}>
 
             <SeccionSuperior {...propsSeccion} />
-            <OfertasList />
+            {/* <OfertasList /> */}
             <InfinityScroll
                 dataLength={inmueblesState && inmueblesState.length > 0 ? inmueblesState.length : 0}
                 hasMore={hasMore}

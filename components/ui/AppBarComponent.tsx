@@ -52,9 +52,9 @@ export const AppBarComponent: FC<Props> = ({ title, transparent = false }) => {
                     {user.id === 0 && (<>
                         <Box sx={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                             <CustomImage src='/logo.png' upperBoxStyles={{ width: { xs: 120, sm: 120, md: 120, xl: 120 }, height: { xs: 120, sm: 120, md: 120, lg: 120 }, }} alt='Logo Consolitex' />
-                            <Button onClick={() => router.push("/auth/login")} color="primary" disableElevation sx={{ borderRadius: 10, textTransform: "none" }} variant="contained">
+                            {/* <Button onClick={() => router.push("/auth/login")} color="primary" disableElevation sx={{ borderRadius: 10, textTransform: "none" }} variant="contained">
                                 Iniciar sesion
-                            </Button>
+                            </Button> */}
                         </Box>
                     </>
                     )}

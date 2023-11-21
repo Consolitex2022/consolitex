@@ -9,6 +9,8 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import LocalPhoneRoundedIcon from '@mui/icons-material/LocalPhoneRounded';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Swal from 'sweetalert2';
+import { blue, green } from '@mui/material/colors';
 
 /**
  * Componente con informacion de la empresa
@@ -77,18 +79,35 @@ const Menu = () => {
                 </ListItemIcon>
                 <ListItemText sx={{ fontFamily: 'Hind', }} primary='Inicio' />
             </ListItemButton>
-            <ListItemButton onClick={() => router.push('/auth/ejecutivo')}>
+            <ListItemButton onClick={() => Swal.fire({
+                title: 'Seleccione una opcion',
+                text: '¿Se encuentra dentro de las instalaciones de Consolitex o fuera?',
+                icon: 'info',
+                showCancelButton: true,
+                cancelButtonText: 'Dentro',
+                showConfirmButton: true,
+                confirmButtonText: 'Fuera',
+                confirmButtonColor: green[500],
+                cancelButtonColor: blue[500],
+            }).then((click) => {
+                if (click.isConfirmed) {
+                    window.location.href = 'http://45.236.120.65:7878/SYGIM/login2.php'
+                } else {
+                    window.location.href = 'http://192.168.255.49:7878/SYGIM/login2.php'
+                }
+            })
+            }>
                 <ListItemIcon>
                     <AdjustIcon color='secondary' />
                 </ListItemIcon>
                 <ListItemText sx={{ fontFamily: 'Hind', }} primary='Acceso Ejecutivo' />
             </ListItemButton>
-            <ListItemButton onClick={() => router.push('/condominios')}>
+            {/* <ListItemButton onClick={() => router.push('/condominios')}>
                 <ListItemIcon>
                     <AdjustIcon color='secondary' />
                 </ListItemIcon>
                 <ListItemText sx={{ fontFamily: 'Hind', }} primary='Condominios' />
-            </ListItemButton>
+            </ListItemButton> */}
         </List>
     )
 }

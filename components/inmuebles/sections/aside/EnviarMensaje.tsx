@@ -53,6 +53,9 @@ export const EnviarMensaje: FC<Props> = ({ data }) => {
             const body = JSON.stringify({ fullname, phone, message, email, ficha_id: data.ficha_id, key: data.key })
             const options = {
                 method: "POST",
+                headers: {
+                    "Content-Type": 'application/json'
+                },
                 body
             }
 

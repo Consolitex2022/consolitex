@@ -7,7 +7,7 @@ type Data = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     switch (req.method) {
         case 'POST':
-            const url = `${process.env.BASE_URL}/messages.php`
+            const url = `${process.env.BASE_URL}/message.php`
             const { ficha_id, key, fullname, phone = '', email = '', message } = req.body;
             const body = JSON.stringify({ fullname, phone, email, message, key, ficha_id });
             const options = {

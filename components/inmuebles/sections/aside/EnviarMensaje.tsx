@@ -57,7 +57,7 @@ export const EnviarMensaje: FC<Props> = ({ data }) => {
             }
 
             try {
-                const url = `api/messages`
+                const url = `/api/messages`
                 const respuesta = await fetch(url, options);
 
                 switch (respuesta.status) {

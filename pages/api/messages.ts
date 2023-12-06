@@ -27,9 +27,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                         res.status(405)
                         break;
                     case 500:
+                        console.log('se recibio error 500')
                         res.status(500).json({ message: 'Error interno del servidor' })
                         break;
                     default:
+                        console.log('Cayo en default')
                         res.status(500).json({ message: 'Error interno del servidor' })
                         break;
                 }

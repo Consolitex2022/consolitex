@@ -57,7 +57,7 @@ export const EnviarMensaje: FC<Props> = ({ data }) => {
             }
 
             try {
-                const url = `${process.env.BASE_URL}/message.php`
+                const url = `https://api.consolitex.org/message.php`
                 const respuesta = await fetch(url, options);
 
                 switch (respuesta.status) {

@@ -57,7 +57,7 @@ export const EnviarMensaje: FC<Props> = ({ data }) => {
             }
 
             try {
-                const url = `https://api.consolitex.org/v2/message.php`
+                const url = `api/messages`
                 const respuesta = await fetch(url, options);
 
                 switch (respuesta.status) {
@@ -70,7 +70,6 @@ export const EnviarMensaje: FC<Props> = ({ data }) => {
                         setIsSubmitting(false);
                         break;
                     case 200:
-
                         const data = await respuesta.json();
                         Swal.fire({
                             title: "Éxito",

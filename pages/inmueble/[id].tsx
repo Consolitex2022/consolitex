@@ -171,7 +171,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
 
     try {
-        const url = `${process.env.BASE_URL}/inmueble/fulldata`
+        const url = `${process.env.BASE_URL}/inmueble/fulldata2.php`
         const respuesta = await axios.get(url, {
             params: {
                 id

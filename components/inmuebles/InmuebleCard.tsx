@@ -3,6 +3,8 @@ import { FC } from 'react'
 import { Inmueble } from '../../pages/index';
 import { numberWithDots, ucfirst } from '../../utils/functions';
 import { BanosIcon, HabitacionesIcon, MetrajeIcon, TerrenoIcon } from '../icons';
+import { CustomImage } from '../images/CustomImage';
+import Image from 'next/image';
 interface Props {
     inmueble: Inmueble;
 }
@@ -15,10 +17,17 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
         window.open(`/inmueble/${ficha_id}`, '_blank')
     }
     return (<>
-        <Box sx={{ mt: 2, width: "280px", height: "380", borderRadius: 5, background: "rgba(255,255,255,0.8)", overflow: "hidden", cursor: "pointer", boxShadow: { xs: "0 0 10px rgba(0,0,0,0.1)", md: "0 8px 32px 0 rgba(0,0,0,0.3)" } }} onClick={() => redirect(data.ficha_id)}>
-            {/* Img */}
-            <Box sx={{ maxWidth: "100%", minWidth: "280px", minHeight: "250px", maxHeight: "250px" }}>
-                <Box component="img" src={`https://images.consolitex.org/newImg.php?url=${encodeURIComponent(url_inmueble)}`} width={"100%"} height={250}></Box>
+        <Box sx={{ mt: 2, width: "15em", aspectRatio: "1/1.3", height: "100%", borderRadius: 5, background: "rgba(255,255,255,0.8)", overflow: "hidden", cursor: "pointer", boxShadow: { xs: "0 0 10px rgba(0,0,0,0.1)", md: "0 8px 32px 0 rgba(0,0,0,0.3)" } }} onClick={() => redirect(data.ficha_id)}>
+
+            <Box sx={{
+                width: "100%",
+                minHeight: 140,
+                height: { xs: "auto", sm: "auto" },
+                position: "relative",
+                overflow: "hidden",
+                cursor: "pointer",
+            }}>
+                <Image alt={data.nombre} src={`https://images.consolitex.org/newImg.php?url=${encodeURIComponent(url_inmueble)}`} layout='fill' loading="lazy" objectFit='cover' />
             </Box>
             {/* Content */}
             <Box sx={{ pt: 2, pr: 2, pl: 2, pb: 0 }}>
@@ -31,7 +40,7 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
                 {/* Nombre del inmueble */}
                 <Typography variant="subtitle1" color="text.primary" sx={{
                     "&:before": {
-                        content: `'${data.nombre.length > 30 ? ucfirst(data.nombre.toLocaleLowerCase()).substring(0, 30) + "..." : ucfirst(data.nombre.toLocaleLowerCase())}'`
+                        content: `'${data.nombre.length > 25 ? ucfirst(data.nombre.toLocaleLowerCase()).substring(0, 25) + "..." : ucfirst(data.nombre.toLocaleLowerCase())}'`
                     },
                     "&:hover:before": {
                         content: `'${ucfirst(data.nombre.toLocaleLowerCase())}'`
@@ -41,7 +50,7 @@ export const InmuebleCard: FC<Props> = ({ inmueble }) => {
                 {/* Urbanizacion, municipio, estado */}
                 <Typography variant="subtitle2" component="p" color="text.secondary" sx={{
                     textOverflow: "ellipsis", "&:before": {
-                        content: `'${info.length > 30 ? info.substring(0, 30) + "..." : info}'`
+                        content: `'${info.length > 25 ? info.substring(0, 25) + "..." : info}'`
                     }, "&:hover:before": {
                         content: `'${info}'`
                     }

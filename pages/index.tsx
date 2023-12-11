@@ -14,6 +14,7 @@ import { UserData } from '../interfaces/user-type';
 import { ShapeDividerBottomComponent } from '../components/ui/shapes/bottom';
 import { ShapeDividerTopComponent } from '../components/ui/shapes/top';
 import { OfertasList } from '../components/search/OfertasList';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 export type InmuebleData = {
   Estado: string;
@@ -100,12 +101,12 @@ const HomePage: NextPage<Props> = ({ inmueblesRecomendados, validatedUser }) => 
       <Box sx={{ minHeight: { xs: "290px", sm: "335px", md: "335px", zIndex: "-10" } }}></Box>
       {/* <OfertasList /> */}
       {/* Recomendados */}
-      <Box sx={{ width: "100%", m: "auto", overflow: "hidden", paddingBlock: { xs: 0, md: 6, lg: 6, xl: 6 }, background: "rgba(255,255,255,1)" }} component="div">
+      <Box sx={{ width: "100%", m: "auto", overflow: "hidden", paddingBlock: { xs: 0, md: 6 }, background: "rgba(255,255,255,1)", mt: -1 }} component="div">
         {/* Inmuebles recomendados */}
         {
           inmuebles !== null && (
             <Suspense fallback="Cargando...">
-              <InmuebleList inmuebles={inmuebles} />
+              <InmuebleList inmuebles={inmuebles ? inmuebles : [] as Inmueble[]} />
             </Suspense>
           )
         }
@@ -180,8 +181,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const user = await validarToken(ctx);
   try {
     // Solicitud HTTP
-    const respuesta = await fetch("https://api.consolitex.org/v2/inmuebles2.php?localidad=Norte");
-
+    const respuesta = await fetch("https://api.consolitex.org/v2/inmuebles.php?localidad=Norte");
+    console.log({ respuesta })
     // Resultado
     const data = await respuesta.json();
 
